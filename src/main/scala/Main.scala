@@ -3,8 +3,8 @@ import scala.util.Random
 
 object CardMatrix {
 
-  val rows = 3
-  val cols = 4
+  val rows = 1
+  val cols = 1
   val playerCount = 2
   val leaderboard = Array.fill[Int](playerCount)(0)
   val initialValue = 99
