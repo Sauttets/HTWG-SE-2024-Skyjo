@@ -1,5 +1,6 @@
 import org.scalatest.funsuite.AnyFunSuite
 import CardMatrix.printMatrix
+import CardMatrix.printCardStack
 
 class CardMatrixTest extends AnyFunSuite {
 
@@ -35,17 +36,26 @@ class CardMatrixTest extends AnyFunSuite {
     Console.withOut(stream) {
       printMatrix(matrix)
     }
-    val output=stream.toString()
-    print(output)
-    assert(output.startsWith("┌────┬────┐\n"))
-    val line2=output.substring(12,24)
-    assert(line2.startsWith("│ xx │ xx │\n"))
-    val line3=output.substring(24,36)
-    assert(line3.startsWith("├────┼────┤\n"))
-    val line4=output.substring(36,48)
-    assert(line4.startsWith("│ xx │ xx │\n"))
-    val line5=output.substring(48,output.length()-1)
-    assert(line5.startsWith("└────┴────┘"))
+    val output=stream.toString().split('\n')
+    assert(output(0)=="┌────┬────┐")
+    assert(output(1)=="│ xx │ xx │")
+    assert(output(2)=="├────┼────┤")
+    assert(output(3)=="│ xx │ xx │")
+    assert(output(4)=="└────┴────┘")
+    assert(output.length==5)
+  }
+  test("printCardstack should have a certain format"){
+    val stream = new java.io.ByteArrayOutputStream()
+    Console.withOut(stream) {
+      printCardStack()
+    }
+    val output=stream.toString().split('\n')
+    assert(output(0)=="Current card stack:")
+    assert(output(1)=="  ┌────┐  ┌────┐")
+    assert(output(2)==" ┌┤ xx │  │ xx │")
+    assert(output(3)==" │└───┬┘  └────┘")
+    assert(output(4)==" └────┘")
+    assert(output.length==5)
   }
 
 }
