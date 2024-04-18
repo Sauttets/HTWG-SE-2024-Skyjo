@@ -1,4 +1,4 @@
-[debug] [htwg-se-2024-skyjo-build] Classpath dependencies List()
-[debug] [htwg-se-2024-skyjo-build] Dependencies from configurations List()
-[debug] Bloop wrote the configuration of project 'htwg-se-2024-skyjo-build' to '/home/matze/Documents/SE/HTWG-SE-2024-Skyjo/project/.bloop/htwg-se-2024-skyjo-build.json'
-[success] Generated .bloop/htwg-se-2024-skyjo-build.json
+[0m[[0m[0mdebug[0m] [0m[0m[sky-jo-build] Classpath dependencies List()[0m
+[0m[[0m[0mdebug[0m] [0m[0m[sky-jo-build] Dependencies from configurations List()[0m
+[0m[[0m[0mdebug[0m] [0m[0mBloop wrote the configuration of project 'sky-jo-build' to '/Users/mirkoway/Documents/HTWG/semester5/SE/Sky-jo/project/.bloop/sky-jo-build.json'[0m
+[0m[[0m[32msuccess[0m] [0m[0mGenerated .bloop/sky-jo-build.json[0m
