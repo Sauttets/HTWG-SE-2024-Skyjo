@@ -1,4 +1,5 @@
 import org.scalatest.funsuite.AnyFunSuite
+import CardMatrix.printMatrix
 
 class CardMatrixTest extends AnyFunSuite {
 
@@ -27,6 +28,24 @@ class CardMatrixTest extends AnyFunSuite {
     val row = List(1, 2, 3, 4)
     val formattedRow = CardMatrix.formatRow(row)
     assert(formattedRow == "│ 01 │ 02 │ 03 │ 04 │")
+  }
+  test("printMatrix should print corners edges"){
+    val matrix = List(List(99,99),List(99,99))
+    val stream = new java.io.ByteArrayOutputStream()
+    Console.withOut(stream) {
+      printMatrix(matrix)
+    }
+    val output=stream.toString()
+    print(output)
+    assert(output.startsWith("┌────┬────┐\n"))
+    val line2=output.substring(12,24)
+    assert(line2.startsWith("│ xx │ xx │\n"))
+    val line3=output.substring(24,36)
+    assert(line3.startsWith("├────┼────┤\n"))
+    val line4=output.substring(36,48)
+    assert(line4.startsWith("│ xx │ xx │\n"))
+    val line5=output.substring(48,output.length()-1)
+    assert(line5.startsWith("└────┴────┘"))
   }
 
 }
