@@ -66,7 +66,6 @@ object MultiPlayerGame {
   @main def Main(): Unit = {
     val matrices = Array.fill(playerCount)(createMatrix(initialValue, rows, cols))
 
-    // Endlessly continue the game (without functionality)
     matrices.indices.foreach { i =>
       println(s"\nPlayer ${i + 1}'s turn:")
       printMatrix(matrices(i))
