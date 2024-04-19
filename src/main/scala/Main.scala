@@ -1,5 +1,5 @@
 import scala.util.Random
-import TUI.*
+import TUI._
 class Card(value:Int,open:Boolean=false){
   def isOpen():Boolean=open
 }

@@ -1,6 +1,5 @@
 import org.scalatest.funsuite.AnyFunSuite
-import CardMatrix.printMatrix
-import CardMatrix.printCardStack
+import TUI._
 
 class CardMatrixTest extends AnyFunSuite {
 
@@ -16,18 +15,18 @@ class CardMatrixTest extends AnyFunSuite {
     assert(matrix.forall(_.length == 4))
     assert(matrix.flatten.forall(_ == 99))
   }
-
+}
+class TUITests extends AnyFunSuite{
   test("padValue should pad single-digit numbers with a leading zero") {
-    assert(CardMatrix.padValue(5) == "05")
+    assert(TUI.padValue(5) == "05")
   }
 
   test("padValue should return 'xx' for 99") {
-    assert(CardMatrix.padValue(99) == "xx")
+    assert(TUI.padValue(99) == "xx")
   }
-
   test("formatRow should format a row properly") {
     val row = List(1, 2, 3, 4)
-    val formattedRow = CardMatrix.formatRow(row)
+    val formattedRow = TUI.formatRow(row)
     assert(formattedRow == "│ 01 │ 02 │ 03 │ 04 │")
   }
   test("printMatrix should print corners edges"){
@@ -57,7 +56,6 @@ class CardMatrixTest extends AnyFunSuite {
     assert(output(4)==" └────┘")
     assert(output.length==5)
   }
-
 }
 
 class MultiPlayerGameTest extends AnyFunSuite {
