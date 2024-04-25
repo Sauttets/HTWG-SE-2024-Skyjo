@@ -76,5 +76,15 @@ class MultiPlayerGameTest extends AnyFunSuite {
     val newMatrix = MultiPlayerGame.playGame(1, initialMatrix)
     assert(initialMatrix == newMatrix)
   }
-}
 
+  test("main should print the names of the players") {
+    val stream = new java.io.ByteArrayOutputStream()
+    Console.withOut(stream) {
+      MultiPlayerGame.Main()
+    }
+    val output = stream.toString
+    assert(output.contains("Player 1"))
+    assert(output.contains("Player 2"))
+
+  }
+}
