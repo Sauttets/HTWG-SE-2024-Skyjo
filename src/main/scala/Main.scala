@@ -1,52 +1,57 @@
 import scala.util.Random
-import TUI._
-class Card(value:Int,open:Boolean=false){
-  def isOpen():Boolean=open
+import scala.io.StdIn
+import TUI.*
+
+class Card(value: Int, open: Boolean = false) {
+  def isOpen(): Boolean = open
 }
+
 object CardMatrix {
-
-  val rows = 3
-  val cols = 4
-  val playerCount = 2
-  val leaderboard = Array.fill[Int](playerCount)(0)
-  val initialValue = 99
-  val cardValues=List(5,10,15,10,10,10,10,10,10,10,10,10,10,10,10)
-  val cardList=cardValues.zipWithIndex.map((value,ind)=>List.tabulate(value)(x=>Card(ind))).flatten
-  
-  def getRndmCards():List[Card]=
-    scala.util.Random.shuffle(cardList)
-
   def createRow(initialValue: Int, size: Int): List[Int] =
     List.fill(size)(initialValue)
 
   def createMatrix(initialValue: Int, rows: Int, cols: Int): List[List[Int]] =
     List.fill(rows)(createRow(initialValue, cols))
-
 }
 
 object MultiPlayerGame {
   import CardMatrix._
 
-  // Function to create random value between -2 and 13
   def getRandomValue: Int = {
     val random = new Random
-    random.nextInt(16) - 2  
+    random.nextInt(16) - 2
   }
 
   def playGame(player: Int, matrix: List[List[Int]]): List[List[Int]] = {
     println(s"\nPlayer $player's turn:")
     printMatrix(matrix)
     printCardStack(getRandomValue, getRandomValue)
-    matrix // Return the matrix unchanged
+    print("Enter Row: ")
+    val row = StdIn.readInt() - 1
+    print("Enter Column: ")
+    val col = StdIn.readInt() - 1
+    val rand = getRandomValue
+    val updatedMatrix = matrix.updated(row, matrix(row).updated(col, rand))
+    println(s"Card at row $row and column $col has value $rand")
+    updatedMatrix
   }
 
-  @main def Main(): Unit = {
-    val matrices = Array.fill(playerCount)(createMatrix(initialValue, rows, cols))
+  def main(args: Array[String]): Unit = {
+    println("Enter number of rows:")
+    val rows = StdIn.readInt()
+    println("Enter number of columns:")
+    val cols = StdIn.readInt()
+    println("Enter number of players:")
+    val playerCount = StdIn.readInt()
 
-    matrices.indices.foreach { i =>
-      println(s"\nPlayer ${i + 1}'s turn:")
-      printMatrix(matrices(i))
-      printCardStack(99, 99)
+    val matrices = Array.fill(playerCount)(createMatrix(99, rows, cols))
+
+    var currentPlayer = 1
+
+    while (true) {
+      val updatedMatrices = playGame(currentPlayer, matrices(currentPlayer - 1))
+      matrices(currentPlayer - 1) = updatedMatrices
+      currentPlayer = if (currentPlayer == playerCount) 1 else currentPlayer + 1
     }
   }
 }
