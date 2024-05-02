@@ -11,9 +11,9 @@ object MultiPlayerGame extends Observable{
   var mat:Vector[CardMatrix]=Vector()
   def setVals(rows:Int,cols:Int,players:Int):Unit={
     for (i<-1 to players)
-      mat:+=CardMatrix(rows,cols,i)
+      mat:+=CardMatrix(rows,cols,i,players)
   }
-  def getVals():(Int,Int,Int)=mat(0).getVals()
+  def getVals():(Int,Int,Int,Int)=mat(currentPlayer).getVals()
   def getMatrix(player:Int):List[List[Int]]=mat(player).createMatrix(99)
   def getRandomValue: Int = {
     val random = new Random

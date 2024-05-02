@@ -8,8 +8,8 @@ object TUI extends Observer{
 
     MultiPlayerGame.add(this)
     override def update: Unit ={
-        val (r,c,p)=MultiPlayerGame.getVals()
-        printCurrentPlayer(p)
+        val (r,c,p,cp)=MultiPlayerGame.getVals()
+        printCurrentPlayer(cp)
         printMatrix(MultiPlayerGame.getMatrix(MultiPlayerGame.currentPlayer))
         printCardStack(MultiPlayerGame.getRandomValue, MultiPlayerGame.getRandomValue)
     }
@@ -65,22 +65,23 @@ object TUI extends Observer{
     }
     def printCardValue(row:Int,col:Int,rand:Int):Unit=
         println(s"Card at row $row and column $col has value $rand")
-}
-
-  def main(args: Array[String]): Unit = {
+    
+    def main(args: Array[String]): Unit = {
     val (rows,cols,playerCount)=TUI.gameInitVals()
 
-    val (r,c,players)=MultiPlayerGame.getVals()
+    val (r,c,players,cp)=MultiPlayerGame.getVals()
     val matrices = Array.fill(players)(MultiPlayerGame.getMatrix(0))
 
     var currentPlayer = 1
 
     while (true) {
-      MultiPlayerGame.playGame(currentPlayer, matrices(currentPlayer - 1))
+      print(" hiiiiii"+currentPlayer)
+      MultiPlayerGame.playGame(currentPlayer-1, matrices(currentPlayer-1))
       val (row ,col)=TUI.cardPicker()
       TUI.printCardValue(row,col,MultiPlayerGame.getRandomValue)
-      val updatedMatrices = MultiPlayerGame.updatedMatrix(matrices(currentPlayer),row,col)
+      val updatedMatrices = MultiPlayerGame.updatedMatrix(matrices(currentPlayer-1),row,col)
       matrices(currentPlayer - 1) = updatedMatrices
-      currentPlayer = if (currentPlayer == playerCount) 1 else currentPlayer + 1
+      currentPlayer =(currentPlayer+1)%players+1
     }
   }
+}
