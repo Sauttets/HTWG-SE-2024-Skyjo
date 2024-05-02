@@ -1,3 +1,4 @@
+package View
 import scala.io.StdIn
 
 object TUI {
