@@ -6,7 +6,7 @@ import scala.util.Random
 import scala.io.StdIn
 import scala.collection.immutable.HashMap
 
-class MultiPlayerGame extends Observable{
+object MultiPlayerGame extends Observable{
   var currentPlayer=0
   var mat:Vector[CardMatrix]=Vector()
   def setVals(rows:Int,cols:Int,players:Int):Unit={

@@ -4,15 +4,14 @@ import Util._
 import scala.io.StdIn
 import Control._
 
-class TUI extends Observer{
+object TUI extends Observer{
 
-    val MPG=new MultiPlayerGame
-    MPG.add(this)
+    MultiPlayerGame.add(this)
     override def update: Unit ={
-        val (r,c,p)=MPG.getVals()
+        val (r,c,p)=MultiPlayerGame.getVals()
         printCurrentPlayer(p)
-        printMatrix(MPG.getMatrix(MPG.currentPlayer))
-        printCardStack(MPG.getRandomValue, MPG.getRandomValue)
+        printMatrix(MultiPlayerGame.getMatrix(MultiPlayerGame.currentPlayer))
+        printCardStack(MultiPlayerGame.getRandomValue, MultiPlayerGame.getRandomValue)
     }
 
     def gameInitVals():(Int,Int,Int)={
@@ -22,7 +21,7 @@ class TUI extends Observer{
         val cols = StdIn.readInt()
         println("Enter number of players:")
         val playerCount = StdIn.readInt()
-        MPG.setVals(rows,cols,playerCount)
+        MultiPlayerGame.setVals(rows,cols,playerCount)
         (rows,cols,playerCount)
     }
     def padValue(value: Int): String =
@@ -69,19 +68,18 @@ class TUI extends Observer{
 }
 
   def main(args: Array[String]): Unit = {
-    val tui=new TUI
-    val (rows,cols,playerCount)=tui.gameInitVals()
+    val (rows,cols,playerCount)=TUI.gameInitVals()
 
-    val (r,c,players)=tui.MPG.getVals()
-    val matrices = Array.fill(players)(tui.MPG.getMatrix(0))
+    val (r,c,players)=MultiPlayerGame.getVals()
+    val matrices = Array.fill(players)(MultiPlayerGame.getMatrix(0))
 
     var currentPlayer = 1
 
     while (true) {
-      tui.MPG.playGame(currentPlayer, matrices(currentPlayer - 1))
-      val (row ,col)=tui.cardPicker()
-      tui.printCardValue(row,col,tui.MPG.getRandomValue)
-      val updatedMatrices = tui.MPG.updatedMatrix(matrices(currentPlayer),row,col)
+      MultiPlayerGame.playGame(currentPlayer, matrices(currentPlayer - 1))
+      val (row ,col)=TUI.cardPicker()
+      TUI.printCardValue(row,col,MultiPlayerGame.getRandomValue)
+      val updatedMatrices = MultiPlayerGame.updatedMatrix(matrices(currentPlayer),row,col)
       matrices(currentPlayer - 1) = updatedMatrices
       currentPlayer = if (currentPlayer == playerCount) 1 else currentPlayer + 1
     }
