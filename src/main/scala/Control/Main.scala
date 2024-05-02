@@ -1,12 +1,12 @@
-package Model
+package Control
 
 import scala.util.Random
 import scala.io.StdIn
-import View.TUI.*
+import View.TUI._
 import scala.collection.immutable.HashMap
 
 object MultiPlayerGame {
-  import CardMatrix._
+  import Model.CardMatrix._
 
   def getRandomValue: Int = {
     val random = new Random

@@ -1,17 +1,17 @@
 import org.scalatest.funsuite.AnyFunSuite
-import TUI._
+import View.TUI._
 import java.util.Random
 
 class TUITests extends AnyFunSuite{
   test("padValue should pad single-digit numbers with a leading zero") {
-    assert(TUI.padValue(5) == "05")
+    assert(padValue(5) == "05")
   }
   test("padValue should return 'xx' for 99") {
-    assert(TUI.padValue(99) == "xx")
+    assert(padValue(99) == "xx")
   }
   test("formatRow should format a row properly") {
     val row = List(1, 2, 3, 4)
-    val formattedRow = TUI.formatRow(row)
+    val formattedRow = formatRow(row)
     assert(formattedRow == "│ 01 │ 02 │ 03 │ 04 │")
   }
   test("printCurrentPlayer should print thegiven player with some text"){
