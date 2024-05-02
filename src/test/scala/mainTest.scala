@@ -1,16 +1,17 @@
 import org.scalatest.funsuite.AnyFunSuite
-import Control._
+import Model._
 
 class CardMatrixTest extends AnyFunSuite {
 
+  val cardMatrix= new CardMatrix(99,1,1)
   test("createRow should create a row with the specified initial value") {
-    val row = Model.CardMatrix.createRow(99, 4)
+    val row = cardMatrix.createRow(99, 4)
     assert(row.length == 4)
     assert(row.forall(_ == 99))
   }
 
   test("createMatrix should create a matrix with the specified initial value") {
-    val matrix = Model.CardMatrix.createMatrix(99, 3, 4)
+    val matrix = cardMatrix.createMatrix(99)
     assert(matrix.length == 3)
     assert(matrix.forall(_.length == 4))
     assert(matrix.flatten.forall(_ == 99))
