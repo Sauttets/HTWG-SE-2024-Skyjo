@@ -14,7 +14,7 @@ object MultiPlayerGame extends Observable{
       mat:+=CardMatrix(rows,cols,i,players)
   }
   def getVals():(Int,Int,Int,Int)=mat(currentPlayer).getVals()
-  def getMatrix(player:Int):List[List[Int]]=mat(player).createMatrix(99)
+  def getMatrix(player:Int):List[List[Int]]=mat(player).matrix
   def getRandomValue: Int = {
     val random = new Random
     random.nextInt(16) - 2
@@ -24,8 +24,8 @@ object MultiPlayerGame extends Observable{
     currentPlayer=player
     notifyObservers
   }
-  def updatedMatrix(matrix: List[List[Int]],row:Int,col:Int): List[List[Int]] = {
-    val rand = getRandomValue
-    matrix.updated(row, matrix(row).updated(col,rand))
+  def updatedMatrix(currplayer:Int,matrix: List[List[Int]],row:Int,col:Int,card:Int): List[List[Int]] = {
+    //mat(currentPlayer)=CardMatrix(matrix.updated(row, matrix(row).updated(col,card)),2,currplayer)
+    matrix
   }
 }

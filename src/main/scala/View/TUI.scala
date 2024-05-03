@@ -75,11 +75,11 @@ object TUI extends Observer{
     var currentPlayer = 1
 
     while (true) {
-      print(" hiiiiii"+currentPlayer)
       MultiPlayerGame.playGame(currentPlayer-1, matrices(currentPlayer-1))
       val (row ,col)=TUI.cardPicker()
-      TUI.printCardValue(row,col,MultiPlayerGame.getRandomValue)
-      val updatedMatrices = MultiPlayerGame.updatedMatrix(matrices(currentPlayer-1),row,col)
+      val card=MultiPlayerGame.getRandomValue
+      TUI.printCardValue(row,col,card)
+      val updatedMatrices = MultiPlayerGame.updatedMatrix(currentPlayer,matrices(currentPlayer-1),row,col,card)
       matrices(currentPlayer - 1) = updatedMatrices
       currentPlayer =(currentPlayer+1)%players+1
     }
