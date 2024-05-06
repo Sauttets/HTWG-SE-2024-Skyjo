@@ -21,3 +21,16 @@ case class Table(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playerCount
             | └────┘""".stripMargin
         str
     }
+
+
+    def getPlayerMatricesString(): String = {
+        val str = Tabletop.zipWithIndex.map { case (playerMatrix, index) =>
+            s"""Player ${index + 1}:
+                |${playerMatrix.rows.map { row =>
+                row.map { card =>
+                    if (card.opened) padValue(card.value) else "xx"
+                }.mkString(" ")
+            }.mkString("\n")}""".stripMargin
+        }.mkString("\n")
+        str
+    }

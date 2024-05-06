@@ -5,3 +5,4 @@ import de.htwg.se.skyjo.model._
   println("Hello world!")
   val table = new Table()
   println(table.getCardStackString())
+  println(table.getPlayerMatricesString())
