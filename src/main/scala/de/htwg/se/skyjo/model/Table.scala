@@ -2,18 +2,22 @@ package de.htwg.se.skyjo.model
 
 case class Table(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playerCount: Int, currentPlayer: Int):
     def this(playerCount: Int = 2, width: Int = 4, height: Int = 4) = {
-        this(List.tabulate(playerCount) {PlayerMatrix(width, height)}, new Cardstack(), playerCount, 0)
-    } 
+        this(List.tabulate(playerCount) { _ =>
+            new PlayerMatrix(width, height)
+            }, new Cardstack(), playerCount, 0)
+    }
 
-    def padValue(cardValue: Int): String =
-        if (cardValue >= 0 && cardValue < 10) "0" + cardValue
-        else cardValue.toString
+    def padValue(cardValue: Int): String = cardValue match {
+        case v if v >= 0 && v < 10 => "0" + v
+        case v => v.toString
+    }
 
     def getCardStackString(): String = {
-        val str = "Current card stack:\n" +
-        "  ┌────┐  ┌────┐\n" +
-        s" ┌┤ xx │  │ ${padValue(cardstack.trashCard.value)} │\n" +
-        " │└───┬┘  └────┘\n" +
-        " └────┘\n"
+        val str =
+        s"""Current card stack:
+            |  ┌────┐  ┌────┐
+            | ┌┤ xx │  │ ${padValue(cardstack.trashCard.value)} │
+            | │└───┬┘  └────┘
+            | └────┘""".stripMargin
         str
     }
