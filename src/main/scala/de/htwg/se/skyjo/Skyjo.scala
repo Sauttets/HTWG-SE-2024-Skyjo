@@ -1,14 +1,15 @@
 import de.htwg.se.skyjo.model._
 import de.htwg.se.skyjo.controller._
+import de.htwg.se.skyjo.aview._
 
 
-@main def hello(): Unit =
-  println("Hello world!")
+@main def main(): Unit =
   var table = new PlayerTable()
   //println(table.getPlayerMatricesString())
   //println(table.getCardStackString())
   //table = table.drawFromStack()
   //print(table.getTableString())
+  /*
   var tableController = new TableController(table)
   tableController.drawFromStack()
   print(tableController.table.getTableString())
@@ -21,3 +22,8 @@ import de.htwg.se.skyjo.controller._
   move = new Move(true, false, 0, 1)
   tableController.doMove(move)
   print(tableController.table.getTableString())
+  */
+
+  var tableController = new TableController(table)
+  var tui = new TUI(tableController)
+  tui.run

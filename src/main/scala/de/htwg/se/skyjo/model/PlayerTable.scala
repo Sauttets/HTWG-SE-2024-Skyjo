@@ -62,3 +62,4 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playe
         if stackCard then copy(Tabletop, cardstack.discard(card).newStackCard(), playerCount, currentPlayer)
         else copy(Tabletop, cardstack.discard(card), playerCount, currentPlayer)
     }
+

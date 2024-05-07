@@ -7,7 +7,6 @@ import model._
 import util._
 
 
-//case class Move(drawnFromStack: Boolean, swapped: Boolean, row : Int, col : Int)
 
 case class TableController(var table: PlayerTable) extends Observable:
     
@@ -29,6 +28,7 @@ case class TableController(var table: PlayerTable) extends Observable:
         notifyObservers
     }
 
+    override def toString = table.getTableString() 
     /* 
     
         takeReplaceAndThrow
