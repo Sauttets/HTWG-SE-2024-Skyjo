@@ -28,4 +28,8 @@ case class PlayerMatrix(rows: Vector[Vector[Card]]):
     val oldCard = getCard(row, col)
     (copy(rows.updated(row, rows(row).updated(col, card))), oldCard)
   }
+
+  def checkFinished()={
+    rows.forall(_.forall(_.opened))
+  }
     

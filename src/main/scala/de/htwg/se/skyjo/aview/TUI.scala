@@ -10,11 +10,14 @@ import util.Observer
 class TUI(controller: TableController) extends Observer:
   controller.add(this)
   def run =
+    println("\u001B[34m"+"Welcome to Skyjo\u001B[0m")
     println(controller)
     getInputAndPrintLoop()
 
 
-  override def update = println(controller)  
+  override def update = {
+    println(controller)
+  }
 
   def getInputAndPrintLoop(): Unit =
     print("Enter your command: (q)uit, (stack), (trash) ")
@@ -27,11 +30,13 @@ class TUI(controller: TableController) extends Observer:
           case None       =>
           case Some(move) => controller.doMove(move)
       }
+    if(controller.gameEnd())
+      println("PLAYER "+(controller.table.currentPlayer+1)+ " ENDED THE GAME")
     getInputAndPrintLoop()
     
 
 def drawInput(input: String): Option[Boolean] =
-    input.toUpperCase() match
+    input.toUpperCase().replaceAll(" ","") match
       case "Q" => sys.exit(0)
       case "STACK" => Some(true)
       case "TRASH" => Some(false)
@@ -40,15 +45,15 @@ def drawInput(input: String): Option[Boolean] =
 
 def moveInput(input: String, draw: Boolean): Option[Move] =
     val Input = input.toUpperCase()
-     Input match
+     Input.replaceAll(" ","") match
       case "Q" => sys.exit(0)
       case _ => Some(Move(
         draw,
-        Input.split(" ")(0) match
+        Input.split(" ")(0).replaceAll(" ","") match
             case "S" => true
             case "D" => false
             case "SWAP" => true
             case "DISCARD" => false,
-        Input.split(" ")(1).toInt,
-        Input.split(" ")(2).toInt
+        Input.split(" ")(1).replaceAll(" ","").toInt,
+        Input.split(" ")(2).replaceAll(" ","").toInt
         ))

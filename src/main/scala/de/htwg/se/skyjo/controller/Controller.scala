@@ -16,7 +16,7 @@ case class TableController(var table: PlayerTable) extends Observable:
     }
 
     def doMove(move: Move): Unit = {
-        val handCard = if move.drawnFromStack then table.cardstack.stackCard else table.cardstack.stackCard
+        val handCard = if move.drawnFromStack then table.cardstack.stackCard else table.cardstack.trashCard
         if move.swapped then
             val tupel = table.Tabletop(table.currentPlayer).changeCard(move.row, move.col, handCard)
             table = table.updateMatrix(table.currentPlayer, tupel(0))
@@ -27,8 +27,11 @@ case class TableController(var table: PlayerTable) extends Observable:
         table = table.copy(currentPlayer = (table.currentPlayer + 1) % table.playerCount)
         notifyObservers
     }
-
-    override def toString = table.getTableString() 
+    def gameEnd():Boolean={
+        table.Tabletop.foreach(x=>if(x.checkFinished()) return true)
+        return false
+    }
+    override def toString = "\u001B[34mPlayer "+(table.currentPlayer+1)+"'s Turn\u001B[0m\n"+table.getTableString() 
     /* 
     
         takeReplaceAndThrow

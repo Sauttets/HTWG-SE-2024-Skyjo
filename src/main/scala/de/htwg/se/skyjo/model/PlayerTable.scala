@@ -35,7 +35,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playe
         val colors = Array("\u001B[31m", "\u001B[32m", "\u001B[35m", "\u001B[36m", "\u001B[33m")
         val str = Tabletop.zipWithIndex.map { case (playerMatrix, index) =>
             val color = colors(index % colors.length) 
-            s"""${color}\nPlayer ${index}:
+            s"""${color}\nPlayer ${(index+1)}:
                 |${"+----" * playerMatrix.rows.head.length}+
                 |${playerMatrix.rows.map { row =>
                 row.map { card =>
