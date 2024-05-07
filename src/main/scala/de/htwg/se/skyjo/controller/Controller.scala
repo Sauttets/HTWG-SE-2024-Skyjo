@@ -22,6 +22,5 @@
         calculateWinner
             checkFinished
             getPlayerPoints
-
-
+            
      */

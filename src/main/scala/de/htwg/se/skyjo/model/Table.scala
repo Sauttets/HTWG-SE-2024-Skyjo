@@ -8,15 +8,16 @@ case class Table(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playerCount
     }
 
     def padValue(cardValue: Int): String = cardValue match {
-        case v if v >= 0 && v < 10 => "0" + v
-        case v => v.toString
+        case v if v == 99 => "│ xx "
+        case v if v >= 0 && v < 10 => "│ 0" + v + " "
+        case v => "│ " + v.toString + " "
     }
 
     def getCardStackString(): String = {
         val str =
-        s"""Current card stack:
+        s"""\nCurrent card stack:
             |  ┌────┐  ┌────┐
-            | ┌┤ xx │  │ ${padValue(cardstack.trashCard.value)} │
+            | ┌┤ xx │  ${padValue(cardstack.trashCard.value)}│
             | │└───┬┘  └────┘
             | └────┘""".stripMargin
         str
@@ -24,13 +25,16 @@ case class Table(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playerCount
 
 
     def getPlayerMatricesString(): String = {
+        val colors = Array("\u001B[31m", "\u001B[32m", "\u001B[35m", "\u001B[36m", "\u001B[33m")
         val str = Tabletop.zipWithIndex.map { case (playerMatrix, index) =>
-            s"""Player ${index + 1}:
+            val color = colors(index % colors.length) 
+            s"""${color}\nPlayer ${index}:
+                |${"+----" * playerMatrix.rows.head.length}+
                 |${playerMatrix.rows.map { row =>
                 row.map { card =>
-                    if (card.opened) padValue(card.value) else "xx"
-                }.mkString(" ")
-            }.mkString("\n")}""".stripMargin
-        }.mkString("\n")
-        str
+                    if (card.opened) padValue(card.value) else padValue(99)
+                }.mkString("") + ("│\n" + "+----" * (row.length))
+            }.mkString("+\n")}""".stripMargin
+        }.mkString("+\n")
+        str + "+\u001B[0m" // Reset color
     }
