@@ -23,6 +23,9 @@ case class PlayerMatrix(rows: Vector[Vector[Card]]):
     copy(rows.updated(row, rows(row).updated(col, newCard)))
   }
 
-  //def flipCard (row: Int, col: Int): Matrix[Card] = copy(rows.updated(row, selectedRow.updated(col, getCard(row, col).copy(opened = true))))
 
-  def changeCard(row: Int, col: Int, card: Card): PlayerMatrix = copy(rows.updated(row, rows(row).updated(col, card)))
+  def changeCard(row: Int, col: Int, card: Card): (PlayerMatrix, Card) = {
+    val oldCard = getCard(row, col)
+    (copy(rows.updated(row, rows(row).updated(col, card))), oldCard)
+  }
+    
