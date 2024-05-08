@@ -46,6 +46,10 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playe
         str + "+\u001B[0m" // Reset color
     }
 
+    def getCurrenPlayerString():String={
+        val colors = Array("\u001B[31m", "\u001B[32m", "\u001B[35m", "\u001B[36m", "\u001B[33m")
+        colors(currentPlayer%colors.length)+"Player "+(currentPlayer+1)+"\u001B[0m"
+    }
     def getTableString(): String = {
         getPlayerMatricesString() + getCardStackString()
     }

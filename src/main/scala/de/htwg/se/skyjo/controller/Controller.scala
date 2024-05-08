@@ -31,7 +31,7 @@ case class TableController(var table: PlayerTable) extends Observable:
         table.Tabletop.foreach(x=>if(x.checkFinished()) return true)
         return false
     }
-    override def toString = "\u001B[34mPlayer "+(table.currentPlayer+1)+"'s Turn\u001B[0m\n"+table.getTableString() 
+    override def toString = table.getTableString() 
     /* 
     
         takeReplaceAndThrow

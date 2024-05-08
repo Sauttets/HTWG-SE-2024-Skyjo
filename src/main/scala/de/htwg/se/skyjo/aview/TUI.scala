@@ -20,12 +20,12 @@ class TUI(controller: TableController) extends Observer:
   }
 
   def getInputAndPrintLoop(): Unit =
-    print("Enter your command: (q)uit, (stack), (trash) ")
+    print(controller.table.getCurrenPlayerString()+"\nEnter your command: (q)uit, (stack), (trash) ")
     drawInput(readLine) match
       case None       =>
       case Some(draw) => {
         if draw then controller.drawFromStack()
-        println("Please enter your move: (swapped, row, col)")
+        println(controller.table.getCurrenPlayerString()+"\nPlease enter your move: (swapped, row, col)")
         moveInput(readLine, draw) match
           case None       =>
           case Some(move) => controller.doMove(move)
@@ -49,11 +49,11 @@ def moveInput(input: String, draw: Boolean): Option[Move] =
       case "Q" => sys.exit(0)
       case _ => Some(Move(
         draw,
-        Input.split(" ")(0).replaceAll(" ","") match
+        Input.split(" ")(0) match
             case "S" => true
             case "D" => false
             case "SWAP" => true
             case "DISCARD" => false,
-        Input.split(" ")(1).replaceAll(" ","").toInt,
-        Input.split(" ")(2).replaceAll(" ","").toInt
+        Input.split(" ")(1).toInt,
+        Input.split(" ")(2).toInt
         ))
