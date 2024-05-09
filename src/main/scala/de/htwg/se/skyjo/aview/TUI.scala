@@ -24,8 +24,10 @@ class TUI(controller: TableController) extends Observer:
     drawInput(readLine) match
       case None       =>
       case Some(draw) => {
-        if draw then controller.drawFromStack()
-        println(controller.table.getCurrenPlayerString()+"\nPlease enter your move: (swapped, row, col)")
+        if draw then  
+          controller.drawFromStack()
+          println(controller.table.getCurrenPlayerString())
+        println("Please enter your move: (swapped, row, col)")
         moveInput(readLine, draw) match
           case None       =>
           case Some(move) => controller.doMove(move)
@@ -36,7 +38,7 @@ class TUI(controller: TableController) extends Observer:
     
 
 def drawInput(input: String): Option[Boolean] =
-    input.toUpperCase().replaceAll(" ","") match
+    input.toUpperCase().replaceAll("\\s+","") match
       case "Q" => sys.exit(0)
       case "STACK" => Some(true)
       case "TRASH" => Some(false)
@@ -44,16 +46,17 @@ def drawInput(input: String): Option[Boolean] =
       case "T" => Some(false)
 
 def moveInput(input: String, draw: Boolean): Option[Move] =
-    val Input = input.toUpperCase()
+    val Input = (" "+input).toUpperCase().replaceAll("\\s+"," ") 
      Input.replaceAll(" ","") match
       case "Q" => sys.exit(0)
       case _ => Some(Move(
         draw,
-        Input.split(" ")(0) match
+        Input.split(" ")(1) match
             case "S" => true
+            case "T" => false
             case "D" => false
             case "SWAP" => true
             case "DISCARD" => false,
-        Input.split(" ")(1).toInt,
-        Input.split(" ")(2).toInt
+        Input.split(" ")(2).toInt,
+        Input.split(" ")(3).toInt
         ))
