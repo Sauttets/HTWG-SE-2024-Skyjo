@@ -1,6 +1,6 @@
-import de.htwg.se.skyjo.model._
-import de.htwg.se.skyjo.controller._
-import de.htwg.se.skyjo.aview._
+import de.htwg.se.skyjo.model.PlayerTable
+import de.htwg.se.skyjo.controller.TableController
+import de.htwg.se.skyjo.aview.TUI
 
 
 @main def main(): Unit =

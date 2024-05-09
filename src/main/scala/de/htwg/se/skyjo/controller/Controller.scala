@@ -27,11 +27,16 @@ case class TableController(var table: PlayerTable) extends Observable:
         table = table.copy(currentPlayer = (table.currentPlayer + 1) % table.playerCount)
         notifyObservers
     }
+<<<<<<< HEAD
     def checkGameEnd():Boolean={
         import scala.util.boundary, boundary.break
         boundary:
             table.Tabletop.foreach(x=>if x.checkFinished() then break(true))
             false
+=======
+    def gameEnd(): Boolean = {
+        table.Tabletop.exists(_.checkFinished())
+>>>>>>> f4c0123aad5e65b4796923a668db60aa55140f03
     }
     override def toString = table.getTableString() 
     /* 
