@@ -49,6 +49,12 @@ class PlayerMatrixSpec extends AnyWordSpec with Matchers {
         playerMatrix.checkFinished() shouldEqual false
       }
     }
+    "getScore method is called" should{
+      "return sum of all cards" in{
+        val playerMatrix = new PlayerMatrix(Vector(Vector(new Card(-2, true), new Card(12, false)), Vector(new Card(5, true), new Card(0, true))))
+        playerMatrix.getScore() shouldBe 15
+      }
+    }
     "getRow method is called" should {
         "return the correct row of cards" in {
             val card1 = new Card(1, true)

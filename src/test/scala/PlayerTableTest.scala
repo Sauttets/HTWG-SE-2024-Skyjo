@@ -138,6 +138,17 @@ class PlayerTableTest extends AnyWordSpec with Matchers {
         str shouldBe shouldString
       }
     }
+    "getting Scores" should{
+      "return scores of each player"in{
+        val playerTable= new PlayerTable(3,1,1)
+        val matrix0=playerTable.Tabletop(0)
+        val matrix1=playerTable.Tabletop(1)
+        val matrix2=playerTable.Tabletop(2)
+        playerTable.getScores() shouldBe List((matrix0.getCard(0,0).value,0),
+                                              (matrix1.getCard(0,0).value,1),
+                                              (matrix2.getCard(0,0).value,2))                                                       
+      }
+    }
 
   }
 }
