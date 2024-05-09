@@ -26,6 +26,11 @@ class CardTest extends AnyWordSpec with Matchers{
         d.opened shouldEqual true
       }
     }
+    "default" should{ 
+      "not be open"in{
+      Card.getClass.getMethod("$lessinit$greater$default$2").invoke(Card) shouldEqual false
+      }
+    }
   }
 }
   // "A PlayerTable" when {
