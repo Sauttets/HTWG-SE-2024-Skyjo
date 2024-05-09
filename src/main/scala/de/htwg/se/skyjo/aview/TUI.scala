@@ -33,7 +33,7 @@ class TUI(controller: TableController) extends Observer:
     val scores=controller.table.getScores()
     scores.foreach((score,player)=>println(controller.table.getPlayerString(player)+" : "+score))
     val winner=scores.minBy((score,player)=>score)
-    println(controller.table.getPlayerString(winner(0))+" WON WITH ONLY "+winner(1)+" POINTS")
+    println(controller.table.getPlayerString(winner(1))+" WON WITH ONLY "+winner(0)+" POINTS")
 
   def inputAndPrint():Unit=
     println(controller.table.getCurrenPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash) ")
