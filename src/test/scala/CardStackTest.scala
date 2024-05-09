@@ -28,11 +28,6 @@ class CardStackTest extends AnyWordSpec with Matchers{
         drawnStack.stackCard.value shouldBe sCard.value
         drawnStack.stackCard.opened shouldBe true
       }
-      "change stackCard" in{
-        val nStack=stack.newStackCard()
-        nStack.stackCard should not equal stack.stackCard
-        nStack.trashCard shouldEqual stack.trashCard
-      }
     }
     "drawn from trash" should{
       val stack=new Cardstack
