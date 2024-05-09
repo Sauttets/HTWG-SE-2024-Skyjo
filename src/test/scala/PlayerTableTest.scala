@@ -1,39 +1,77 @@
-import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 import de.htwg.se.skyjo.model._
 
-class PlayerTableTest extends AnyFunSuite {
+class PlayerTableTest extends AnyWordSpec with Matchers {
 
-  test("Creating a new PlayerTable") {
-    val playerTable = new PlayerTable()
-    assert(playerTable.Tabletop.size == 2) 
-    assert(playerTable.cardstack.stackCard.value >= -2 && playerTable.cardstack.stackCard.value <= 12)
-    assert(playerTable.playerCount == 2)
-    assert(playerTable.currentPlayer == 0)
-  }
+  "A PlayerTable" when {
 
-  test("Drawing from the stack") {
-    val playerTable = new PlayerTable()
-    val updatedTable = playerTable.drawFromStack()
-    assert(updatedTable.cardstack.stackCard.opened)
-  }
+    "created" should {
+      "have initial state" in {
+        val playerTable = new PlayerTable()
+        playerTable.Tabletop.size shouldEqual 2
+        playerTable.cardstack.stackCard.value should (be >= -2 and be <= 12)
+        playerTable.playerCount shouldEqual 2
+        playerTable.currentPlayer shouldEqual 0
+      }
+    }
 
-  test("Updating a player's matrix") {
-    val playerTable = new PlayerTable()
-    val newMatrix = new PlayerMatrix(4, 4)
-    val updatedTable = playerTable.updateMatrix(0, newMatrix)
-    assert(updatedTable.Tabletop(0) == newMatrix)
-  }
+    "drawing from the stack" should {
+      "open the top card" in {
+        val playerTable = new PlayerTable()
+        val updatedTable = playerTable.drawFromStack()
+        updatedTable.cardstack.stackCard.opened shouldBe true
+      }
+    }
 
-  test("Updating the cardstack") {
-    //card from stack put on trash
-    val playerTable = new PlayerTable()
-    val handCard = playerTable.cardstack.stackCard
-    val updatedTable = playerTable.updateCardstack(handCard, true)
-    assert(updatedTable.cardstack.trashCard.value == handCard.value)
+    "updating a player's matrix" should {
+      "update the corresponding position in Tabletop" in {
+        val playerTable = new PlayerTable()
+        val newMatrix = new PlayerMatrix(4, 4)
+        val updatedTable = playerTable.updateMatrix(0, newMatrix)
+        updatedTable.Tabletop(0) shouldEqual newMatrix
+      }
+    }
 
-    //card from matrix
-    val matrixHandCard = Card(10, opened = true)
-    val updatedTable2 = updatedTable.updateCardstack(matrixHandCard, false)
-    assert(updatedTable2.cardstack.trashCard == matrixHandCard)
+    "updating the cardstack" should {
+      "move the card from stack to trash if specified" in {
+        val playerTable = new PlayerTable()
+        val handCard = playerTable.cardstack.stackCard
+        val updatedTable = playerTable.updateCardstack(handCard, true)
+        updatedTable.cardstack.trashCard.value shouldBe handCard.value
+
+        val matrixHandCard = Card(10, opened = true)
+        val updatedTable2 = updatedTable.updateCardstack(matrixHandCard, false)
+        updatedTable2.cardstack.trashCard shouldBe matrixHandCard
+      }
+    }
+
+    "padding values for cards" should {
+      "pad the values correctly" in {
+        val playerTable = new PlayerTable()
+        val card = new Card(10, opened = true)
+        playerTable.padValue(card) shouldBe "│ 10 "
+        val card2 = new Card(1, opened = true)
+        playerTable.padValue(card2) shouldBe "│ 01 "
+        val card3 = new Card(-2, opened = true)
+        playerTable.padValue(card3) shouldBe "│ -2 "
+        val card4 = new Card(1, opened = false)
+        playerTable.padValue(card4) shouldBe "│ xx "
+      }
+    }
+
+    "getting Cardstack String" should {
+      "return correct string representation" in {
+        val playerTable = new PlayerTable()
+        val str = playerTable.getCardStackString()
+        val shouldString =
+          s"""\nCurrent card stack:
+             |  ┌────┐  ┌────┐
+             | ┌${playerTable.padValue(playerTable.cardstack.stackCard)}│  ${playerTable.padValue(playerTable.cardstack.trashCard)}│
+             | │└───┬┘  └────┘
+             | └────┘""".stripMargin
+        str shouldBe shouldString
+      }
+    }
   }
 }
