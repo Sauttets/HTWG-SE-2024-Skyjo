@@ -6,6 +6,7 @@ import controller.TableController
 
 import scala.io.StdIn.readLine
 import util.Observer
+import java.lang.ModuleLayer.Controller
 
 class TUI(controller: TableController) extends Observer:
   controller.add(this)
@@ -13,14 +14,29 @@ class TUI(controller: TableController) extends Observer:
     println("\u001B[34m"+"Welcome to Skyjo\u001B[0m")
     println(controller)
     getInputAndPrintLoop()
-
+    lastRound()
 
   override def update = {
     println(controller)
   }
 
   def getInputAndPrintLoop(): Unit =
-    print(controller.table.getCurrenPlayerString()+"\nEnter your command: (q)uit, (stack), (trash) ")
+    inputAndPrint()
+    if(controller.gameEnd())
+      println(controller.table.getPlayerString(controller.table.currentPlayer-1)+ " ENDED THE GAME: one more round to go")
+      return
+    getInputAndPrintLoop()
+
+  def lastRound():Unit=
+    for (x<-1 to controller.table.playerCount-1)
+      inputAndPrint()
+    val scores=controller.table.getScores()
+    scores.foreach((score,player)=>println(controller.table.getPlayerString(player)+" : "+score))
+    val winner=scores.minBy((score,player)=>score)
+    println(controller.table.getPlayerString(winner(0))+" WON WITH ONLY "+winner(1)+" POINTS")
+
+  def inputAndPrint():Unit=
+    println(controller.table.getCurrenPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash) ")
     drawInput(readLine) match
       case None       =>
       case Some(draw) => {
@@ -32,12 +48,9 @@ class TUI(controller: TableController) extends Observer:
           case None       =>
           case Some(move) => controller.doMove(move)
       }
-    if(controller.gameEnd())
-      println(controller.table.getCurrenPlayerString()+ " ENDED THE GAME")
-    getInputAndPrintLoop()
     
 
-def drawInput(input: String): Option[Boolean] =
+  def drawInput(input: String): Option[Boolean] =
     input.toUpperCase().replaceAll("\\s+","") match
       case "Q" => sys.exit(0)
       case "STACK" => Some(true)
@@ -45,7 +58,7 @@ def drawInput(input: String): Option[Boolean] =
       case "S" => Some(true)
       case "T" => Some(false)
 
-def moveInput(input: String, draw: Boolean): Option[Move] =
+  def moveInput(input: String, draw: Boolean): Option[Move] =
     val Input = (" "+input).toUpperCase().replaceAll("\\s+"," ") 
      Input.replaceAll(" ","") match
       case "Q" => sys.exit(0)

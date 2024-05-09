@@ -32,4 +32,7 @@ case class PlayerMatrix(rows: Vector[Vector[Card]]):
   def checkFinished()={
     rows.forall(_.forall(_.opened))
   }
-    
+  
+  def getScore()={
+    rows.map(row=>row.map(card=>card.value).sum).sum
+  }
