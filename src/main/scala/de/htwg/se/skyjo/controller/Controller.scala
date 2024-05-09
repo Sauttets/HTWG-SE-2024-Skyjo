@@ -27,9 +27,8 @@ case class TableController(var table: PlayerTable) extends Observable:
         table = table.copy(currentPlayer = (table.currentPlayer + 1) % table.playerCount)
         notifyObservers
     }
-    def gameEnd():Boolean={
-        table.Tabletop.foreach(x=>if(x.checkFinished()) return true)
-        return false
+    def gameEnd(): Boolean = {
+        table.Tabletop.exists(_.checkFinished())
     }
     override def toString = table.getTableString() 
     /* 

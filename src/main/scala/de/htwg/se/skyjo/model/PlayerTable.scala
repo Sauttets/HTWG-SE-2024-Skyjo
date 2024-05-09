@@ -62,8 +62,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playe
         copy(Tabletop.updated(player, playerMatrix), cardstack, playerCount, currentPlayer)
     }
 
-    def updateCardstack(card: Card, stackCard: Boolean) = {
-        if stackCard then copy(Tabletop, cardstack.discard(card).newStackCard(), playerCount, currentPlayer)
+    def updateCardstack(card: Card, drwawFromStack: Boolean) = {
+        if drwawFromStack then copy(Tabletop, cardstack.discard(card).newStackCard(), playerCount, currentPlayer)
         else copy(Tabletop, cardstack.discard(card), playerCount, currentPlayer)
     }
-
