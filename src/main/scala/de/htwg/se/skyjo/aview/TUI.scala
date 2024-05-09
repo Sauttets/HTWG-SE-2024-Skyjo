@@ -30,8 +30,8 @@ class TUI(controller: TableController) extends Observer:
           case None       =>
           case Some(move) => controller.doMove(move)
       }
-    if(controller.gameEnd())
-      println("PLAYER "+(controller.table.currentPlayer+1)+ " ENDED THE GAME")
+    if(controller.checkGameEnd())
+      println(controller.table.getCurrenPlayerString()+ " ENDED THE GAME")
     getInputAndPrintLoop()
     
 
