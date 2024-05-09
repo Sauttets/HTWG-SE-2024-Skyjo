@@ -1,5 +1,3 @@
-import de.htwg.se.skyjo._
-import org.scalatest._
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.skyjo.model.Card
 import de.htwg.se.skyjo.model.Cardstack

@@ -22,6 +22,12 @@ class TableControllerTest extends AnyWordSpec with Matchers {
         controller.doMove(move)
         controller.table should not be oldTable
       }
+      "do a move with drawn from trash" in {
+        val move = new Move(false, false, 2, 1)
+        val oldTable = controller.table
+        controller.doMove(move)
+        controller.table should not be oldTable
+      }
       "do a move with swap card" in {
         val move = new Move(true, true, 1, 2)
         val oldTable = controller.table

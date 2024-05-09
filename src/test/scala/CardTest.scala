@@ -6,7 +6,7 @@ import org.scalatest.matchers.should._
 
 class CardTest extends AnyWordSpec with Matchers{ 
   "A Card" when{
-    "when created should have initial state" should{
+    "created should have initial state" should{
       "without parameters" in{
         val c=new Card
         c.value should equal(5+-7)
