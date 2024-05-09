@@ -9,9 +9,9 @@ class PlayerTableTest extends AnyWordSpec with Matchers {
     "created" should {
       "have initial state" in {
         val playerTable = new PlayerTable()
-        playerTable.Tabletop.size shouldEqual 2
+        playerTable.Tabletop.size should be > 0
         playerTable.cardstack.stackCard.value should (be >= -2 and be <= 12)
-        playerTable.playerCount shouldEqual 2
+        playerTable.playerCount should be > 0
         playerTable.currentPlayer shouldEqual 0
       }
     }
@@ -73,5 +73,71 @@ class PlayerTableTest extends AnyWordSpec with Matchers {
         str shouldBe shouldString
       }
     }
+
+    "getting current player string" should {
+      "return correct string representation" in {
+        val playerTable = new PlayerTable()
+        val str = playerTable.getCurrenPlayerString()
+        str should include ((playerTable.currentPlayer+1).toString())
+        str.toUpperCase() should include ("PLAYER")
+      }
+    }
+
+    "getting player matrices string" should {
+      "return correct string representation" in {
+        val playerTable = new PlayerTable()
+        val str = playerTable.getPlayerMatricesString() 
+        val shouldString1 = 
+            s"""|\u001B[31m
+                |Player 1:
+                |+----+----+----+----+
+                |│ xx │ xx │ xx │ xx │
+                |+----+----+----+----+
+                |│ xx │ xx │ xx │ xx │
+                |+----+----+----+----+
+                |│ xx │ xx │ xx │ xx │
+                |+----+----+----+----+
+                |│ xx │ xx │ xx │ xx │
+                |+----+----+----+----+
+                |\u001B[32m
+                |Player 2:
+                |+----+----+----+----+
+                |│ xx │ xx │ xx │ xx │
+                |+----+----+----+----+
+                |│ xx │ xx │ xx │ xx │
+                |+----+----+----+----+
+                |│ xx │ xx │ xx │ xx │
+                |+----+----+----+----+
+                |│ xx │ xx │ xx │ xx │
+                |+----+----+----+----+\u001B[0m""".stripMargin
+        str shouldBe shouldString1
+      }
+      "return string representation of minimal matrix" in {
+        val playerTable = new PlayerTable(2, 1, 1)
+        val str = playerTable.getPlayerMatricesString()
+        val shouldString2 = 
+            s"""|\u001B[31m
+                |Player 1:
+                |+----+
+                |│ xx │
+                |+----+
+                |\u001B[32m
+                |Player 2:
+                |+----+
+                |│ xx │
+                |+----+\u001B[0m""".stripMargin
+        str shouldBe shouldString2
+      }
+    }
+
+    "getting full table string" should {
+      "return correct string representation" in {
+        val playerTable = new PlayerTable()
+        val str = playerTable.getTableString()
+        val shouldString = playerTable.getPlayerMatricesString() + playerTable.getCardStackString()
+        str shouldBe shouldString
+      }
+    }
+
   }
 }

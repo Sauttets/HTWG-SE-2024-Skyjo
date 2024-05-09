@@ -31,26 +31,3 @@ case class TableController(var table: PlayerTable) extends Observable:
         table.Tabletop.exists(_.checkFinished())
     }
     override def toString = table.getTableString() 
-    /* 
-    
-        takeReplaceAndThrow
-            takeCardFromFresh || takeCardFromTrash
-            replaceCard
-            throwCard
-            setNextPlayer
-
-        takeThrowAndTurn
-            takeCardFromFresh
-            throwCard
-            turnCard
-            setNextPlayer
-
-        checkremoveColumn
-            checkColumn
-                removeColumn    
-            
-        calculateWinner
-            checkFinished
-            getPlayerPoints
-            
-     */
