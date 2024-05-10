@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/Sauttets/HTWG-SE-2024-Skyjo/badge.svg?branch=main)](https://coveralls.io/github/Sauttets/HTWG-SE-2024-Skyjo?branch=main)
+
 ## sbt project compiled with Scala 3
 
 ### Usage
