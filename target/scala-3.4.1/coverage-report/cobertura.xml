@@ -1,0 +1,847 @@
+<?xml version="1.0"?>
+<!DOCTYPE coverage SYSTEM "https://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage 
+line-rate="0.75" lines-valid="259" lines-covered="194" branches-valid="31" branches-covered="21" branch-rate="0.68" complexity="0" version="1.0" timestamp="1715325746868">
+    <sources>
+        <source>--source</source>
+        <source>/Users/mirkoway/Documents/HTWG/semester5/SE/Sky-jo/src/main/scala</source>
+    </sources>
+    <packages>
+        <package name="&lt;empty&gt;" line-rate="0.00" branch-rate="0.00" complexity="0">
+            <classes>
+                <class 
+                name="&lt;empty&gt;.Skyjo$package" filename="de/htwg/se/skyjo/Skyjo.scala" line-rate="0.00" branch-rate="0.00" complexity="0">
+                    <methods>
+                        <method name="&lt;empty&gt;/Skyjo$package/main" signature="()V" line-rate="0.00" branch-rate="0.00" complexity="0">
+                            <lines>
+                                <line number="7" hits="0" branch="false"/>
+                                <line number="9" hits="0" branch="false"/>
+                                <line number="8" hits="0" branch="false"/>
+                                <line number="6" hits="0" branch="false"/>
+                                <line number="7" hits="0" branch="false"/>
+                                <line number="7" hits="0" branch="false"/>
+                                <line number="10" hits="0" branch="false"/>
+                                <line number="7" hits="0" branch="false"/>
+                            </lines>
+                        </method>
+                    </methods>
+                    <lines>
+                        <line number="7" hits="0" branch="false"/>
+                        <line number="9" hits="0" branch="false"/>
+                        <line number="8" hits="0" branch="false"/>
+                        <line number="6" hits="0" branch="false"/>
+                        <line number="7" hits="0" branch="false"/>
+                        <line number="7" hits="0" branch="false"/>
+                        <line number="10" hits="0" branch="false"/>
+                        <line number="7" hits="0" branch="false"/>
+                    </lines>
+</class>
+            </classes>
+        </package>
+        <package name="de.htwg.se.skyjo.aview" line-rate="0.35" branch-rate="0.50" complexity="0">
+            <classes>
+                <class 
+                name="de.htwg.se.skyjo.aview.TUI" filename="de/htwg/se/skyjo/aview/TUI.scala" line-rate="0.35" branch-rate="0.50" complexity="0">
+                    <methods>
+                        <method 
+                        name="de.htwg.se.skyjo.aview/TUI/inputAndPrint" signature="()V" line-rate="0.00" branch-rate="0.00" complexity="0">
+                            <lines>
+                                <line number="41" hits="0" branch="true"/>
+                                <line number="48" hits="0" branch="true"/>
+                                <line number="45" hits="0" branch="false"/>
+                                <line number="42" hits="0" branch="true"/>
+                                <line number="46" hits="0" branch="false"/>
+                                <line number="39" hits="0" branch="false"/>
+                                <line number="39" hits="0" branch="false"/>
+                                <line number="45" hits="0" branch="true"/>
+                                <line number="47" hits="0" branch="false"/>
+                                <line number="40" hits="0" branch="false"/>
+                                <line number="45" hits="0" branch="false"/>
+                                <line number="49" hits="0" branch="true"/>
+                                <line number="49" hits="0" branch="false"/>
+                                <line number="38" hits="0" branch="false"/>
+                                <line number="39" hits="0" branch="false"/>
+                                <line number="44" hits="0" branch="true"/>
+                                <line number="40" hits="0" branch="false"/>
+                                <line number="47" hits="0" branch="false"/>
+                                <line number="44" hits="0" branch="false"/>
+                            </lines>
+</method>
+                        <method name="de.htwg.se.skyjo.aview/TUI/run" signature="()V" line-rate="0.00" branch-rate="0.00" complexity="0">
+                            <lines>
+                                <line number="15" hits="0" branch="false"/>
+                                <line number="13" hits="0" branch="false"/>
+                                <line number="17" hits="0" branch="false"/>
+                                <line number="14" hits="0" branch="false"/>
+                                <line number="14" hits="0" branch="false"/>
+                                <line number="16" hits="0" branch="false"/>
+                            </lines>
+                        </method>
+                        <method name="de.htwg.se.skyjo.aview/TUI/moveInput" signature="()V" line-rate="0.91" branch-rate="0.86" complexity="0">
+                            <lines>
+                                <line number="74" hits="1" branch="false"/>
+                                <line number="70" hits="1" branch="true"/>
+                                <line number="61" hits="1" branch="false"/>
+                                <line number="64" hits="0" branch="false"/>
+                                <line number="73" hits="1" branch="false"/>
+                                <line number="73" hits="1" branch="false"/>
+                                <line number="67" hits="1" branch="false"/>
+                                <line number="62" hits="1" branch="false"/>
+                                <line number="69" hits="1" branch="true"/>
+                                <line number="74" hits="1" branch="false"/>
+                                <line number="62" hits="1" branch="false"/>
+                                <line number="72" hits="1" branch="true"/>
+                                <line number="65" hits="1" branch="true"/>
+                                <line number="63" hits="1" branch="false"/>
+                                <line number="67" hits="1" branch="false"/>
+                                <line number="73" hits="1" branch="false"/>
+                                <line number="73" hits="1" branch="false"/>
+                                <line number="64" hits="0" branch="true"/>
+                                <line number="74" hits="1" branch="false"/>
+                                <line number="68" hits="1" branch="true"/>
+                                <line number="71" hits="1" branch="true"/>
+                                <line number="74" hits="1" branch="false"/>
+                                <line number="62" hits="1" branch="false"/>
+                            </lines>
+                        </method>
+                        <method 
+                        name="de.htwg.se.skyjo.aview/TUI/&lt;init&gt;" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="12" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method name="de.htwg.se.skyjo.aview/TUI/drawInput" signature="()V" line-rate="0.78" branch-rate="0.80" complexity="0">
+                            <lines>
+                                <line number="56" hits="1" branch="true"/>
+                                <line number="59" hits="1" branch="true"/>
+                                <line number="54" hits="1" branch="false"/>
+                                <line number="54" hits="1" branch="false"/>
+                                <line number="55" hits="0" branch="true"/>
+                                <line number="58" hits="1" branch="true"/>
+                                <line number="57" hits="1" branch="true"/>
+                                <line number="53" hits="1" branch="false"/>
+                                <line number="55" hits="0" branch="false"/>
+                            </lines>
+                        </method>
+                        <method name="de.htwg.se.skyjo.aview/TUI/update" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="19" hits="1" branch="false"/>
+                                <line number="20" hits="1" branch="false"/>
+                            </lines>
+                        </method>
+                        <method name="de.htwg.se.skyjo.aview/TUI/$anonfun" signature="()V" line-rate="0.00" branch-rate="0.00" complexity="0">
+                            <lines>
+                                <line number="34" hits="0" branch="false"/>
+                                <line number="34" hits="0" branch="false"/>
+                                <line number="32" hits="0" branch="false"/>
+                                <line number="34" hits="0" branch="false"/>
+                                <line number="34" hits="0" branch="false"/>
+                            </lines>
+                        </method>
+                        <method name="de.htwg.se.skyjo.aview/TUI/lastRound" signature="()V" line-rate="0.00" branch-rate="0.00" complexity="0">
+                            <lines>
+                                <line number="36" hits="0" branch="false"/>
+                                <line number="30" hits="0" branch="false"/>
+                                <line number="31" hits="0" branch="false"/>
+                                <line number="36" hits="0" branch="false"/>
+                                <line number="36" hits="0" branch="false"/>
+                                <line number="34" hits="0" branch="false"/>
+                                <line number="36" hits="0" branch="false"/>
+                                <line number="36" hits="0" branch="false"/>
+                                <line number="31" hits="0" branch="false"/>
+                                <line number="31" hits="0" branch="false"/>
+                                <line number="35" hits="0" branch="false"/>
+                                <line number="33" hits="0" branch="false"/>
+                                <line number="36" hits="0" branch="false"/>
+                                <line number="36" hits="0" branch="false"/>
+                            </lines>
+                        </method>
+                        <method 
+                        name="de.htwg.se.skyjo.aview/TUI/getInputAndPrintLoop" signature="()V" line-rate="0.00" branch-rate="0.00" complexity="0">
+                            <lines>
+                                <line number="27" hits="0" branch="true"/>
+                                <line number="24" hits="0" branch="false"/>
+                                <line number="26" hits="0" branch="false"/>
+                                <line number="26" hits="0" branch="true"/>
+                                <line number="23" hits="0" branch="false"/>
+                                <line number="26" hits="0" branch="false"/>
+                                <line number="25" hits="0" branch="false"/>
+                                <line number="26" hits="0" branch="false"/>
+                                <line number="28" hits="0" branch="false"/>
+                            </lines>
+</method>
+                    </methods>
+                    <lines>
+                        <line number="74" hits="1" branch="false"/>
+                        <line number="70" hits="1" branch="true"/>
+                        <line number="61" hits="1" branch="false"/>
+                        <line number="27" hits="0" branch="true"/>
+                        <line number="64" hits="0" branch="false"/>
+                        <line number="73" hits="1" branch="false"/>
+                        <line number="41" hits="0" branch="true"/>
+                        <line number="48" hits="0" branch="true"/>
+                        <line number="56" hits="1" branch="true"/>
+                        <line number="34" hits="0" branch="false"/>
+                        <line number="36" hits="0" branch="false"/>
+                        <line number="45" hits="0" branch="false"/>
+                        <line number="42" hits="0" branch="true"/>
+                        <line number="34" hits="0" branch="false"/>
+                        <line number="12" hits="1" branch="false"/>
+                        <line number="30" hits="0" branch="false"/>
+                        <line number="24" hits="0" branch="false"/>
+                        <line number="31" hits="0" branch="false"/>
+                        <line number="73" hits="1" branch="false"/>
+                        <line number="67" hits="1" branch="false"/>
+                        <line number="59" hits="1" branch="true"/>
+                        <line number="15" hits="0" branch="false"/>
+                        <line number="62" hits="1" branch="false"/>
+                        <line number="46" hits="0" branch="false"/>
+                        <line number="32" hits="0" branch="false"/>
+                        <line number="36" hits="0" branch="false"/>
+                        <line number="39" hits="0" branch="false"/>
+                        <line number="26" hits="0" branch="false"/>
+                        <line number="54" hits="1" branch="false"/>
+                        <line number="13" hits="0" branch="false"/>
+                        <line number="39" hits="0" branch="false"/>
+                        <line number="69" hits="1" branch="true"/>
+                        <line number="74" hits="1" branch="false"/>
+                        <line number="54" hits="1" branch="false"/>
+                        <line number="45" hits="0" branch="true"/>
+                        <line number="62" hits="1" branch="false"/>
+                        <line number="72" hits="1" branch="true"/>
+                        <line number="65" hits="1" branch="true"/>
+                        <line number="55" hits="0" branch="true"/>
+                        <line number="47" hits="0" branch="false"/>
+                        <line number="36" hits="0" branch="false"/>
+                        <line number="40" hits="0" branch="false"/>
+                        <line number="17" hits="0" branch="false"/>
+                        <line number="26" hits="0" branch="true"/>
+                        <line number="34" hits="0" branch="false"/>
+                        <line number="63" hits="1" branch="false"/>
+                        <line number="19" hits="1" branch="false"/>
+                        <line number="67" hits="1" branch="false"/>
+                        <line number="73" hits="1" branch="false"/>
+                        <line number="58" hits="1" branch="true"/>
+                        <line number="45" hits="0" branch="false"/>
+                        <line number="36" hits="0" branch="false"/>
+                        <line number="23" hits="0" branch="false"/>
+                        <line number="34" hits="0" branch="false"/>
+                        <line number="49" hits="0" branch="true"/>
+                        <line number="14" hits="0" branch="false"/>
+                        <line number="36" hits="0" branch="false"/>
+                        <line number="26" hits="0" branch="false"/>
+                        <line number="31" hits="0" branch="false"/>
+                        <line number="49" hits="0" branch="false"/>
+                        <line number="73" hits="1" branch="false"/>
+                        <line number="64" hits="0" branch="true"/>
+                        <line number="57" hits="1" branch="true"/>
+                        <line number="74" hits="1" branch="false"/>
+                        <line number="38" hits="0" branch="false"/>
+                        <line number="39" hits="0" branch="false"/>
+                        <line number="44" hits="0" branch="true"/>
+                        <line number="53" hits="1" branch="false"/>
+                        <line number="68" hits="1" branch="true"/>
+                        <line number="31" hits="0" branch="false"/>
+                        <line number="35" hits="0" branch="false"/>
+                        <line number="25" hits="0" branch="false"/>
+                        <line number="14" hits="0" branch="false"/>
+                        <line number="40" hits="0" branch="false"/>
+                        <line number="47" hits="0" branch="false"/>
+                        <line number="26" hits="0" branch="false"/>
+                        <line number="71" hits="1" branch="true"/>
+                        <line number="16" hits="0" branch="false"/>
+                        <line number="74" hits="1" branch="false"/>
+                        <line number="62" hits="1" branch="false"/>
+                        <line number="33" hits="0" branch="false"/>
+                        <line number="36" hits="0" branch="false"/>
+                        <line number="55" hits="0" branch="false"/>
+                        <line number="20" hits="1" branch="false"/>
+                        <line number="36" hits="0" branch="false"/>
+                        <line number="44" hits="0" branch="false"/>
+                        <line number="28" hits="0" branch="false"/>
+                        <line number="34" hits="0" branch="false"/>
+                    </lines>
+</class>
+            </classes>
+        </package>
+        <package name="de.htwg.se.skyjo.controller" line-rate="1.00" branch-rate="1.00" complexity="0">
+            <classes>
+                <class 
+                name="de.htwg.se.skyjo.controller.TableController" filename="de/htwg/se/skyjo/controller/Controller.scala" line-rate="1.00" branch-rate="1.00" complexity="0">
+                    <methods>
+                        <method 
+                        name="de.htwg.se.skyjo.controller/TableController/doMove" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="21" hits="1" branch="false"/>
+                                <line number="25" hits="1" branch="false"/>
+                                <line number="22" hits="1" branch="false"/>
+                                <line number="28" hits="1" branch="false"/>
+                                <line number="21" hits="1" branch="true"/>
+                                <line number="23" hits="1" branch="false"/>
+                                <line number="19" hits="1" branch="true"/>
+                                <line number="25" hits="1" branch="false"/>
+                                <line number="22" hits="1" branch="false"/>
+                                <line number="25" hits="1" branch="true"/>
+                                <line number="23" hits="1" branch="false"/>
+                                <line number="18" hits="1" branch="false"/>
+                                <line number="19" hits="1" branch="true"/>
+                                <line number="25" hits="1" branch="false"/>
+                                <line number="21" hits="1" branch="false"/>
+                                <line number="26" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.controller/TableController/toString" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="33" hits="1" branch="false"/>
+                                <line number="33" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.controller/TableController/$anonfun" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="31" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.controller/TableController/drawFromStack" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="15" hits="1" branch="false"/>
+                                <line number="14" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.controller/TableController/gameEnd" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="31" hits="1" branch="false"/>
+                                <line number="30" hits="1" branch="false"/>
+                            </lines>
+</method>
+                    </methods>
+                    <lines>
+                        <line number="21" hits="1" branch="false"/>
+                        <line number="25" hits="1" branch="false"/>
+                        <line number="33" hits="1" branch="false"/>
+                        <line number="22" hits="1" branch="false"/>
+                        <line number="28" hits="1" branch="false"/>
+                        <line number="31" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="21" hits="1" branch="true"/>
+                        <line number="23" hits="1" branch="false"/>
+                        <line number="31" hits="1" branch="false"/>
+                        <line number="33" hits="1" branch="false"/>
+                        <line number="19" hits="1" branch="true"/>
+                        <line number="25" hits="1" branch="false"/>
+                        <line number="22" hits="1" branch="false"/>
+                        <line number="25" hits="1" branch="true"/>
+                        <line number="15" hits="1" branch="false"/>
+                        <line number="14" hits="1" branch="false"/>
+                        <line number="23" hits="1" branch="false"/>
+                        <line number="18" hits="1" branch="false"/>
+                        <line number="19" hits="1" branch="true"/>
+                        <line number="25" hits="1" branch="false"/>
+                        <line number="30" hits="1" branch="false"/>
+                        <line number="21" hits="1" branch="false"/>
+                        <line number="26" hits="1" branch="false"/>
+                    </lines>
+</class>
+            </classes>
+        </package>
+        <package name="de.htwg.se.skyjo.model" line-rate="1.00" branch-rate="1.00" complexity="0">
+            <classes>
+                <class 
+                name="de.htwg.se.skyjo.model.PlayerMatrix" filename="de/htwg/se/skyjo/model/PlayerMatrix.scala" line-rate="1.00" branch-rate="1.00" complexity="0">
+                    <methods>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerMatrix/getRow" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="18" hits="1" branch="false"/>
+                                <line number="18" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerMatrix/getScore" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="36" hits="1" branch="false"/>
+                                <line number="37" hits="1" branch="false"/>
+                                <line number="37" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerMatrix/flipCard" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="22" hits="1" branch="false"/>
+                                <line number="23" hits="1" branch="false"/>
+                                <line number="22" hits="1" branch="false"/>
+                                <line number="23" hits="1" branch="false"/>
+                                <line number="20" hits="1" branch="false"/>
+                                <line number="23" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerMatrix/checkFinished" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="33" hits="1" branch="false"/>
+                                <line number="32" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerMatrix/getCard" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="17" hits="1" branch="false"/>
+                                <line number="17" hits="1" branch="false"/>
+                                <line number="17" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerMatrix/&lt;init&gt;" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="8" hits="1" branch="false"/>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="5" hits="1" branch="false"/>
+                                <line number="16" hits="1" branch="false"/>
+                                <line number="8" hits="1" branch="false"/>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="8" hits="1" branch="false"/>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="7" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerMatrix/$anonfun" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="37" hits="1" branch="false"/>
+                                <line number="9" hits="1" branch="false"/>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="10" hits="1" branch="false"/>
+                                <line number="33" hits="1" branch="false"/>
+                                <line number="9" hits="1" branch="false"/>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="37" hits="1" branch="false"/>
+                                <line number="9" hits="1" branch="false"/>
+                                <line number="10" hits="1" branch="false"/>
+                                <line number="10" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerMatrix/changeCard" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="29" hits="1" branch="false"/>
+                                <line number="27" hits="1" branch="false"/>
+                                <line number="29" hits="1" branch="false"/>
+                                <line number="28" hits="1" branch="false"/>
+                                <line number="29" hits="1" branch="false"/>
+                            </lines>
+</method>
+                    </methods>
+                    <lines>
+                        <line number="8" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="37" hits="1" branch="false"/>
+                        <line number="18" hits="1" branch="false"/>
+                        <line number="29" hits="1" branch="false"/>
+                        <line number="22" hits="1" branch="false"/>
+                        <line number="27" hits="1" branch="false"/>
+                        <line number="9" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="5" hits="1" branch="false"/>
+                        <line number="36" hits="1" branch="false"/>
+                        <line number="29" hits="1" branch="false"/>
+                        <line number="10" hits="1" branch="false"/>
+                        <line number="16" hits="1" branch="false"/>
+                        <line number="23" hits="1" branch="false"/>
+                        <line number="33" hits="1" branch="false"/>
+                        <line number="28" hits="1" branch="false"/>
+                        <line number="37" hits="1" branch="false"/>
+                        <line number="8" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="17" hits="1" branch="false"/>
+                        <line number="9" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="22" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="37" hits="1" branch="false"/>
+                        <line number="18" hits="1" branch="false"/>
+                        <line number="8" hits="1" branch="false"/>
+                        <line number="29" hits="1" branch="false"/>
+                        <line number="33" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="23" hits="1" branch="false"/>
+                        <line number="9" hits="1" branch="false"/>
+                        <line number="37" hits="1" branch="false"/>
+                        <line number="10" hits="1" branch="false"/>
+                        <line number="17" hits="1" branch="false"/>
+                        <line number="20" hits="1" branch="false"/>
+                        <line number="7" hits="1" branch="false"/>
+                        <line number="17" hits="1" branch="false"/>
+                        <line number="10" hits="1" branch="false"/>
+                        <line number="32" hits="1" branch="false"/>
+                        <line number="23" hits="1" branch="false"/>
+                    </lines>
+</class>
+                <class 
+                name="de.htwg.se.skyjo.model.PlayerTable" filename="de/htwg/se/skyjo/model/PlayerTable.scala" line-rate="1.00" branch-rate="1.00" complexity="0">
+                    <methods>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/getScores" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="65" hits="1" branch="false"/>
+                                <line number="65" hits="1" branch="false"/>
+                                <line number="64" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/getPlayerMatricesString" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="34" hits="1" branch="false"/>
+                                <line number="45" hits="1" branch="false"/>
+                                <line number="36" hits="1" branch="false"/>
+                                <line number="46" hits="1" branch="false"/>
+                                <line number="35" hits="1" branch="false"/>
+                                <line number="36" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/&lt;init&gt;" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="4" hits="1" branch="false"/>
+                                <line number="5" hits="1" branch="false"/>
+                                <line number="7" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/getPlayerString" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="53" hits="1" branch="false"/>
+                                <line number="53" hits="1" branch="false"/>
+                                <line number="51" hits="1" branch="false"/>
+                                <line number="52" hits="1" branch="false"/>
+                                <line number="53" hits="1" branch="false"/>
+                                <line number="53" hits="1" branch="false"/>
+                                <line number="53" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/getCurrenPlayerString" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="49" hits="1" branch="false"/>
+                                <line number="49" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/$lessinit$greater$default$1" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="4" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/padValue" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="12" hits="1" branch="true"/>
+                                <line number="14" hits="1" branch="true"/>
+                                <line number="15" hits="1" branch="false"/>
+                                <line number="18" hits="1" branch="true"/>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="13" hits="1" branch="false"/>
+                                <line number="15" hits="1" branch="false"/>
+                                <line number="11" hits="1" branch="true"/>
+                                <line number="10" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/getTableString" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="57" hits="1" branch="false"/>
+                                <line number="57" hits="1" branch="false"/>
+                                <line number="57" hits="1" branch="false"/>
+                                <line number="56" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/$anonfun" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="36" hits="1" branch="true"/>
+                                <line number="37" hits="1" branch="false"/>
+                                <line number="41" hits="1" branch="false"/>
+                                <line number="41" hits="1" branch="false"/>
+                                <line number="38" hits="1" branch="false"/>
+                                <line number="39" hits="1" branch="false"/>
+                                <line number="43" hits="1" branch="false"/>
+                                <line number="6" hits="1" branch="false"/>
+                                <line number="37" hits="1" branch="false"/>
+                                <line number="40" hits="1" branch="false"/>
+                                <line number="44" hits="1" branch="false"/>
+                                <line number="44" hits="1" branch="false"/>
+                                <line number="43" hits="1" branch="false"/>
+                                <line number="43" hits="1" branch="false"/>
+                                <line number="65" hits="1" branch="false"/>
+                                <line number="38" hits="1" branch="false"/>
+                                <line number="43" hits="1" branch="false"/>
+                                <line number="39" hits="1" branch="false"/>
+                                <line number="39" hits="1" branch="false"/>
+                                <line number="42" hits="1" branch="false"/>
+                                <line number="43" hits="1" branch="false"/>
+                                <line number="39" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/updateCardstack" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="74" hits="1" branch="false"/>
+                                <line number="73" hits="1" branch="true"/>
+                                <line number="72" hits="1" branch="false"/>
+                                <line number="73" hits="1" branch="false"/>
+                                <line number="74" hits="1" branch="true"/>
+                                <line number="73" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/$lessinit$greater$default$2" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="4" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/getCardStackString" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="27" hits="1" branch="false"/>
+                                <line number="23" hits="1" branch="false"/>
+                                <line number="29" hits="1" branch="false"/>
+                                <line number="25" hits="1" branch="false"/>
+                                <line number="25" hits="1" branch="false"/>
+                                <line number="27" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/$lessinit$greater$default$3" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="4" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/updateMatrix" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="68" hits="1" branch="false"/>
+                                <line number="69" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/PlayerTable/drawFromStack" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="60" hits="1" branch="false"/>
+                                <line number="61" hits="1" branch="false"/>
+                            </lines>
+</method>
+                    </methods>
+                    <lines>
+                        <line number="36" hits="1" branch="true"/>
+                        <line number="53" hits="1" branch="false"/>
+                        <line number="37" hits="1" branch="false"/>
+                        <line number="41" hits="1" branch="false"/>
+                        <line number="12" hits="1" branch="true"/>
+                        <line number="27" hits="1" branch="false"/>
+                        <line number="74" hits="1" branch="false"/>
+                        <line number="65" hits="1" branch="false"/>
+                        <line number="23" hits="1" branch="false"/>
+                        <line number="4" hits="1" branch="false"/>
+                        <line number="14" hits="1" branch="true"/>
+                        <line number="73" hits="1" branch="true"/>
+                        <line number="53" hits="1" branch="false"/>
+                        <line number="60" hits="1" branch="false"/>
+                        <line number="15" hits="1" branch="false"/>
+                        <line number="29" hits="1" branch="false"/>
+                        <line number="41" hits="1" branch="false"/>
+                        <line number="72" hits="1" branch="false"/>
+                        <line number="34" hits="1" branch="false"/>
+                        <line number="51" hits="1" branch="false"/>
+                        <line number="38" hits="1" branch="false"/>
+                        <line number="65" hits="1" branch="false"/>
+                        <line number="4" hits="1" branch="false"/>
+                        <line number="52" hits="1" branch="false"/>
+                        <line number="57" hits="1" branch="false"/>
+                        <line number="39" hits="1" branch="false"/>
+                        <line number="43" hits="1" branch="false"/>
+                        <line number="6" hits="1" branch="false"/>
+                        <line number="18" hits="1" branch="true"/>
+                        <line number="45" hits="1" branch="false"/>
+                        <line number="68" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="37" hits="1" branch="false"/>
+                        <line number="40" hits="1" branch="false"/>
+                        <line number="44" hits="1" branch="false"/>
+                        <line number="25" hits="1" branch="false"/>
+                        <line number="4" hits="1" branch="false"/>
+                        <line number="69" hits="1" branch="false"/>
+                        <line number="25" hits="1" branch="false"/>
+                        <line number="53" hits="1" branch="false"/>
+                        <line number="13" hits="1" branch="false"/>
+                        <line number="44" hits="1" branch="false"/>
+                        <line number="43" hits="1" branch="false"/>
+                        <line number="36" hits="1" branch="false"/>
+                        <line number="61" hits="1" branch="false"/>
+                        <line number="73" hits="1" branch="false"/>
+                        <line number="15" hits="1" branch="false"/>
+                        <line number="53" hits="1" branch="false"/>
+                        <line number="43" hits="1" branch="false"/>
+                        <line number="46" hits="1" branch="false"/>
+                        <line number="65" hits="1" branch="false"/>
+                        <line number="74" hits="1" branch="true"/>
+                        <line number="27" hits="1" branch="false"/>
+                        <line number="38" hits="1" branch="false"/>
+                        <line number="43" hits="1" branch="false"/>
+                        <line number="11" hits="1" branch="true"/>
+                        <line number="49" hits="1" branch="false"/>
+                        <line number="5" hits="1" branch="false"/>
+                        <line number="35" hits="1" branch="false"/>
+                        <line number="39" hits="1" branch="false"/>
+                        <line number="57" hits="1" branch="false"/>
+                        <line number="57" hits="1" branch="false"/>
+                        <line number="4" hits="1" branch="false"/>
+                        <line number="49" hits="1" branch="false"/>
+                        <line number="39" hits="1" branch="false"/>
+                        <line number="42" hits="1" branch="false"/>
+                        <line number="64" hits="1" branch="false"/>
+                        <line number="7" hits="1" branch="false"/>
+                        <line number="10" hits="1" branch="false"/>
+                        <line number="43" hits="1" branch="false"/>
+                        <line number="73" hits="1" branch="false"/>
+                        <line number="53" hits="1" branch="false"/>
+                        <line number="36" hits="1" branch="false"/>
+                        <line number="56" hits="1" branch="false"/>
+                        <line number="39" hits="1" branch="false"/>
+                    </lines>
+</class>
+                <class 
+                name="de.htwg.se.skyjo.model.Cardstack" filename="de/htwg/se/skyjo/model/Cardstack.scala" line-rate="1.00" branch-rate="1.00" complexity="0">
+                    <methods>
+                        <method 
+                        name="de.htwg.se.skyjo.model/Cardstack/&lt;init&gt;" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="6" hits="1" branch="false"/>
+                                <line number="6" hits="1" branch="false"/>
+                                <line number="6" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/Cardstack/drawFromTrash" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="10" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/Cardstack/newStackCard" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="12" hits="1" branch="false"/>
+                                <line number="12" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/Cardstack/drawFromStack" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="7" hits="1" branch="false"/>
+                                <line number="8" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/Cardstack/discard" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="11" hits="1" branch="false"/>
+                                <line number="11" hits="1" branch="false"/>
+                            </lines>
+</method>
+                    </methods>
+                    <lines>
+                        <line number="7" hits="1" branch="false"/>
+                        <line number="11" hits="1" branch="false"/>
+                        <line number="6" hits="1" branch="false"/>
+                        <line number="6" hits="1" branch="false"/>
+                        <line number="12" hits="1" branch="false"/>
+                        <line number="8" hits="1" branch="false"/>
+                        <line number="11" hits="1" branch="false"/>
+                        <line number="10" hits="1" branch="false"/>
+                        <line number="12" hits="1" branch="false"/>
+                        <line number="6" hits="1" branch="false"/>
+                    </lines>
+</class>
+                <class 
+                name="de.htwg.se.skyjo.model.Card" filename="de/htwg/se/skyjo/model/Card.scala" line-rate="1.00" branch-rate="1.00" complexity="0">
+                    <methods>
+                        <method 
+                        name="de.htwg.se.skyjo.model/Card/&lt;init&gt;" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="6" hits="1" branch="false"/>
+                                <line number="5" hits="1" branch="false"/>
+                                <line number="5" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.model/Card/$lessinit$greater$default$2" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="4" hits="1" branch="false"/>
+                            </lines>
+</method>
+                    </methods>
+                    <lines>
+                        <line number="6" hits="1" branch="false"/>
+                        <line number="5" hits="1" branch="false"/>
+                        <line number="5" hits="1" branch="false"/>
+                        <line number="4" hits="1" branch="false"/>
+                    </lines>
+</class>
+            </classes>
+        </package>
+        <package name="de.htwg.se.skyjo.util" line-rate="1.00" branch-rate="1.00" complexity="0">
+            <classes>
+                <class 
+                name="de.htwg.se.skyjo.util.Observable" filename="de/htwg/se/skyjo/util/Observer.scala" line-rate="1.00" branch-rate="1.00" complexity="0">
+                    <methods>
+                        <method 
+                        name="de.htwg.se.skyjo.util/Observable/notifyObservers" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="11" hits="1" branch="false"/>
+                                <line number="11" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.util/Observable/$anonfun" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="11" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method 
+                        name="de.htwg.se.skyjo.util/Observable/remove" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="10" hits="1" branch="false"/>
+                                <line number="10" hits="1" branch="false"/>
+                            </lines>
+</method>
+                        <method name="de.htwg.se.skyjo.util/Observable/add" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="9" hits="1" branch="false"/>
+                                <line number="9" hits="1" branch="false"/>
+                            </lines>
+                        </method>
+                        <method 
+                        name="de.htwg.se.skyjo.util/Observable/&lt;init&gt;" signature="()V" line-rate="1.00" branch-rate="1.00" complexity="0">
+                            <lines>
+                                <line number="8" hits="1" branch="false"/>
+                            </lines>
+</method>
+                    </methods>
+                    <lines>
+                        <line number="10" hits="1" branch="false"/>
+                        <line number="9" hits="1" branch="false"/>
+                        <line number="11" hits="1" branch="false"/>
+                        <line number="11" hits="1" branch="false"/>
+                        <line number="9" hits="1" branch="false"/>
+                        <line number="10" hits="1" branch="false"/>
+                        <line number="11" hits="1" branch="false"/>
+                        <line number="8" hits="1" branch="false"/>
+                    </lines>
+</class>
+            </classes>
+        </package>
+    </packages>
+</coverage>
