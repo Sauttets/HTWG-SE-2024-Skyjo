@@ -1,0 +1,102 @@
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(MoveTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(CardStackTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(CardTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(PlayerTableTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(PlayerMatrixSpec, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(TableControllerTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(TuiTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mMoveTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA Move[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when created[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should have the correct values[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mCardTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA Card[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when created should have initial state[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should without parameters[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should with Bool[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should with Int and Bool[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when default[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should not be open[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mPlayerMatrixSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA PlayerMatrix[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when created[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should have the correct size[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should and random all closed cards[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when flipCard[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should correctly flip the specified card[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when changeCard method is called[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should correctly change the specified card[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when checkFinished method is called[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return true if all cards are opened[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return false if any card is not opened[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when getScore method is called[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return sum of all cards[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when getRow method is called[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return the correct row of cards[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mCardStackTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA CardStack[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when created should have initial state[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should without parameters[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should with Cards[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when drawn from Stack[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should flip stackcard[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when drawn from trash[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should give Trashcard[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when discarding[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should discard card[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTuiTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA TUI[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when update called[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should print tableString[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should print on notified[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should not print once removed[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when drawInput called[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return true or false accordingly[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when moveInput called[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return true or false accordingly[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTableControllerTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA TableController[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when new[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should have a table[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should draw a card from stack[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should do a move with drawn from stack[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should do a move with drawn from trash[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should do a move with swap card[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should check if game ends[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return a string representation of the table[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mPlayerTableTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA PlayerTable[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when created[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should have initial state[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when drawing from the stack[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should open the top card[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when updating a player's matrix[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should update the corresponding position in Tabletop[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when updating the cardstack[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should move the card from stack to trash if specified[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when padding values for cards[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should pad the values correctly[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when getting Cardstack String[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return correct string representation[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when getting current player string[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return correct string representation[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when getting player matrices string[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return correct string representation[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return string representation of minimal matrix[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when getting full table string[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return correct string representation[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when getting Scores[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should return scores of each player[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 590 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 41[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 7, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 41, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerMatrixSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0m	MoveTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	TuiTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerTableTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	CardTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	CardStackTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	TableControllerTest[0m
