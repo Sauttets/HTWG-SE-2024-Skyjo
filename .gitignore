@@ -1,5 +1,5 @@
-.target/
-.project/
+target/
+project/
 .bloop/
 .metals/
 .idea/
