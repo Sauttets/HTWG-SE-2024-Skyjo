@@ -1,14 +1,10 @@
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(MoveTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(CardStackTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(CardTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(PlayerTableTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(PlayerMatrixSpec, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(TableControllerTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(TuiTest, org.scalatest.tools.Framework$$anon$1@8c36275, false, [SuiteSelector])[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mMoveTest:[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mA Move[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  when created[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  - should have the correct values[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(TuiTest, org.scalatest.tools.Framework$$anon$1@a205770, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(CardStackTest, org.scalatest.tools.Framework$$anon$1@a205770, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(PlayerMatrixSpec, org.scalatest.tools.Framework$$anon$1@a205770, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(TableControllerTest, org.scalatest.tools.Framework$$anon$1@a205770, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(MoveTest, org.scalatest.tools.Framework$$anon$1@a205770, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(PlayerTableTest, org.scalatest.tools.Framework$$anon$1@a205770, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(CardTest, org.scalatest.tools.Framework$$anon$1@a205770, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mCardTest:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mA Card[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  when created should have initial state[0m[0m
@@ -17,6 +13,10 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m  - should with Int and Bool[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  when default[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - should not be open[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mMoveTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA Move[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  when created[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - should have the correct values[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mPlayerMatrixSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mA PlayerMatrix[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  when created[0m[0m
@@ -87,7 +87,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m  - should return correct string representation[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  when getting Scores[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - should return scores of each player[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 590 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 398 milliseconds.[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 41[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 7, aborted 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 41, failed 0, canceled 0, ignored 0, pending 0[0m[0m

@@ -2297,6 +2297,40 @@ false
 def newStackCard
 
 134
+src/main/scala/de/htwg/se/skyjo/model/Cardstack.scala
+de.htwg.se.skyjo.model
+Cardstack
+Class
+de.htwg.se.skyjo.model.Cardstack
+getStackCard
+563
+579
+13
+getStackCard
+DefDef
+false
+0
+false
+def getStackCard
+
+135
+src/main/scala/de/htwg/se/skyjo/model/Cardstack.scala
+de.htwg.se.skyjo.model
+Cardstack
+Class
+de.htwg.se.skyjo.model.Cardstack
+getTrashCard
+596
+612
+14
+getTrashCard
+DefDef
+false
+0
+false
+def getTrashCard
+
+136
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2313,7 +2347,7 @@ false
 false
 def this
 
-135
+137
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2330,7 +2364,7 @@ false
 false
 Array.ofDim[Card](height, width)
 
-136
+138
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2347,7 +2381,7 @@ false
 false
 for (i <- 0 until height) {\n        for (j <- 0 until width) {\n          matrix(i)(j) = new Card()\n        }\n      }
 
-137
+139
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2364,7 +2398,7 @@ false
 false
 0 until height
 
-138
+140
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2381,7 +2415,7 @@ false
 false
 0
 
-139
+141
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2398,7 +2432,7 @@ false
 false
 for (j <- 0 until width) {\n          matrix(i)(j) = new Card()\n        }
 
-140
+142
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2415,7 +2449,7 @@ false
 false
 0 until width
 
-141
+143
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2432,7 +2466,7 @@ false
 false
 0
 
-142
+144
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2449,7 +2483,7 @@ false
 false
 matrix(i)(j) = new Card()
 
-143
+145
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2466,7 +2500,7 @@ false
 false
 matrix(i)
 
-144
+146
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2483,7 +2517,7 @@ false
 false
 new Card()
 
-145
+147
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2500,7 +2534,7 @@ false
 false
 matrix.map(_.toVector)
 
-146
+148
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2517,7 +2551,7 @@ false
 false
 matrix.map(_.toVector)
 
-147
+149
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2534,7 +2568,7 @@ false
 false
 matrix
 
-148
+150
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2551,7 +2585,7 @@ false
 false
 _
 
-149
+151
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2568,7 +2602,7 @@ false
 false
 _.toVector
 
-150
+152
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2585,7 +2619,7 @@ false
 false
 matrix.map(_.toVector).toVector
 
-151
+153
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2602,7 +2636,7 @@ false
 false
 rows.size
 
-152
+154
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2619,7 +2653,7 @@ false
 false
 rows(row)(col)
 
-153
+155
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2636,7 +2670,7 @@ false
 false
 rows(row)
 
-154
+156
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2653,7 +2687,7 @@ false
 false
 def getCard
 
-155
+157
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2670,7 +2704,7 @@ false
 false
 rows(row)
 
-156
+158
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2687,7 +2721,7 @@ false
 false
 def getRow
 
-157
+159
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2704,7 +2738,7 @@ false
 false
 new Card(getCard(row, col).value, true)
 
-158
+160
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2721,7 +2755,7 @@ false
 false
 getCard(row, col)
 
-159
+161
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2738,7 +2772,7 @@ false
 false
 rows.updated(row, rows(row).updated(col, newCard))
 
-160
+162
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2755,7 +2789,7 @@ false
 false
 rows(row).updated(col, newCard)
 
-161
+163
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2772,7 +2806,7 @@ false
 false
 rows(row)
 
-162
+164
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2789,7 +2823,7 @@ false
 false
 def flipCard
 
-163
+165
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2806,7 +2840,7 @@ false
 false
 getCard(row, col)
 
-164
+166
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2823,7 +2857,7 @@ false
 false
 rows.updated(row, rows(row).updated(col, card))
 
-165
+167
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2840,7 +2874,7 @@ false
 false
 rows(row).updated(col, card)
 
-166
+168
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2857,7 +2891,7 @@ false
 false
 rows(row)
 
-167
+169
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2874,7 +2908,7 @@ false
 false
 def changeCard
 
-168
+170
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2891,7 +2925,7 @@ false
 false
 rows.forall(_.forall(_.opened))
 
-169
+171
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2908,7 +2942,7 @@ false
 false
 _.forall(_.opened)
 
-170
+172
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2925,7 +2959,7 @@ false
 false
 def checkFinished
 
-171
+173
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2942,7 +2976,7 @@ false
 false
 rows.map(row=>row.map(card=>card.value).sum).sum
 
-172
+174
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2959,7 +2993,7 @@ false
 false
 rows.map(row=>row.map(card=>card.value).sum)
 
-173
+175
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2976,7 +3010,7 @@ false
 false
 row.map(card=>card.value).sum
 
-174
+176
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -2993,7 +3027,7 @@ false
 false
 row.map(card=>card.value)
 
-175
+177
 src/main/scala/de/htwg/se/skyjo/model/PlayerMatrix.scala
 de.htwg.se.skyjo.model
 PlayerMatrix
@@ -3010,7 +3044,7 @@ false
 false
 def getScore
 
-176
+178
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3027,7 +3061,7 @@ false
 false
 def this
 
-177
+179
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3044,7 +3078,7 @@ false
 false
 List.tabulate(playerCount) { _ =>\n            new PlayerMatrix(width, height)\n            }
 
-178
+180
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3061,7 +3095,7 @@ false
 false
 new PlayerMatrix(width, height)
 
-179
+181
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3078,7 +3112,7 @@ false
 false
 new Cardstack()
 
-180
+182
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3095,7 +3129,7 @@ false
 false
 "│ 0" + card.value + " "
 
-181
+183
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3112,7 +3146,7 @@ false
 false
 "│ 0" + card.value
 
-182
+184
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3129,7 +3163,7 @@ true
 false
 {\n                "│ 0" + card.value + " "\n            }
 
-183
+185
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3146,7 +3180,7 @@ false
 false
 "│ " + card.value.toString + " "
 
-184
+186
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3163,7 +3197,7 @@ false
 false
 "│ " + card.value.toString
 
-185
+187
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3180,7 +3214,7 @@ true
 false
 {\n                "│ " + card.value.toString + " "\n            }
 
-186
+188
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3197,7 +3231,7 @@ true
 false
 {\n            if (card.value >= 0 && card.value < 10) {\n                "│ 0" + card.value + " "\n            } else {\n                "│ " + card.value.toString + " "\n            }\n\n        }
 
-187
+189
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3214,7 +3248,7 @@ true
 false
 {\n            "│ xx "\n        }
 
-188
+190
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3231,7 +3265,7 @@ false
 false
 def padValue
 
-189
+191
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3248,7 +3282,7 @@ false
 false
 s"""\\nCurrent card stack:\n            |  ┌────┐  ┌────┐\n            | ┌${padValue(cardstack.stackCard)}│  ${padValue(cardstack.trashCard)}│\n            | │└───┬┘  └────┘\n            | └────┘"""
 
-190
+192
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3265,7 +3299,7 @@ false
 false
 s"""\\nCurrent card stack:\n            |  ┌────┐  ┌────┐\n            | ┌${padValue(cardstack.stackCard)}│  ${padValue(cardstack.trashCard)}│\n            | │└───┬┘  └────┘\n            | └────┘"""
 
-191
+193
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3282,7 +3316,7 @@ false
 false
 padValue(cardstack.stackCard)
 
-192
+194
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3299,7 +3333,7 @@ false
 false
 padValue(cardstack.trashCard)
 
-193
+195
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3316,7 +3350,7 @@ false
 false
 s"""\\nCurrent card stack:\n            |  ┌────┐  ┌────┐\n            | ┌${padValue(cardstack.stackCard)}│  ${padValue(cardstack.trashCard)}│\n            | │└───┬┘  └────┘\n            | └────┘""".stripMargin
 
-194
+196
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3333,7 +3367,7 @@ false
 false
 def getCardStackString
 
-195
+197
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3350,7 +3384,7 @@ false
 false
 Array("\\u001B[31m", "\\u001B[32m", "\\u001B[35m", "\\u001B[36m", "\\u001B[33m")
 
-196
+198
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3367,7 +3401,7 @@ false
 false
 Tabletop.zipWithIndex.map { case (playerMatrix, index) =>\n            val color = colors(index % colors.length) \n            s"""${color}\\nPlayer ${(index+1)}:\n                |${"+----" * playerMatrix.rows.head.length}+\n                |${playerMatrix.rows.map { row =>\n                row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length))\n            }.mkString("+\\n")}""".stripMargin\n        }.mkString("+\\n")
 
-197
+199
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3384,7 +3418,7 @@ false
 false
 Tabletop.zipWithIndex.map { case (playerMatrix, index) =>\n            val color = colors(index % colors.length) \n            s"""${color}\\nPlayer ${(index+1)}:\n                |${"+----" * playerMatrix.rows.head.length}+\n                |${playerMatrix.rows.map { row =>\n                row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length))\n            }.mkString("+\\n")}""".stripMargin\n        }
 
-198
+200
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3401,7 +3435,7 @@ false
 false
 Tabletop.zipWithIndex
 
-199
+201
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3418,7 +3452,7 @@ false
 false
 colors(index % colors.length)
 
-200
+202
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3435,7 +3469,7 @@ false
 false
 colors.length
 
-201
+203
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3452,7 +3486,7 @@ false
 false
 s"""${color}\\nPlayer ${(index+1)}:\n                |${"+----" * playerMatrix.rows.head.length}+\n                |${playerMatrix.rows.map { row =>\n                row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length))\n            }.mkString("+\\n")}"""
 
-202
+204
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3469,7 +3503,7 @@ false
 false
 s"""${color}\\nPlayer ${(index+1)}:\n                |${"+----" * playerMatrix.rows.head.length}+\n                |${playerMatrix.rows.map { row =>\n                row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length))\n            }.mkString("+\\n")}"""
 
-203
+205
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3486,7 +3520,7 @@ false
 false
 "+----" * playerMatrix.rows.head.length
 
-204
+206
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3503,7 +3537,7 @@ false
 false
 "+----"
 
-205
+207
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3520,7 +3554,7 @@ false
 false
 playerMatrix.rows.head
 
-206
+208
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3537,7 +3571,7 @@ false
 false
 playerMatrix.rows.head.length
 
-207
+209
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3554,7 +3588,7 @@ false
 false
 playerMatrix.rows.map { row =>\n                row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length))\n            }.mkString("+\\n")
 
-208
+210
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3571,7 +3605,7 @@ false
 false
 playerMatrix.rows.map { row =>\n                row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length))\n            }
 
-209
+211
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3588,7 +3622,7 @@ false
 false
 row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length)
 
-210
+212
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3605,7 +3639,7 @@ false
 false
 row.map { card =>\n                    padValue(card)\n                }.mkString("")
 
-211
+213
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3622,7 +3656,7 @@ false
 false
 row.map { card =>\n                    padValue(card)\n                }
 
-212
+214
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3639,7 +3673,7 @@ false
 false
 padValue(card)
 
-213
+215
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3656,7 +3690,7 @@ false
 false
 "│\\n" + "+----" * (row.length)
 
-214
+216
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3673,7 +3707,7 @@ false
 false
 "+----" * (row.length
 
-215
+217
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3690,7 +3724,7 @@ false
 false
 "+----"
 
-216
+218
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3707,7 +3741,7 @@ false
 false
 row.length
 
-217
+219
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3724,7 +3758,7 @@ false
 false
 s"""${color}\\nPlayer ${(index+1)}:\n                |${"+----" * playerMatrix.rows.head.length}+\n                |${playerMatrix.rows.map { row =>\n                row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length))\n            }.mkString("+\\n")}""".stripMargin
 
-218
+220
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3741,7 +3775,7 @@ true
 false
 =>\n            val color = colors(index % colors.length) \n            s"""${color}\\nPlayer ${(index+1)}:\n                |${"+----" * playerMatrix.rows.head.length}+\n                |${playerMatrix.rows.map { row =>\n                row.map { card =>\n                    padValue(card)\n                }.mkString("") + ("│\\n" + "+----" * (row.length))\n            }.mkString("+\\n")}""".stripMargin
 
-219
+221
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3758,7 +3792,7 @@ false
 false
 str + "+\\u001B[0m"
 
-220
+222
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3775,7 +3809,7 @@ false
 false
 def getPlayerMatricesString
 
-221
+223
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3792,7 +3826,7 @@ false
 false
 getPlayerString(currentPlayer)
 
-222
+224
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3809,7 +3843,7 @@ false
 false
 def getCurrenPlayerString
 
-223
+225
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3826,7 +3860,7 @@ false
 false
 Array("\\u001B[31m", "\\u001B[32m", "\\u001B[35m", "\\u001B[36m", "\\u001B[33m")
 
-224
+226
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3843,7 +3877,7 @@ false
 false
 colors(player%colors.length)+"Player "+(player+1)+"\\u001B[0m"
 
-225
+227
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3860,7 +3894,7 @@ false
 false
 colors(player%colors.length)+"Player "+(player+1
 
-226
+228
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3877,7 +3911,7 @@ false
 false
 colors(player%colors.length)+"Player "
 
-227
+229
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3894,7 +3928,7 @@ false
 false
 colors(player%colors.length)
 
-228
+230
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3911,7 +3945,7 @@ false
 false
 colors.length
 
-229
+231
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3928,7 +3962,7 @@ false
 false
 def getPlayerString
 
-230
+232
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3945,7 +3979,7 @@ false
 false
 getPlayerMatricesString() + getCardStackString()
 
-231
+233
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3962,7 +3996,7 @@ false
 false
 getPlayerMatricesString()
 
-232
+234
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3979,7 +4013,7 @@ false
 false
 getCardStackString()
 
-233
+235
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -3996,7 +4030,7 @@ false
 false
 def getTableString
 
-234
+236
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4013,7 +4047,7 @@ false
 false
 cardstack.drawFromStack()
 
-235
+237
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4030,7 +4064,7 @@ false
 false
 def drawFromStack
 
-236
+238
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4047,7 +4081,7 @@ false
 false
 Tabletop.map(matrix=>matrix.getScore())
 
-237
+239
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4064,7 +4098,7 @@ false
 false
 matrix.getScore()
 
-238
+240
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4081,7 +4115,7 @@ false
 false
 Tabletop.map(matrix=>matrix.getScore()).zipWithIndex
 
-239
+241
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4098,7 +4132,7 @@ false
 false
 def getScores
 
-240
+242
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4115,7 +4149,7 @@ false
 false
 Tabletop.updated(player, playerMatrix)
 
-241
+243
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4132,7 +4166,7 @@ false
 false
 def updateMatrix
 
-242
+244
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4149,7 +4183,7 @@ false
 false
 cardstack.discard(card).newStackCard()
 
-243
+245
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4166,7 +4200,7 @@ false
 false
 cardstack.discard(card)
 
-244
+246
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4183,7 +4217,7 @@ true
 false
 copy(Tabletop, cardstack.discard(card).newStackCard(), playerCount, currentPlayer)
 
-245
+247
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4200,7 +4234,7 @@ false
 false
 cardstack.discard(card)
 
-246
+248
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4217,7 +4251,7 @@ true
 false
 copy(Tabletop, cardstack.discard(card), playerCount, currentPlayer)
 
-247
+249
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
@@ -4234,51 +4268,17 @@ false
 false
 def updateCardstack
 
-248
-src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
-de.htwg.se.skyjo.model
-PlayerTable
-Object
-de.htwg.se.skyjo.model.PlayerTable
-$lessinit$greater$default$1
-178
-178
-4
-$lessinit$greater$default$1
-DefDef
-false
-0
-false
-
-
-249
-src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
-de.htwg.se.skyjo.model
-PlayerTable
-Object
-de.htwg.se.skyjo.model.PlayerTable
-$lessinit$greater$default$2
-194
-194
-4
-$lessinit$greater$default$2
-DefDef
-false
-0
-false
-
-
 250
 src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
 de.htwg.se.skyjo.model
 PlayerTable
 Object
 de.htwg.se.skyjo.model.PlayerTable
-$lessinit$greater$default$3
-211
-211
+$lessinit$greater$default$1
+178
+178
 4
-$lessinit$greater$default$3
+$lessinit$greater$default$1
 DefDef
 false
 0
@@ -4286,6 +4286,40 @@ false
 
 
 251
+src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
+de.htwg.se.skyjo.model
+PlayerTable
+Object
+de.htwg.se.skyjo.model.PlayerTable
+$lessinit$greater$default$2
+194
+194
+4
+$lessinit$greater$default$2
+DefDef
+false
+0
+false
+
+
+252
+src/main/scala/de/htwg/se/skyjo/model/PlayerTable.scala
+de.htwg.se.skyjo.model
+PlayerTable
+Object
+de.htwg.se.skyjo.model.PlayerTable
+$lessinit$greater$default$3
+211
+211
+4
+$lessinit$greater$default$3
+DefDef
+false
+0
+false
+
+
+253
 src/main/scala/de/htwg/se/skyjo/util/Observer.scala
 de.htwg.se.skyjo.util
 Observable
@@ -4302,7 +4336,7 @@ false
 false
 Vector()
 
-252
+254
 src/main/scala/de/htwg/se/skyjo/util/Observer.scala
 de.htwg.se.skyjo.util
 Observable
@@ -4319,7 +4353,7 @@ false
 false
 subscribers :+ s
 
-253
+255
 src/main/scala/de/htwg/se/skyjo/util/Observer.scala
 de.htwg.se.skyjo.util
 Observable
@@ -4336,7 +4370,7 @@ false
 false
 def add
 
-254
+256
 src/main/scala/de/htwg/se/skyjo/util/Observer.scala
 de.htwg.se.skyjo.util
 Observable
@@ -4353,7 +4387,7 @@ false
 false
 subscribers.filterNot(o => o == s)
 
-255
+257
 src/main/scala/de/htwg/se/skyjo/util/Observer.scala
 de.htwg.se.skyjo.util
 Observable
@@ -4370,7 +4404,7 @@ false
 false
 def remove
 
-256
+258
 src/main/scala/de/htwg/se/skyjo/util/Observer.scala
 de.htwg.se.skyjo.util
 Observable
@@ -4387,7 +4421,7 @@ false
 false
 subscribers.foreach(o => o.update)
 
-257
+259
 src/main/scala/de/htwg/se/skyjo/util/Observer.scala
 de.htwg.se.skyjo.util
 Observable
@@ -4404,7 +4438,7 @@ false
 false
 o.update
 
-258
+260
 src/main/scala/de/htwg/se/skyjo/util/Observer.scala
 de.htwg.se.skyjo.util
 Observable
