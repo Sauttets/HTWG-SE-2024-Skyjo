@@ -10,3 +10,7 @@ case class Cardstack(stackCard: Card, trashCard: Card):
     def drawFromTrash(): (Card, Cardstack) = (trashCard, copy(stackCard, Card(1, opened = true))) //1 needs to be fixed to a random number
     def discard(card: Card): Cardstack = copy(stackCard, new Card(card.value, opened = true))
     def newStackCard(): Cardstack = copy(new Card(), trashCard)
+    def getStackCard()=stackCard
+    def getTrashCard()=trashCard
+
+    //maybe state pattern with either Card or actualy cardlists

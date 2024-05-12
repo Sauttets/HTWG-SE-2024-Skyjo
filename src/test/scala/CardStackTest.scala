@@ -8,46 +8,46 @@ class CardStackTest extends AnyWordSpec with Matchers{
     "created should have initial state" should{
       "without parameters" in{
         val stack=new Cardstack
-        stack.stackCard should not be null
-        stack.stackCard.opened shouldBe false
+        stack.getStackCard() should not be null
+        stack.getStackCard().opened shouldBe false
       }
       "with Cards" in{
         val (a,b)=(new Card,new Card)
         val stack=new Cardstack(a,b)
-        stack.stackCard should equal (a)
-        stack.trashCard should equal (b)
+        stack.getStackCard() should equal (a)
+        stack.getTrashCard() should equal (b)
       }
     }
     "drawn from Stack" should{
       val stack=new Cardstack
-      val sCard=stack.stackCard
-      val tCard=stack.trashCard
+      val sCard=stack.getStackCard()
+      val tCard=stack.getTrashCard()
       "flip stackcard" in{
         val drawnStack=stack.drawFromStack()
-        drawnStack.trashCard shouldEqual tCard
-        drawnStack.stackCard.value shouldBe sCard.value
-        drawnStack.stackCard.opened shouldBe true
+        drawnStack.getTrashCard() shouldEqual tCard
+        drawnStack.getStackCard().value shouldBe sCard.value
+        drawnStack.getStackCard().opened shouldBe true
       }
     }
     "drawn from trash" should{
       val stack=new Cardstack
-      val sCard=stack.stackCard
-      val tCard=stack.trashCard
+      val sCard=stack.getStackCard()
+      val tCard=stack.getTrashCard()
       "give Trashcard" in{
         val (tCard,cardStack)=stack.drawFromTrash()
-        stack.trashCard shouldEqual tCard
-        cardStack.trashCard should not equal (stack.trashCard)
+        stack.getTrashCard() shouldEqual tCard
+        cardStack.getTrashCard() should not equal (stack.getTrashCard())
       }
     }
     "discarding" should{
       val stack=new Cardstack
-      val sCard=stack.stackCard
+      val sCard=stack.getStackCard()
       "discard card" in{
         val dCard=new Card
         val dStack=stack.discard(dCard)
-        dStack.trashCard.value shouldEqual dCard.value
-        dStack.trashCard.opened shouldBe true
-        dStack.stackCard shouldEqual sCard
+        dStack.getTrashCard().value shouldEqual dCard.value
+        dStack.getTrashCard().opened shouldBe true
+        dStack.getStackCard() shouldEqual sCard
       }
     }
   }
