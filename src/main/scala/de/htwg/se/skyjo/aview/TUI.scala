@@ -90,7 +90,7 @@ class TUI(controller: TableController) extends Observer {
           Input.split(" ")(2).toInt,
           Input.split(" ")(3).toInt
         ))
-      case _ => None
+      case null => None
     }
   }
 }
