@@ -1,10 +1,11 @@
 package de.htwg.se.skyjo.model
+import de.htwg.se.skyjo.util.CardStackStrategy
 
-case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playerCount: Int, currentPlayer: Int):
+case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrategy, playerCount: Int, currentPlayer: Int):
     def this(playerCount: Int = 2, width: Int = 4, height: Int = 4) = {
         this(List.tabulate(playerCount) { _ =>
             new PlayerMatrix(width, height)
-            }, new Cardstack(), playerCount, 0)
+            }, new LCardStack(), playerCount, 0)
     }
 
     def padValue(card: Card): String = {
@@ -24,7 +25,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: Cardstack, playe
         val str =
         s"""\nCurrent card stack:
             |  ┌────┐  ┌────┐
-            | ┌${padValue(cardstack.stackCard)}│  ${padValue(cardstack.trashCard)}│
+            | ┌${padValue(cardstack.getStackCard())}│  ${padValue(cardstack.getTrashCard())}│
             | │└───┬┘  └────┘
             | └────┘""".stripMargin
         str

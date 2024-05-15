@@ -2,7 +2,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 import de.htwg.se.skyjo.model._
 
-class PlayerTableTest extends AnyWordSpec with Matchers {
+class PlayerTableSpec extends AnyWordSpec with Matchers {
 
   "A PlayerTable" when {
 
@@ -10,7 +10,7 @@ class PlayerTableTest extends AnyWordSpec with Matchers {
       "have initial state" in {
         val playerTable = new PlayerTable()
         playerTable.Tabletop.size should be > 0
-        playerTable.cardstack.stackCard.value should (be >= -2 and be <= 12)
+        playerTable.cardstack.getStackCard().value should (be >= -2 and be <= 12)
         playerTable.playerCount should be > 0
         playerTable.currentPlayer shouldEqual 0
       }
@@ -20,7 +20,7 @@ class PlayerTableTest extends AnyWordSpec with Matchers {
       "open the top card" in {
         val playerTable = new PlayerTable()
         val updatedTable = playerTable.drawFromStack()
-        updatedTable.cardstack.stackCard.opened shouldBe true
+        updatedTable.cardstack.getStackCard().opened shouldBe true
       }
     }
 
@@ -36,13 +36,13 @@ class PlayerTableTest extends AnyWordSpec with Matchers {
     "updating the cardstack" should {
       "move the card from stack to trash if specified" in {
         val playerTable = new PlayerTable()
-        val handCard = playerTable.cardstack.stackCard
+        val handCard = playerTable.cardstack.getStackCard()
         val updatedTable = playerTable.updateCardstack(handCard, true)
-        updatedTable.cardstack.trashCard.value shouldBe handCard.value
+        updatedTable.cardstack.getTrashCard().value shouldBe handCard.value
 
         val matrixHandCard = Card(10, opened = true)
         val updatedTable2 = updatedTable.updateCardstack(matrixHandCard, false)
-        updatedTable2.cardstack.trashCard shouldBe matrixHandCard
+        updatedTable2.cardstack.getTrashCard() shouldBe matrixHandCard
       }
     }
 
@@ -67,7 +67,7 @@ class PlayerTableTest extends AnyWordSpec with Matchers {
         val shouldString =
           s"""\nCurrent card stack:
              |  ┌────┐  ┌────┐
-             | ┌${playerTable.padValue(playerTable.cardstack.stackCard)}│  ${playerTable.padValue(playerTable.cardstack.trashCard)}│
+             | ┌${playerTable.padValue(playerTable.cardstack.getStackCard())}│  ${playerTable.padValue(playerTable.cardstack.getTrashCard())}│
              | │└───┬┘  └────┘
              | └────┘""".stripMargin
         str shouldBe shouldString

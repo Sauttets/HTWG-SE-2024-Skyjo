@@ -3,7 +3,7 @@ import org.scalatest.matchers.should.Matchers
 import de.htwg.se.skyjo.controller._
 import de.htwg.se.skyjo.model._
 
-class TableControllerTest extends AnyWordSpec with Matchers {
+class TableControllerSpec extends AnyWordSpec with Matchers {
   "A TableController" when {
     "new" should {
       val playerTable = new PlayerTable()

@@ -2,7 +2,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 import de.htwg.se.skyjo.model._
 
-class MoveTest extends AnyWordSpec with Matchers {
+class MoveSpec extends AnyWordSpec with Matchers {
     "A Move" when {
         "created" should {
             "have the correct values" in {

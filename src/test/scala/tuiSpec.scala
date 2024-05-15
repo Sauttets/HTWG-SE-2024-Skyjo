@@ -4,7 +4,7 @@ import de.htwg.se.skyjo.aview._
 import de.htwg.se.skyjo.controller._
 import de.htwg.se.skyjo.model._
 
-class TuiTest extends AnyWordSpec with Matchers {
+class TuiSpec extends AnyWordSpec with Matchers {
   "A TUI" when{
     var table = new PlayerTable()
     var tableController = new TableController(table)

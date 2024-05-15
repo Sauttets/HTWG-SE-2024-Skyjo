@@ -1,25 +1,25 @@
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.skyjo.model.Card
-import de.htwg.se.skyjo.model.Cardstack
+import de.htwg.se.skyjo.model.CCardStack
 import org.scalatest.matchers.should._
 
-class CardStackTest extends AnyWordSpec with Matchers{ 
- "A CardStack" when{
+class CCardStackSpec extends AnyWordSpec with Matchers{ 
+ "A CCardStack" when{
     "created should have initial state" should{
       "without parameters" in{
-        val stack=new Cardstack
+        val stack=new CCardStack
         stack.getStackCard() should not be null
         stack.getStackCard().opened shouldBe false
       }
       "with Cards" in{
         val (a,b)=(new Card,new Card)
-        val stack=new Cardstack(a,b)
+        val stack=new CCardStack(a,b)
         stack.getStackCard() should equal (a)
         stack.getTrashCard() should equal (b)
       }
     }
     "drawn from Stack" should{
-      val stack=new Cardstack
+      val stack=new CCardStack
       val sCard=stack.getStackCard()
       val tCard=stack.getTrashCard()
       "flip stackcard" in{
@@ -30,17 +30,17 @@ class CardStackTest extends AnyWordSpec with Matchers{
       }
     }
     "drawn from trash" should{
-      val stack=new Cardstack
+      val stack=new CCardStack
       val sCard=stack.getStackCard()
       val tCard=stack.getTrashCard()
       "give Trashcard" in{
         val (tCard,cardStack)=stack.drawFromTrash()
         stack.getTrashCard() shouldEqual tCard
-        cardStack.getTrashCard() should not equal (stack.getTrashCard())
+        cardStack.getTrashCard() should not be (stack.getTrashCard())
       }
     }
     "discarding" should{
-      val stack=new Cardstack
+      val stack=new CCardStack
       val sCard=stack.getStackCard()
       "discard card" in{
         val dCard=new Card

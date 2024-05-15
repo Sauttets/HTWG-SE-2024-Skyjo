@@ -4,7 +4,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.skyjo.model.Card
 import org.scalatest.matchers.should._
 
-class CardTest extends AnyWordSpec with Matchers{ 
+class CardSpec extends AnyWordSpec with Matchers{ 
   "A Card" when{
     "created should have initial state" should{
       "without parameters" in{
