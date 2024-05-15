@@ -3,7 +3,7 @@ import de.htwg.se.skyjo.model.Card
 
 trait CardStackStrategy {
   def drawFromStack() :(CardStackStrategy)
-  def drawFromTrash(): (Card, CardStackStrategy) 
+  def drawFromTrash(): (CardStackStrategy) 
   def discard(card: Card): CardStackStrategy 
   def newStackCard(): CardStackStrategy
   def getStackCard(): Card

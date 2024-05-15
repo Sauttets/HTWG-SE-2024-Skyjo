@@ -7,7 +7,7 @@ case class CCardStack(stackCard: Card, trashCard: Card) extends CardStackStrateg
     override def drawFromStack() = {
         (copy(CardBuilder().value(stackCard.value).opened(true).build(), trashCard)) 
     }
-    override def drawFromTrash(): (Card, CCardStack) = (trashCard, copy(stackCard, Card(1, opened = true))) //1 needs to be fixed to a random number
+    override def drawFromTrash(): CCardStack = copy(stackCard, Card(1, opened = true)) //1 needs to be fixed to a random number
     override def discard(card: Card): CCardStack = copy(stackCard, CardBuilder().value(card.value).opened(true).build())
     override def newStackCard(): CCardStack = copy(CardBuilder().build(), trashCard)
     override def getStackCard()=stackCard
