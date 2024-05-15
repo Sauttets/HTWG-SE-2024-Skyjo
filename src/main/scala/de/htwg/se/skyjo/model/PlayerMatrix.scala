@@ -7,7 +7,7 @@ case class PlayerMatrix(rows: Vector[Vector[Card]]):
       val matrix = Array.ofDim[Card](height, width)
       for (i <- 0 until height) {
         for (j <- 0 until width) {
-          matrix(i)(j) = new Card()
+          matrix(i)(j) = CardBuilder().build()
         }
       }
       matrix.map(_.toVector).toVector
@@ -19,7 +19,7 @@ case class PlayerMatrix(rows: Vector[Vector[Card]]):
 
   def flipCard (row: Int, col: Int): PlayerMatrix = {
     //val selectedCard = getCard(row, col)
-    val newCard = new Card(getCard(row, col).value, true)
+    val newCard = CardBuilder().value(getCard(row, col).value).opened(true).build()
     copy(rows.updated(row, rows(row).updated(col, newCard)))
   }
 

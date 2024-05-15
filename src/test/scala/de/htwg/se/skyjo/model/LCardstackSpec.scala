@@ -1,5 +1,5 @@
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.skyjo.model.Card
+import de.htwg.se.skyjo.model._
 import de.htwg.se.skyjo.model.LCardStack
 import org.scalatest.matchers.should._
 
@@ -12,7 +12,7 @@ class LCardStackSpec extends AnyWordSpec with Matchers{
         stack.getStackCard().opened shouldBe false
       }
       "with Lists" in{
-        val (a,b)=(List(new Card,new Card),List(new Card,new Card))
+        val (a,b)=(List(CardBuilder().build(),CardBuilder().build()),List(CardBuilder().build(),CardBuilder().build()))
         val stack=new LCardStack(a,b)
         stack.getStackCard() should equal (a(0))
         stack.getTrashCard() should equal (b.last)
@@ -30,7 +30,7 @@ class LCardStackSpec extends AnyWordSpec with Matchers{
       }
     }
     "drawn from trash" should{
-      val stack=new LCardStack().discard(new Card)
+      val stack=new LCardStack().discard(CardBuilder().build())
       val sCard=stack.getStackCard()
       val tCard=stack.getTrashCard()
       "give Trashcard" in{
@@ -43,7 +43,7 @@ class LCardStackSpec extends AnyWordSpec with Matchers{
       val stack=new LCardStack
       val sCard=stack.getStackCard()
       "discard card" in{
-        val dCard=new Card
+        val dCard=CardBuilder().build()
         val dStack=stack.discard(dCard)
         dStack.getTrashCard().value shouldEqual dCard.value
         dStack.getTrashCard().opened shouldBe true

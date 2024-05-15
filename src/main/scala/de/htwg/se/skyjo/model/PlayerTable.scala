@@ -5,7 +5,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     def this(playerCount: Int = 2, width: Int = 4, height: Int = 4) = {
         this(List.tabulate(playerCount) { _ =>
             new PlayerMatrix(width, height)
-            }, new LCardStack(), playerCount, 0)
+            }, new CCardStack(), playerCount, 0)
     }
 
     def padValue(card: Card): String = {

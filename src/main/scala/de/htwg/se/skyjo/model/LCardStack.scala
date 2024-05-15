@@ -3,7 +3,7 @@ import scala.util.Random
 import de.htwg.se.skyjo.util.CardStackStrategy
 
 case class LCardStack(stack: List[Card], trashstack: List[Card]) extends CardStackStrategy:
-    def this(stacksize:Int=100) = {this(List.tabulate(stacksize) { _ =>new Card()},List(new Card()))}   
+    def this(stacksize:Int=100) = {this(List.tabulate(stacksize) { _ =>CardBuilder().build()},List(CardBuilder().opened(true).build()))}   
     override def drawFromStack() = {
         (copy(stack.updated(0,stack(0).flip()), trashstack)) 
     }

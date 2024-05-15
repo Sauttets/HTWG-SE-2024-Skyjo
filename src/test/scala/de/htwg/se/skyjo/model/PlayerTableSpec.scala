@@ -49,13 +49,13 @@ class PlayerTableSpec extends AnyWordSpec with Matchers {
     "padding values for cards" should {
       "pad the values correctly" in {
         val playerTable = new PlayerTable()
-        val card = new Card(10, opened = true)
+        val card = CardBuilder().value(10).opened(true).build()
         playerTable.padValue(card) shouldBe "│ 10 "
-        val card2 = new Card(1, opened = true)
+        val card2 = CardBuilder().value(1).opened(true).build()
         playerTable.padValue(card2) shouldBe "│ 01 "
-        val card3 = new Card(-2, opened = true)
+        val card3 = CardBuilder().value(-2).opened(true).build()
         playerTable.padValue(card3) shouldBe "│ -2 "
-        val card4 = new Card(1, opened = false)
+        val card4 = CardBuilder().value(1).opened(false).build()
         playerTable.padValue(card4) shouldBe "│ xx "
       }
     }

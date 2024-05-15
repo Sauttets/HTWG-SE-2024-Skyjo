@@ -1,8 +1,9 @@
+package de.htwg.se.skyjo
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should._
-import de.htwg.se.skyjo.aview._
-import de.htwg.se.skyjo.controller._
-import de.htwg.se.skyjo.model._
+import aview._
+import controller._
+import model._
 
 class TuiSpec extends AnyWordSpec with Matchers {
   "A TUI" when{

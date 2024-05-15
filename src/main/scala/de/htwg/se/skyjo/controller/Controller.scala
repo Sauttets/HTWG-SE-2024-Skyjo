@@ -7,7 +7,6 @@ import model._
 import util._
 
 
-
 case class TableController(var table: PlayerTable) extends Observable:
     
     def drawFromStack(): Unit = {
