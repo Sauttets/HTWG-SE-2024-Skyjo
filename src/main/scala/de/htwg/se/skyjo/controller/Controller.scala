@@ -7,7 +7,6 @@ import model._
 import util._
 
 
-
 case class TableController(var table: PlayerTable) extends Observable:
     
     def drawFromStack(): Unit = {
@@ -16,7 +15,7 @@ case class TableController(var table: PlayerTable) extends Observable:
     }
 
     def doMove(move: Move): Unit = {
-        val handCard = if move.drawnFromStack then table.cardstack.stackCard else table.cardstack.trashCard
+        val handCard = if move.drawnFromStack then table.cardstack.getStackCard() else table.cardstack.getTrashCard()
         if move.swapped then
             val tupel = table.Tabletop(table.currentPlayer).changeCard(move.row, move.col, handCard)
             table = table.updateMatrix(table.currentPlayer, tupel(0))
