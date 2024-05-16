@@ -6,9 +6,6 @@ case class Card(value: Int, opened: Boolean = false) {
 }
 
 object CardBuilder {
-  // val cardCounts=List(5,10,15,10,10,10,10,10,10,10,10,10,10,10,10)
-  // val cardValues=cardCounts.zipWithIndex.map((value,ind)=>List.tabulate(value)(x=>ind-2)).flatten    
-  // var shuffledValues=scala.util.Random.shuffle(cardValues)
   def apply() = {new CardBuilder()}
 }
 

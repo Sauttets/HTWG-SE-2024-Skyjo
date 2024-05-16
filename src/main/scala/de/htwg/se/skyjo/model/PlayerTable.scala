@@ -7,7 +7,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
             new PlayerMatrix(width, height)
             }, new LCardStack(), playerCount, 0)
     }
-    
+
     def padValue(card: Card): String = {
         if (card.opened) {
             if (card.value >= 0 && card.value < 10) {
@@ -59,7 +59,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     }
 
     def drawFromStack() = {
-        copy(Tabletop, cardstack = cardstack.drawFromStack(), playerCount, currentPlayer)
+        copy(Tabletop, cardstack = cardstack.flipStackTop(), playerCount, currentPlayer)
     }
 
     def getScores()={
@@ -71,6 +71,6 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     }
 
     def updateCardstack(card: Card, drwawFromStack: Boolean) = {
-        if drwawFromStack then copy(Tabletop, cardstack.discard(card).newStackCard(), playerCount, currentPlayer)
-        else copy(Tabletop, cardstack.drawFromTrash().discard(card), playerCount, currentPlayer)
+        if drwawFromStack then copy(Tabletop, cardstack.discard(card).removeStackTop(), playerCount, currentPlayer)
+        else copy(Tabletop, cardstack.removeTrashTop().discard(card), playerCount, currentPlayer)
     }

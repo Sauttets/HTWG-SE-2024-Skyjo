@@ -1,11 +1,11 @@
 package de.htwg.se.skyjo.util
-import de.htwg.se.skyjo.model.Card
+import de.htwg.se.skyjo.model._
 
 trait CardStackStrategy {
-  def drawFromStack() :(CardStackStrategy)
-  def drawFromTrash(): (CardStackStrategy) 
+  def flipStackTop() :CardStackStrategy
+  def removeTrashTop(): CardStackStrategy
   def discard(card: Card): CardStackStrategy 
-  def newStackCard(): CardStackStrategy
+  def removeStackTop(): CardStackStrategy
   def getStackCard(): Card
   def getTrashCard(): Card
 }
