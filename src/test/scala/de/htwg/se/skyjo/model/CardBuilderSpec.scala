@@ -26,6 +26,13 @@ class CardBuilderSpec extends AnyWordSpec with Matchers{
         d.value shouldEqual 4
         d.opened shouldEqual true
       }
+      "with value" in {
+        val cb = CardBuilder()
+        an [IndexOutOfBoundsException] should be thrownBy {
+          cb.value(13)
+        }
+      }
+
     }
     "default" should{ 
       "not be open"in{
@@ -34,5 +41,3 @@ class CardBuilderSpec extends AnyWordSpec with Matchers{
     }
   }
 }
-
-
