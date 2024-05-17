@@ -28,6 +28,11 @@ class CCardStackSpec extends AnyWordSpec with Matchers{
         drawnStack.getStackCard().value shouldBe sCard.value
         drawnStack.getStackCard().opened shouldBe true
       }
+      "remove Stack top" in{
+        val drawnStack=stack.removeStackTop()
+        drawnStack.getStackCard().value should not be sCard.opened
+        drawnStack.getStackCard().opened shouldBe false
+      }
     }
     "drawn from trash" should{
       val stack=new CCardStack
