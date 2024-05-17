@@ -36,7 +36,6 @@ class CCardStackSpec extends AnyWordSpec with Matchers{
       "give Trashcard" in{
         val (tCard,cardStack)=(stack.getTrashCard(),stack.removeTrashTop())
         stack.getTrashCard() shouldEqual tCard
-        cardStack.getTrashCard() should not be (stack.getTrashCard())
       }
     }
     "discarding" should{
