@@ -9,27 +9,20 @@ object CardBuilder {
   def apply() = {new CardBuilder()}
 }
 
-case class CardBuilder(value:Int,opened:Boolean,simulate:Boolean) {
+case class CardBuilder(value:Int,opened:Boolean) {
   def this()={
-    this(Random.nextInt(15)-2,false,true)
-    // this(CardBuilder.shuffledValues(0),false,true)
+    this(Random.nextInt(15)-2,false)
   }
   def value(value: Int): CardBuilder = {
     if( value>12 || value < -2) then throw new java.lang.IndexOutOfBoundsException
-    copy(value,this.opened,false)
+    copy(value,this.opened)
   }
 
   def opened(open: Boolean): CardBuilder = {
-    copy(this.value,open,this.simulate)
+    copy(this.value,open)
   }
 
   def build(): Card = {
-    // if(this.simulate){
-    //     val card=Card(CardBuilder.shuffledValues(0),false)
-    //     CardBuilder.shuffledValues=CardBuilder.shuffledValues.drop(1)
-    //     card
-    // }
-    // else
       Card(value, opened)
   }
 }
