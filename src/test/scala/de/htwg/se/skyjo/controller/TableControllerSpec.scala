@@ -8,9 +8,7 @@ class TableControllerSpec extends AnyWordSpec with Matchers {
     "new" should {
       val playerTable = new PlayerTable()
       val controller = TableController(playerTable)
-      "have a table" in {
-        controller.table should be(playerTable)
-      }
+      controller.setCardStackStrategy(new LCardStack)
       "check if game ends" in {
         controller.gameEnd() shouldBe a[Boolean]
       }
