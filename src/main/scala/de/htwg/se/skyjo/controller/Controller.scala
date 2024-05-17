@@ -14,6 +14,8 @@ case class TableController(var table: PlayerTable) extends Observable:
         notifyObservers
     }
 
+    def setCardStackStrategy(strat:CardStackStrategy)=table=table.setCardStackStrategy(strat)
+
     def doMove(move: Move): Unit = {
         val handCard = if move.drawnFromStack then table.cardstack.getStackCard() else table.cardstack.getTrashCard()
         print("HandCard:"+handCard.value)
