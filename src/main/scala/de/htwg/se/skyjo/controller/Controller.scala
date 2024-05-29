@@ -19,6 +19,7 @@ case class TableController(var table: PlayerTable) extends Observable:
   def doMove(move: Move): Unit = {
     val command = new MoveCommand(this, move)
     command.execute()
+    print(command)
     undoStack.push(command)
     redoStack.clear()
   }
