@@ -2,11 +2,12 @@ package de.htwg.se.skyjo.model
 import de.htwg.se.skyjo.util.CardStackStrategy
 
 case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrategy, playerCount: Int, currentPlayer: Int):
-    def this(playerCount: Int = 2, width: Int = 4, height: Int = 4) = {
+    def this(playerCount: Int = 2, width: Int = 4, height: Int = 4,lcard:Boolean=true) = {
         this(List.tabulate(playerCount) { _ =>
             new PlayerMatrix(width, height)
-            }, new CCardStack(), playerCount, 0)
+            }, new LCardStack(), playerCount, 0)
     }
+    def setCardStackStrategy(strat:CardStackStrategy)= copy(Tabletop,strat,playerCount,currentPlayer)
 
     def padValue(card: Card): String = {
         if (card.opened) {
@@ -59,7 +60,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     }
 
     def drawFromStack() = {
-        copy(Tabletop, cardstack = cardstack.drawFromStack(), playerCount, currentPlayer)
+        copy(Tabletop, cardstack = cardstack.flipStackTop(), playerCount, currentPlayer)
     }
 
     def getScores()={
@@ -71,6 +72,6 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     }
 
     def updateCardstack(card: Card, drwawFromStack: Boolean) = {
-        if drwawFromStack then copy(Tabletop, cardstack.discard(card).newStackCard(), playerCount, currentPlayer)
-        else copy(Tabletop, cardstack.discard(card), playerCount, currentPlayer)
+        if drwawFromStack then copy(Tabletop, cardstack.discard(card).removeStackTop(), playerCount, currentPlayer)
+        else copy(Tabletop, cardstack.removeTrashTop().discard(card), playerCount, currentPlayer)
     }

@@ -6,24 +6,23 @@ case class Card(value: Int, opened: Boolean = false) {
 }
 
 object CardBuilder {
-  def apply() = new CardBuilder()
+  def apply() = {new CardBuilder()}
 }
 
-class CardBuilder {
-  private var value: Int = Random.nextInt(15) - 2
-  private var opened: Boolean = false
-
+case class CardBuilder(value:Int,opened:Boolean) {
+  def this()={
+    this(Random.nextInt(15)-2,false)
+  }
   def value(value: Int): CardBuilder = {
-    this.value = value
-    this
+    if( value>12 || value < -2) then throw new java.lang.IndexOutOfBoundsException
+    copy(value,this.opened)
   }
 
-  def opened(opened: Boolean): CardBuilder = {
-    this.opened = opened
-    this
+  def opened(open: Boolean): CardBuilder = {
+    copy(this.value,open)
   }
 
   def build(): Card = {
-    Card(value, opened)
+      Card(value, opened)
   }
 }

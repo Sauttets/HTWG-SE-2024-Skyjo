@@ -7,6 +7,8 @@ import controller._
 import scala.io.StdIn.readLine
 import util.Observer
 import java.lang.ModuleLayer.Controller
+import de.htwg.se.skyjo.model.CCardStack
+import de.htwg.se.skyjo.model.LCardStack
 
 class TUI(controller: TableController) extends Observer {
   controller.add(this)
@@ -18,6 +20,11 @@ class TUI(controller: TableController) extends Observer {
 
   def run: Unit = {
     println("\u001B[34m"+"Welcome to Skyjo\u001B[0m")
+    println("(L)ist or (C)ard Cardstack")
+    readLine() match{
+      case "L"      => controller.setCardStackStrategy(new LCardStack)
+      case "C"      => controller.setCardStackStrategy(new CCardStack)
+    }
     println(controller)
     getInputAndPrintLoop()
     lastRound()
@@ -90,7 +97,7 @@ class TUI(controller: TableController) extends Observer {
           Input.split(" ")(2).toInt,
           Input.split(" ")(3).toInt
         ))
-      case _ => None
+      case null => None
     }
   }
 }

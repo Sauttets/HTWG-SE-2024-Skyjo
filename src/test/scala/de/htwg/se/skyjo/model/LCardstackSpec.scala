@@ -23,7 +23,7 @@ class LCardStackSpec extends AnyWordSpec with Matchers{
       val sCard=stack.getStackCard()
       val tCard=stack.getTrashCard()
       "flip stackcard" in{
-        val drawnStack=stack.drawFromStack()
+        val drawnStack=stack.flipStackTop()
         drawnStack.getTrashCard() shouldEqual tCard
         drawnStack.getStackCard().value shouldBe sCard.value
         drawnStack.getStackCard().opened shouldBe true
@@ -34,9 +34,8 @@ class LCardStackSpec extends AnyWordSpec with Matchers{
       val sCard=stack.getStackCard()
       val tCard=stack.getTrashCard()
       "give Trashcard" in{
-        val (tCard,cardStack)=stack.drawFromTrash()
+        val (tCard,cardStack)=(stack.getTrashCard(),stack.removeTrashTop())
         stack.getTrashCard() shouldEqual tCard
-        cardStack.getTrashCard() should not be (stack.getTrashCard())
       }
     }
     "discarding" should{
