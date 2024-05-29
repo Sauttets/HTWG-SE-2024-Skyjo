@@ -8,7 +8,8 @@ import util._
 
 
 case class TableController(var table: PlayerTable) extends Observable:
-    
+    val undoManager = new UndoManager[PlayerTable]    
+
     def drawFromStack(): Unit = {
         table = table.drawFromStack()
         notifyObservers
@@ -17,18 +18,11 @@ case class TableController(var table: PlayerTable) extends Observable:
     def setCardStackStrategy(strat:CardStackStrategy)=table=table.setCardStackStrategy(strat)
 
     def doMove(move: Move): Unit = {
-        val handCard = if move.drawnFromStack then table.cardstack.getStackCard() else table.cardstack.getTrashCard()
-        print("HandCard:"+handCard.value)
-        if move.swapped then
-            val tupel = table.Tabletop(table.currentPlayer).changeCard(move.row, move.col, handCard)
-            table = table.updateMatrix(table.currentPlayer, tupel(0))
-            table = table.updateCardstack(tupel(1), move.drawnFromStack)
-        else
-            table = table.updateMatrix(table.currentPlayer, table.Tabletop(table.currentPlayer).flipCard(move.row, move.col))
-            table = table.updateCardstack(handCard, move.drawnFromStack)
-        table = table.copy(currentPlayer = (table.currentPlayer + 1) % table.playerCount)
+        table = undoManager.doStep(table, PutCommand(move))
         notifyObservers
     }
+    def undo: PlayerTable = undoManager.undoStep(table)
+    def redo: PlayerTable = undoManager.redoStep(table)
     def gameEnd(): Boolean = {
         table.Tabletop.exists(_.checkFinished())
     }
