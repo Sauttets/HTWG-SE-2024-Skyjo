@@ -19,7 +19,6 @@ case class TableController(var table: PlayerTable) extends Observable:
   def doMove(move: Move): Unit = {
     val command = new MoveCommand(this, move)
     command.execute()
-    print(command)
     undoStack.push(command)
     redoStack.clear()
   }
@@ -34,7 +33,6 @@ case class TableController(var table: PlayerTable) extends Observable:
       table = table.updateMatrix(table.currentPlayer, table.Tabletop(table.currentPlayer).flipCard(move.row, move.col))
       table = table.updateCardstack(handCard, move.drawnFromStack)
     table = table.copy(currentPlayer = (table.currentPlayer + 1) % table.playerCount)
-    notifyObservers
   }
 
   def undo(): Unit = {

@@ -10,6 +10,7 @@ class MoveCommand(controller: TableController, move: Move) extends Command:
   override def execute(): Unit =
     previousState = controller.table.copy()
     controller.executeMove(move)
+    controller.notifyObservers
   
   override def undo(): Unit =
     controller.table = previousState
