@@ -18,4 +18,3 @@ class MoveCommand(controller: TableController, move: Move) extends Command:
   
   override def redo(): Unit =
     execute()
-  override def toString(): String = if(previousState!=null)previousState.Tabletop.toString()+"\n"+previousState.cardstack+"\n"+previousState.playerCount+"\n"+previousState.currentPlayer+"\n" else ""

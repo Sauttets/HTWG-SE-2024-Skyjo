@@ -51,18 +51,22 @@ class TUI(controller: TableController) extends Observer:
           moveInput(readLine, false) match
             case None       =>
             case Some(move) => controller.doMove(move)
-        case "undo" => controller.undo()
-        case "redo" => controller.redo()
+        case "undo" => controller.careTaker.undo()
+        case "redo" => controller.careTaker.redo()
 
   def drawInput(input: String): Option[String] =
-    input.toUpperCase().replaceAll("\\s+","") match
-      case "Q" => sys.exit(0)
-      case "STACK" => Some("drawStack")
-      case "TRASH" => Some("drawTrash")
-      case "S" => Some("drawStack")
-      case "T" => Some("drawTrash")
-      case "U" => Some("undo")
-      case "R" => Some("redo")
+    while(true){
+      input.toUpperCase().replaceAll("\\s+","") match
+        case "Q" => sys.exit(0)
+        case "STACK" => return Some("drawStack")
+        case "TRASH" => return Some("drawTrash")
+        case "S" => return Some("drawStack")
+        case "T" => return Some("drawTrash")
+        case "U" => return Some("undo")
+        case "R" => return Some("redo")
+        case _=> print("wrong input")
+    }
+    return None
 
   def moveInput(input: String, draw: Boolean): Option[Move] =
     val Input = (" "+input).toUpperCase().replaceAll("\\s+"," ") 

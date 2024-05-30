@@ -4,12 +4,10 @@ package controller
 import model._
 import util._
 
-import scala.collection.mutable.Stack
 
 case class TableController(var table: PlayerTable) extends Observable:
   
-  private val undoStack: Stack[Command] = Stack()
-  private val redoStack: Stack[Command] = Stack()
+  val careTaker=new CareTaker()
 
   def drawFromStack(): Unit = {
     table = table.drawFromStack()
@@ -19,8 +17,7 @@ case class TableController(var table: PlayerTable) extends Observable:
   def doMove(move: Move): Unit = {
     val command = new MoveCommand(this, move)
     command.execute()
-    undoStack.push(command)
-    redoStack.clear()
+    careTaker.save(Memento(command))
   }
 
   def executeMove(move: Move): Unit = {
@@ -35,19 +32,6 @@ case class TableController(var table: PlayerTable) extends Observable:
     table = table.copy(currentPlayer = (table.currentPlayer + 1) % table.playerCount)
   }
 
-  def undo(): Unit = {
-    if undoStack.nonEmpty then
-      val command = undoStack.pop()
-      command.undo()
-      redoStack.push(command)
-  }
-
-  def redo(): Unit = {
-    if redoStack.nonEmpty then
-      val command = redoStack.pop()
-      command.redo()
-      undoStack.push(command)
-  }
 
   def gameEnd(): Boolean = {
     table.Tabletop.exists(_.checkFinished())
