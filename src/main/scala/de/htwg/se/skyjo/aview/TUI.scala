@@ -4,6 +4,7 @@ package aview
 import model.Move
 import controller.TableController
 
+import scala.util.{Try, Success, Failure}
 import scala.io.StdIn.readLine
 import util.Observer
 
@@ -68,18 +69,35 @@ class TUI(controller: TableController) extends Observer:
     }
     return None
 
-  def moveInput(input: String, draw: Boolean): Option[Move] =
-    val Input = (" "+input).toUpperCase().replaceAll("\\s+"," ") 
-     Input.replaceAll(" ","") match
-      case "Q" => sys.exit(0)
-      case _ => Some(Move(
-        draw,
-        Input.split(" ")(1) match
-            case "S" => true
-            case "T" => false
-            case "D" => false
-            case "SWAP" => true
-            case "DISCARD" => false,
-        Input.split(" ")(2).toInt,
-        Input.split(" ")(3).toInt
-        ))
+  def moveInput(input: String, draw: Boolean): Option[Move] = {
+    val Input = (" " + input).toUpperCase().replaceAll("\\s+", " ")
+
+    if (Input.replaceAll(" ", "") == "Q") {
+      sys.exit(0)
+    }
+
+    val parts = Input.split(" ")
+
+    if (parts.length < 4) {
+      None // Not enough parts to parse
+    } else {
+      Try {
+        val swapped = parts(1) match {
+          case "S" => true
+          case "T" => false
+          case "D" => false
+          case "SWAP" => true
+          case "DISCARD" => false
+          case _ => throw new IllegalArgumentException("Invalid action")
+        }
+
+        val row = parts(2).toInt
+        val col = parts(3).toInt
+
+        Move(draw, swapped, row, col)
+      } match {
+        case Success(move) => Some(move)
+        case Failure(_) => None
+      }
+    }
+  }
