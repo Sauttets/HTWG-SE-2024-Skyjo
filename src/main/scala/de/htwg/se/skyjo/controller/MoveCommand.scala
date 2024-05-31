@@ -5,16 +5,18 @@ import model._
 import util._
 
 class MoveCommand(controller: TableController, move: Move) extends Command:
-  private var previousState: PlayerTable = null
+  private var previousState: Option[PlayerTable] = None
 
   override def execute(): Unit =
-    previousState = controller.table.copy()
+    previousState = Some(controller.table.copy())
     controller.executeMove(move)
-    controller.notifyObservers
+    controller.notifyObservers()
   
   override def undo(): Unit =
-    controller.table = previousState
-    controller.notifyObservers
+    previousState.foreach { state =>
+      controller.table = state
+      controller.notifyObservers()
+    }
   
   override def redo(): Unit =
     execute()
