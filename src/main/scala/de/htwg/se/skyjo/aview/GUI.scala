@@ -11,7 +11,6 @@ import util.Observer
 
 class GUI(controller: TableController) extends MainFrame with Observer:
   title = "Skyjo"
-
   controller.add(this)
 
   def update: Unit = {
@@ -19,43 +18,19 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     println(controller)
   }
 
-  val drawFromTrashButton = new Button {
-    text = "Draw from Trash"
-  }
+  val drawFromTrashButton, drawFromStackButton, undoButton, redoButton, quitButton = new Button()
+  drawFromTrashButton.text = "Draw from Trash"
+  drawFromStackButton.text = "Draw from Stack"
+  undoButton.text = "Undo"
+  redoButton.text = "Redo"
+  quitButton.text = "Quit"
 
-  val drawFromStackButton = new Button {
-    text = "Draw from Stack"
-  }
-
-  val undoButton = new Button {
-    text = "Undo"
-  }
-
-  val redoButton = new Button {
-    text = "Redo"
-  }
-
-  val quitButton = new Button {
-    text = "Quit"
-  }
-
-  val stackCardLabel = new Label {
-    text = "Stack Card: XX"
-  }
-
-  val trashCardLabel = new Label {
-    text = "Trash Card: XX"
-  }
+  val stackCardLabel, trashCardLabel = new Label()
+  stackCardLabel.text = "Stack Card: XX"
+  trashCardLabel.text = "Trash Card: XX"
 
   contents = new BoxPanel(Orientation.Vertical) {
-    contents += drawFromTrashButton
-    contents += drawFromStackButton
-    contents += undoButton
-    contents += redoButton
-    contents += quitButton
-    contents += Swing.VStrut(20)
-    contents += stackCardLabel
-    contents += trashCardLabel
+    contents ++= Seq(drawFromTrashButton, drawFromStackButton, undoButton, redoButton, quitButton, Swing.VStrut(20), stackCardLabel, trashCardLabel)
     border = Swing.EmptyBorder(30, 30, 10, 30)
   }
 
@@ -82,19 +57,11 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   def showMovePopup(draw: Boolean): Unit = {
     val dialog = new Dialog {
       title = "Enter Move Details"
-      val swappedField = new TextField { columns = 5 }
-      val rowField = new TextField { columns = 5 }
-      val colField = new TextField { columns = 5 }
+      val swappedField, rowField, colField = new TextField { columns = 5 }
       val executeButton = new Button { text = "Execute" }
 
       contents = new BoxPanel(Orientation.Vertical) {
-        contents += new Label("Swapped (S or T):")
-        contents += swappedField
-        contents += new Label("Row:")
-        contents += rowField
-        contents += new Label("Column:")
-        contents += colField
-        contents += executeButton
+        contents ++= Seq(new Label("Swapped (S or T):"), swappedField, new Label("Row:"), rowField, new Label("Column:"), colField, executeButton)
         border = Swing.EmptyBorder(10, 10, 10, 10)
       }
 
@@ -103,13 +70,14 @@ class GUI(controller: TableController) extends MainFrame with Observer:
       reactions += {
         case ButtonClicked(`executeButton`) =>
           val moveInputString = s" ${swappedField.text} ${rowField.text} ${colField.text}"
-          moveInput(moveInputString, draw) match
+          moveInput(moveInputString, draw) match {
             case None       =>
               Dialog.showMessage(contents.head, "Invalid move input", title = "Error", Dialog.Message.Error)
             case Some(move) =>
               controller.doMove(move)
               refreshCards()
               close()
+          }
       }
 
       centerOnScreen()
@@ -119,30 +87,18 @@ class GUI(controller: TableController) extends MainFrame with Observer:
 
   def moveInput(input: String, draw: Boolean): Option[Move] = {
     val Input = (" " + input).toUpperCase().replaceAll("\\s+", " ")
-
-    if (Input.replaceAll(" ", "") == "Q") {
-      sys.exit(0)
-    }
+    if (Input.replaceAll(" ", "") == "Q") sys.exit(0)
 
     val parts = Input.split(" ")
-
-    if (parts.length < 4) {
-      None // Not enough parts to parse
-    } else {
+    if (parts.length < 4) None 
+    else {
       Try {
         val swapped = parts(1) match {
-          case "S" => true
-          case "T" => false
-          case "D" => false
-          case "SWAP" => true
-          case "DISCARD" => false
+          case "S" | "SWAP" => true
+          case "T" | "D" | "DISCARD" => false
           case _ => throw new IllegalArgumentException("Invalid action")
         }
-
-        val row = parts(2).toInt
-        val col = parts(3).toInt
-
-        Move(draw, swapped, row, col)
+        Move(draw, swapped, parts(2).toInt, parts(3).toInt)
       } match {
         case Success(move) => Some(move)
         case Failure(_) => None
@@ -152,16 +108,12 @@ class GUI(controller: TableController) extends MainFrame with Observer:
 
   def refreshCards(): Unit = {
     val cardStack = controller.table.getCardStack()
-    val stackCard = cardStack.getStackCard()
-    val trashCard = cardStack.getTrashCard()
-
-    stackCardLabel.text = if (stackCard.opened) s"Stack Card: ${stackCard.value}" else "Stack Card: XX"
-    trashCardLabel.text = if (trashCard.opened) s"Trash Card: ${trashCard.value}" else "Trash Card: XX"
+    stackCardLabel.text = if (cardStack.getStackCard().opened) s"Stack Card: ${cardStack.getStackCard().value}" else "Stack Card: XX"
+    trashCardLabel.text = if (cardStack.getTrashCard().opened) s"Trash Card: ${cardStack.getTrashCard().value}" else "Trash Card: XX"
   }
 
   size = new Dimension(300, 300)
   centerOnScreen()
   open()
-
   refreshCards()
 end GUI
