@@ -1,5 +1,4 @@
 package de.htwg.se.skyjo.model
-import scala.util.Random
 import de.htwg.se.skyjo.util.CardStackStrategy
 
 case class CCardStack(stackCard: Card, trashCard: Card) extends CardStackStrategy:

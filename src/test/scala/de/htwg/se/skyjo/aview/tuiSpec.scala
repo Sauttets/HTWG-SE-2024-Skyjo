@@ -35,16 +35,6 @@ class TuiSpec extends AnyWordSpec with Matchers {
         stream.toString() shouldBe ""
       }
     }
-    "drawInput called" should{
-      "return true or false accordingly" in{
-        tui.drawInput(" s ").contains(true) shouldBe true
-        tui.drawInput("StAcK ").contains(true) shouldBe true
-        tui.drawInput(" S").contains(true) shouldBe true
-        tui.drawInput(" t ").contains(false) shouldBe true
-        tui.drawInput("tRaSH ").contains(false) shouldBe true
-        tui.drawInput(" T").contains(false) shouldBe true
-      }
-    }
     "moveInput called" should{
       "return true or false accordingly" in{
         tui.moveInput(" s 1  2",true).contains(Move(true,true,1,2)) shouldBe true

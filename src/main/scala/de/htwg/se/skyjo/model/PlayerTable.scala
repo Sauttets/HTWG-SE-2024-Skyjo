@@ -16,7 +16,6 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
             } else {
                 "│ " + card.value.toString + " "
             }
-
         } else {
             "│ xx "
         }

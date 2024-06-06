@@ -1,7 +1,6 @@
 package de.htwg.se.skyjo.model
 import scala.util.Random
 import de.htwg.se.skyjo.util.CardStackStrategy
-import de.htwg
 
 case class LCardStack(stack: List[Card], trashstack: List[Card]) extends CardStackStrategy:
     def this(stackList:List[Card])  =   this(stackList,List(CardBuilder().opened(true).build()))
