@@ -31,6 +31,8 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
         str
     }
 
+    def getCardStack(): CardStackStrategy = cardstack
+    def getPlayerMatrices(): List[PlayerMatrix] = Tabletop
 
     def getPlayerMatricesString(): String = {
         val colors = Array("\u001B[31m", "\u001B[32m", "\u001B[35m", "\u001B[36m", "\u001B[33m")
