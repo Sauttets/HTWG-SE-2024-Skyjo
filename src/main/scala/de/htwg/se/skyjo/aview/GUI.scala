@@ -54,10 +54,15 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   }
   val playerMatrixGui=controller.table.Tabletop.map(mat=>{
     val grid =new GridPanel(mat.size,mat.rows.size)
+    val cardPanel=new CardGUI(0,false)
     for(r<-0 until grid.rows;c<-0 until grid.columns)
       val card=mat.getCard(r,c)
       val cardPanel=new CardGUI(card.value,card.opened)
       grid.contents+=cardPanel
+    val fixedSize=new Dimension(cardPanel.fixedSize.width*grid.columns,cardPanel.fixedSize.height*grid.rows)
+    grid.preferredSize_=(fixedSize)
+    grid.minimumSize_=(fixedSize)
+    grid.maximumSize_=(fixedSize)
     grid
     }
   )
@@ -160,7 +165,7 @@ class  CardGUI(value:Int,open:Boolean) extends BorderPanel{
   val gborder= new EmptyBorder(2,2,2,2)
   border=new CompoundBorder(gborder,wborder)
   visible_=(true)
-  val fixedSize=new Dimension(40,80)
+  val fixedSize=new Dimension(50,70)
   preferredSize_=(fixedSize)
   minimumSize_=(fixedSize)
   maximumSize_=(fixedSize)
