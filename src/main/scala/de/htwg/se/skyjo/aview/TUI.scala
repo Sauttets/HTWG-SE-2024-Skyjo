@@ -37,8 +37,8 @@ class TUI(controller: TableController) extends Observer:
 
   def inputAndPrint():Unit=
     println(controller.table.getCurrenPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash), (u)ndo, (r)edo ")
-    drawInput(readLine) match
-      case None       =>
+    drawInput() match
+      case None  =>
       case Some(command) => command match
         case "drawStack" =>
           controller.drawFromStack()
@@ -55,9 +55,9 @@ class TUI(controller: TableController) extends Observer:
         case "undo" => controller.careTaker.undo()
         case "redo" => controller.careTaker.redo()
 
-  def drawInput(input: String): Option[String] =
+  def drawInput(): Option[String] =
     while(true){
-      input.toUpperCase().replaceAll("\\s+","") match
+      readLine.toUpperCase().replaceAll("\\s+","") match
         case "Q" => sys.exit(0)
         case "STACK" => return Some("drawStack")
         case "TRASH" => return Some("drawTrash")
@@ -65,9 +65,9 @@ class TUI(controller: TableController) extends Observer:
         case "T" => return Some("drawTrash")
         case "U" => return Some("undo")
         case "R" => return Some("redo")
-        case _=> print("wrong input")
+        case _=> print("wrong input \n")
     }
-    return None
+    None
 
   def moveInput(input: String, draw: Boolean): Option[Move] = {
     val Input = (" " + input).toUpperCase().replaceAll("\\s+", " ")

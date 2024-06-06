@@ -8,11 +8,21 @@ import scala.util.{Try, Success, Failure}
 import scala.swing._
 import scala.swing.event._
 import util.Observer
+import de.htwg.se.skyjo.model.CardBuilder.apply
+import javax.swing.border.LineBorder
+import java.awt.Color;
+import scala.util.boundary
+import javax.swing.border.EmptyBorder
+import javax.swing.border.Border
+import scala.annotation.TypeConstraint
+import javax.swing.border.CompoundBorder
+import de.htwg.se.skyjo.model.PlayerMatrix
+
 
 class GUI(controller: TableController) extends MainFrame with Observer:
   title = "Skyjo"
   controller.add(this)
-
+  
   def update: Unit = {
     refreshCards()
     println(controller)
@@ -29,12 +39,36 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   stackCardLabel.text = "Stack Card: XX"
   trashCardLabel.text = "Trash Card: XX"
 
+  val drawPanel=new BoxPanel(Orientation.Horizontal){
+      contents+=(drawFromTrashButton,drawFromStackButton)
+      border=Swing.EmptyBorder(10,0,10,0)
+  }
+  val undoMenu=new MenuItem("Undo"){mnemonic=Key.Z}
+  val redoMenu=new MenuItem("Redo"){mnemonic=Key.Y}
+  val quitMenu= new MenuItem("Quit"){mnemonic=Key.Q}
+  menuBar=new MenuBar{
+    contents+= new Menu("Util"){
+      mnemonic=Key.U
+      contents+=(undoMenu,redoMenu,quitMenu)
+    }
+  }
+  val playerMatrixGui=controller.table.Tabletop.map(mat=>{
+    val grid =new GridPanel(mat.size,mat.rows.size)
+    for(r<-0 until grid.rows;c<-0 until grid.columns)
+      val card=mat.getCard(r,c)
+      val cardPanel=new CardGUI(card.value,card.opened)
+      grid.contents+=cardPanel
+    grid
+    }
+  )
+
   contents = new BoxPanel(Orientation.Vertical) {
-    contents ++= Seq(drawFromTrashButton, drawFromStackButton, undoButton, redoButton, quitButton, Swing.VStrut(20), stackCardLabel, trashCardLabel)
+    contents += (drawPanel,undoButton, redoButton, quitButton, Swing.VStrut(20),stackCardLabel, trashCardLabel)
+    playerMatrixGui.foreach(panel=>contents+=(panel,Swing.VStrut(20)))
     border = Swing.EmptyBorder(30, 30, 10, 30)
   }
 
-  listenTo(drawFromTrashButton, drawFromStackButton, undoButton, redoButton, quitButton)
+  listenTo(drawFromTrashButton, drawFromStackButton,menuBar,quitMenu,undoMenu,redoMenu)
 
   reactions += {
     case ButtonClicked(`drawFromTrashButton`) =>
@@ -44,13 +78,13 @@ class GUI(controller: TableController) extends MainFrame with Observer:
       controller.drawFromStack()
       refreshCards()
       showMovePopup(true)
-    case ButtonClicked(`undoButton`) =>
+    case ButtonClicked(`undoMenu`) =>
       controller.careTaker.undo()
       refreshCards()
-    case ButtonClicked(`redoButton`) =>
+    case ButtonClicked(`redoMenu`) =>
       controller.careTaker.redo()
       refreshCards()
-    case ButtonClicked(`quitButton`) =>
+    case ButtonClicked(`quitMenu`) =>
       sys.exit(0)
   }
 
@@ -75,7 +109,6 @@ class GUI(controller: TableController) extends MainFrame with Observer:
               Dialog.showMessage(contents.head, "Invalid move input", title = "Error", Dialog.Message.Error)
             case Some(move) =>
               controller.doMove(move)
-              refreshCards()
               close()
           }
       }
@@ -112,8 +145,24 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     trashCardLabel.text = if (cardStack.getTrashCard().opened) s"Trash Card: ${cardStack.getTrashCard().value}" else "Trash Card: XX"
   }
 
-  size = new Dimension(300, 300)
+  pack()
   centerOnScreen()
   open()
   refreshCards()
 end GUI
+
+class  CardGUI(value:Int,open:Boolean) extends BorderPanel{
+  val text=new Label(value.toString)
+  add(text,BorderPanel.Position.Center)
+  background=Color.green
+  visible_=(true)
+  val wborder= new LineBorder(Color.white,3)
+  val gborder= new EmptyBorder(2,2,2,2)
+  border=new CompoundBorder(gborder,wborder)
+  visible_=(true)
+  val fixedSize=new Dimension(40,80)
+  preferredSize_=(fixedSize)
+  minimumSize_=(fixedSize)
+  maximumSize_=(fixedSize)
+  // override def preferredSize: Dimension = new Dimension(400,120)
+}
