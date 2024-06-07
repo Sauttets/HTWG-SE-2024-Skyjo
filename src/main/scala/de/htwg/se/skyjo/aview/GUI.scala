@@ -23,9 +23,10 @@ import java.awt.image.BufferedImage
 import scala.collection.MapView.Keys
 import javax.swing.JLayeredPane
 import javax.swing.JComponent
+import javax.swing.JPanel
 
 class GUI(controller: TableController) extends MainFrame with Observer:
-  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+  // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
   title = "Skyjo"
   controller.add(this)
 
@@ -33,39 +34,27 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     refreshCards()
     println(controller)
   }
-
-  val drawFromTrashButton, drawFromStackButton = new Button() {
-    // var c = new java.awt.Component(){contents=new CardGUI(controller.table.cardstack.getTrashCard())}
-    // var im = new BufferedImage(CardGUI.width, CardGUI.height, BufferedImage.TYPE_INT_ARGB);
-    // c.printAll(im.getGraphics())
-    // print(im.getHeight()+":"+im.getWidth())
-    // icon_=(new ImageIcon(im));
-    // borderPainted_=(false)
-    // contentAreaFilled_=(false)
-    preferredSize = CardGUI.fixedSize
-    minimumSize = CardGUI.fixedSize
-    maximumSize = CardGUI.fixedSize
-  }
-
+  val trashCardButton, stackCardButton = new BoxPanel(Orientation.Vertical){listenTo(mouse.clicks)}
+  case class DrawEvent(stack:Boolean) extends Event
+  stackCardButton.reactions+={case MousePressed(_,_,_,_,_)=>publish(new DrawEvent(true));print("Stack")}
+  trashCardButton.reactions+={case MousePressed(_,_,_,_,_)=>publish(new DrawEvent(false));print("Trash")}
   val stackLabel, trashLabel = new Label()
   stackLabel.text = "Stack"
   trashLabel.text = "Trash"
 
   val drawPanel = new BoxPanel(Orientation.Horizontal) {
-    contents += (new BoxPanel(Orientation.Vertical) {
-      contents += stackLabel
-      // val layers=new JComponent(){add (new JLayeredPane(){
-      //   add(drawFromStackButton.peer,JLayeredPane.PALETTE_LAYER);
-      //   add(new CardGUI(controller.table.cardstack.getStackCard()).peer,JLayeredPane.DEFAULT_LAYER);
-      //   }
-      //   )
-      // }
-      // contents += wrap(layers)
-      contents += drawFromStackButton
-    }, new BoxPanel(Orientation.Vertical) {
+    val stackPanel=new BoxPanel(Orientation.Vertical) {
+      contents+=stackLabel+=stackCardButton
+      // val layers=new JLayeredPane()
+      // layers.add(new CardGUI(controller.table.cardstack.getStackCard()).peer,null,JLayeredPane.POPUP_LAYER);
+      // layers.add(drawFromStackButton.peer,new Integer(1),JLayeredPane.PALETTE_LAYER);
+      // contents += new BorderPanel{layout(Component.wrap(layers))=BorderPanel.Position.Center}
+    }
+    val trashPanel=new BoxPanel(Orientation.Vertical) {
       contents += trashLabel
-      contents += drawFromTrashButton
-    })
+      contents += trashCardButton
+    }
+    contents +=stackPanel+=trashPanel
     border = Swing.EmptyBorder(10, 0, 10, 0)
   }
 
@@ -107,13 +96,13 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   }
   contents = mainPanel
 
-  listenTo(drawFromTrashButton, drawFromStackButton, menuBar, quitMenu, undoMenu, redoMenu,mainPanel.keys)
+  listenTo(trashCardButton, stackCardButton, menuBar, quitMenu, undoMenu, redoMenu,mainPanel.keys)
 
   reactions += {
-    case ButtonClicked(`drawFromTrashButton`) =>
+    case DrawEvent(false) =>
       controller.drawFromTrash()
       showMovePopup(false)
-    case ButtonClicked(`drawFromStackButton`) =>
+    case DrawEvent(true) =>
       controller.drawFromStack()
       showMovePopup(true)
     case ButtonClicked(`undoMenu`) | KeyPressed(_, Key.Z, Key.Modifier.Control, _)=>
@@ -199,42 +188,42 @@ class GUI(controller: TableController) extends MainFrame with Observer:
 
   def refreshCards(): Unit = {
     val cardStack = controller.table.cardstack
-    drawFromStackButton.text = if (cardStack.getStackCard().opened) s"${cardStack.getStackCard().value}" else "XX"
-    drawFromTrashButton.text = s"${cardStack.getTrashCard().value}"
+    stackCardButton.contents.clear()
+    stackCardButton.contents+=new CardGUI(cardStack.getStackCard())
+    trashCardButton.contents.clear()
+    trashCardButton.contents+=new CardGUI(cardStack.getTrashCard())
     val currentPlayer = controller.table.currentPlayer
     for(grid<-0 until controller.table.Tabletop.length) updateMatrix(grid)
     validate();
     repaint();
     mainPanel.requestFocus()
   }
-
+  refreshCards()
   pack()
   minimumSize_=(size)
   centerOnScreen()
   open()
-  refreshCards()
 end GUI
 
-class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.fixedSize) extends BorderPanel {
+class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.innerDim) extends BorderPanel {
   import CardGUI._
   def this(card: Card) = this(card.value, card.opened)
   val cardsurface = new BorderPanel() {
     if (open) {
       add(new Label(value.toString){font_=(font.deriveFont(20.0f));foreground_=(Color.black)}, BorderPanel.Position.Center)
-      background = Color.green
+      background_=(Color.green)
     } else
-      background = Color.blue
+      background_=(Color.blue)
     val wborder = new LineBorder(Color.white, 3)
     val eborder = new EmptyBorder(2, 2, 2, 2)
-    border = new CompoundBorder(eborder, wborder)
+    border_=(new CompoundBorder(eborder, wborder))
     preferredSize_=(dim)
     minimumSize_=(dim)
     maximumSize_=(dim)
   }
   add(cardsurface, BorderPanel.Position.Center)
-  border = new EmptyBorder(hpadding, vpadding, hpadding, vpadding)
-  val paddedDim = new Dimension(cardsurface.minimumSize.width + 2 * vpadding, cardsurface.maximumSize.height + 2 * hpadding)
-  background = new Color(0, 0, 0, 0)
+  border_=(new EmptyBorder(hpadding, vpadding, hpadding, vpadding))
+  background_=(new Color(0, 0, 0, 0))
   preferredSize_=(paddedDim)
   minimumSize_=(paddedDim)
   maximumSize_=(paddedDim)
@@ -243,7 +232,8 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.fixedSize) ext
 object CardGUI {
   val hpadding = 2
   val vpadding = 5
-  val fixedSize = new Dimension(50, 70)
-  val width = fixedSize.width+2*vpadding
-  val height = fixedSize.height+2*hpadding
+  val innerDim = new Dimension(50, 70)
+  val width = innerDim.width+2*vpadding
+  val height = innerDim.height+2*hpadding
+  val paddedDim = new Dimension(width, height)
 }
