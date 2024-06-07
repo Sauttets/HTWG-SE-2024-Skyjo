@@ -14,6 +14,13 @@ case class TableController(var table: PlayerTable) extends Observable:
     notifyObservers
   }
 
+    def drawFromTrash(): Unit = {
+    table = table.drawFromTrash()
+    notifyObservers
+  }
+
+
+
   def doMove(move: Move): Unit = {
     val command = new MoveCommand(this, move)
     command.execute()

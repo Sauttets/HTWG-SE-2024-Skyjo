@@ -86,18 +86,15 @@ class GUI(controller: TableController) extends MainFrame with Observer:
 
   reactions += {
     case ButtonClicked(`drawFromTrashButton`) =>
-      refreshCards()
+      controller.drawFromTrash()
       showMovePopup(false)
     case ButtonClicked(`drawFromStackButton`) =>
       controller.drawFromStack()
-      refreshCards()
       showMovePopup(true)
     case ButtonClicked(`undoMenu`) =>
       controller.careTaker.undo()
-      refreshCards()
     case ButtonClicked(`redoMenu`) =>
       controller.careTaker.redo()
-      refreshCards()
     case ButtonClicked(`quitMenu`) =>
       sys.exit(0)
   }
@@ -170,9 +167,11 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   def refreshCards(): Unit = {
     val cardStack = controller.table.cardstack
     drawFromStackButton.text = if (cardStack.getStackCard().opened) s"${cardStack.getStackCard().value}" else "XX"
-    drawFromTrashButton.text = if (cardStack.getTrashCard().opened) s"${cardStack.getTrashCard().value}" else "XX"
+    drawFromTrashButton.text = s"${cardStack.getTrashCard().value}"
     val currentPlayer = controller.table.currentPlayer
     for(grid<-0 until controller.table.Tabletop.length) updateMatrix(grid)
+    validate();
+    repaint();
   }
 
   pack()
