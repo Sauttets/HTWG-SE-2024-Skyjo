@@ -34,10 +34,10 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     refreshCards()
     println(controller)
   }
-  val trashCardButton, stackCardButton = new BoxPanel(Orientation.Vertical){listenTo(mouse.clicks)}
+  val trashCardButton, stackCardButton = new BoxPanel(Orientation.Vertical){listenTo(mouse.clicks);val active=true}
   case class DrawEvent(stack:Boolean) extends Event
-  stackCardButton.reactions+={case MousePressed(_,_,_,_,_)=>publish(new DrawEvent(true));print("Stack")}
-  trashCardButton.reactions+={case MousePressed(_,_,_,_,_)=>publish(new DrawEvent(false));print("Trash")}
+  stackCardButton.reactions+={case MousePressed(_,_,_,_,_)=>publish(new DrawEvent(true))}
+  trashCardButton.reactions+={case MousePressed(_,_,_,_,_)=>publish(new DrawEvent(false))}
   val stackLabel, trashLabel = new Label()
   stackLabel.text = "Stack"
   trashLabel.text = "Trash"
@@ -236,4 +236,11 @@ object CardGUI {
   val width = innerDim.width+2*vpadding
   val height = innerDim.height+2*hpadding
   val paddedDim = new Dimension(width, height)
+}
+
+case class CardButton(active:Boolean=true,x:Int,y:Int)extends BoxPanel(Orientation.Vertical){
+  def Highlight(bool:Boolean)={
+    if (bool) border_=(new CompoundBorder(new LineBorder(Color.yellow,3),new EmptyBorder(5,5,5,5)))
+    else border_=(new EmptyBorder(0,0,0,0))
+  }
 }
