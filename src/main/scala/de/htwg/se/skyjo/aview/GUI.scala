@@ -125,8 +125,16 @@ class GUI(controller: TableController) extends MainFrame with Observer:
       reactions += {
         case ButtonClicked(`replaceButton`) =>
           swapped = true
+          replaceButton.enabled_=(false)
+          replaceButton.background=Color.green
+          throwButton.enabled_=(true)
+          throwButton.background=new Button().background
         case ButtonClicked(`throwButton`) =>
           swapped = false
+          throwButton.enabled_=(false)
+          throwButton.background=Color.green
+          replaceButton.enabled_=(true)
+          replaceButton.background=new Button().background
         case ButtonClicked(`executeButton`) =>
           val moveInputString = s" ${if (swapped) "S" else "T"} ${rowField.text} ${colField.text}"
           moveInput(moveInputString, draw) match {
