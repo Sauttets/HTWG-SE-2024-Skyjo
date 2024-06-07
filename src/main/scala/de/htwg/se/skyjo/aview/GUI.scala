@@ -28,12 +28,10 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     println(controller)
   }
 
-  val drawFromTrashButton, drawFromStackButton, undoButton, redoButton, quitButton = new Button()
+  val drawFromTrashButton, drawFromStackButton= new Button()
   drawFromTrashButton.text = "Draw from Trash"
   drawFromStackButton.text = "Draw from Stack"
-  undoButton.text = "Undo"
-  redoButton.text = "Redo"
-  quitButton.text = "Quit"
+
 
   val stackCardLabel, trashCardLabel = new Label()
   stackCardLabel.text = "Stack Card: XX"
@@ -52,25 +50,30 @@ class GUI(controller: TableController) extends MainFrame with Observer:
       contents+=(undoMenu,redoMenu,quitMenu)
     }
   }
-  val playerMatrixGui=controller.table.Tabletop.map(mat=>{
-    val grid =new GridPanel(mat.size,mat.rows.size)
-    val cardPanel=new CardGUI(0,false)
+
+  def updateMatrix(player:Int)={
+    val grid=playerGridList(player)
+    val mat=controller.table.Tabletop(player)
+    grid.contents.clear()
     for(r<-0 until grid.rows;c<-0 until grid.columns)
-      val card=mat.getCard(r,c)
-      val cardPanel=new CardGUI(card.value,card.opened)
-      grid.contents+=cardPanel
-    val fixedSize=new Dimension(cardPanel.fixedSize.width*grid.columns,cardPanel.fixedSize.height*grid.rows)
+      grid.contents+=new CardGUI(mat.getCard(r,c))
+    grid.background=new Color(0,0,0,0)
+    val fixedSize=new Dimension((CardGUI.width+CardGUI.vpadding*2)*grid.columns,(CardGUI.height+CardGUI.hpadding*2)*grid.rows)
     grid.preferredSize_=(fixedSize)
     grid.minimumSize_=(fixedSize)
     grid.maximumSize_=(fixedSize)
-    grid
-    }
-  )
-
+    grid.border=EmptyBorder(10,5,10,5)
+  }
+  val playerGridList=controller.table.Tabletop.map(mat=>new GridPanel(mat.size,mat.rows.size))
+  val table=new FlowPanel(){
+    background=Color.black
+    for(i<-0 until playerGridList.size)
+      updateMatrix(i)
+      contents+=playerGridList(i)
+  }
   contents = new BoxPanel(Orientation.Vertical) {
-    contents += (drawPanel,undoButton, redoButton, quitButton, Swing.VStrut(20),stackCardLabel, trashCardLabel)
-    playerMatrixGui.foreach(panel=>contents+=(panel,Swing.VStrut(20)))
-    border = Swing.EmptyBorder(30, 30, 10, 30)
+    contents += (drawPanel, Swing.VStrut(20),stackCardLabel, trashCardLabel,table)
+    // border = Swing.EmptyBorder(30, 30, 10, 30)
   }
 
   listenTo(drawFromTrashButton, drawFromStackButton,menuBar,quitMenu,undoMenu,redoMenu)
@@ -148,26 +151,47 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     val cardStack = controller.table.getCardStack()
     stackCardLabel.text = if (cardStack.getStackCard().opened) s"Stack Card: ${cardStack.getStackCard().value}" else "Stack Card: XX"
     trashCardLabel.text = if (cardStack.getTrashCard().opened) s"Trash Card: ${cardStack.getTrashCard().value}" else "Trash Card: XX"
+    val currentPlayer=controller.table.currentPlayer
+    updateMatrix(if (currentPlayer-1==(-1))controller.table.Tabletop.size-1  else currentPlayer-1)
   }
 
   pack()
+  minimumSize_=(size)
   centerOnScreen()
   open()
   refreshCards()
 end GUI
 
-class  CardGUI(value:Int,open:Boolean) extends BorderPanel{
-  val text=new Label(value.toString)
-  add(text,BorderPanel.Position.Center)
-  background=Color.green
-  visible_=(true)
-  val wborder= new LineBorder(Color.white,3)
-  val gborder= new EmptyBorder(2,2,2,2)
-  border=new CompoundBorder(gborder,wborder)
-  visible_=(true)
+class  CardGUI(value:Int,open:Boolean,dim:Dimension=CardGUI.fixedSize) extends BorderPanel{
+  import CardGUI._
+  def this(card:Card)=this(card.value,card.opened)
+  val cardsurface=new BorderPanel(){
+    if(open){
+      add(new Label(value.toString),BorderPanel.Position.Center)
+      background=Color.green
+    }
+    else
+      background=Color.blue
+    val wborder= new LineBorder(Color.white,3)
+    val eborder= new EmptyBorder(2,2,2,2)
+    border=new CompoundBorder(eborder,wborder)
+    preferredSize_=(dim)
+    minimumSize_=(dim)
+    maximumSize_=(dim)
+  }
+  add(cardsurface,BorderPanel.Position.Center)
+  border=new EmptyBorder(hpadding,vpadding,hpadding,vpadding)
+  val paddedDim=new Dimension(cardsurface.minimumSize.width+2*vpadding,cardsurface.maximumSize.height+2*hpadding)
+  background=new Color(0,0,0,0)
+  preferredSize_=(paddedDim)
+  minimumSize_=(paddedDim)
+  maximumSize_=(paddedDim)
+}
+
+object CardGUI{
+  val hpadding=2
+  val vpadding=5
   val fixedSize=new Dimension(50,70)
-  preferredSize_=(fixedSize)
-  minimumSize_=(fixedSize)
-  maximumSize_=(fixedSize)
-  // override def preferredSize: Dimension = new Dimension(400,120)
+  val width=fixedSize.width
+  val height=fixedSize.height
 }
