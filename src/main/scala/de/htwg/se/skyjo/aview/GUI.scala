@@ -6,6 +6,7 @@ import controller.TableController
 
 import scala.util.{Try, Success, Failure}
 import scala.swing._
+import scala.swing.Component._
 import scala.swing.event._
 import util.Observer
 import de.htwg.se.skyjo.model.CardBuilder.apply
@@ -14,8 +15,17 @@ import java.awt.Color
 import scala.util.boundary
 import javax.swing.border.{EmptyBorder, Border, CompoundBorder}
 import de.htwg.se.skyjo.model.PlayerMatrix
+import javax.swing.UIManager
+import java.io.File
+import javax.imageio.ImageIO
+import javax.swing.ImageIcon
+import java.awt.image.BufferedImage
+import scala.collection.MapView.Keys
+import javax.swing.JLayeredPane
+import javax.swing.JComponent
 
 class GUI(controller: TableController) extends MainFrame with Observer:
+  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
   title = "Skyjo"
   controller.add(this)
 
@@ -25,12 +35,17 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   }
 
   val drawFromTrashButton, drawFromStackButton = new Button() {
-    preferredSize = new Dimension(50, 70)
-    minimumSize = new Dimension(50, 70)
-    maximumSize = new Dimension(50, 70)
+    // var c = new java.awt.Component(){contents=new CardGUI(controller.table.cardstack.getTrashCard())}
+    // var im = new BufferedImage(CardGUI.width, CardGUI.height, BufferedImage.TYPE_INT_ARGB);
+    // c.printAll(im.getGraphics())
+    // print(im.getHeight()+":"+im.getWidth())
+    // icon_=(new ImageIcon(im));
+    // borderPainted_=(false)
+    // contentAreaFilled_=(false)
+    preferredSize = CardGUI.fixedSize
+    minimumSize = CardGUI.fixedSize
+    maximumSize = CardGUI.fixedSize
   }
-  drawFromTrashButton.text = "Trash Card: XX"
-  drawFromStackButton.text = "Stack Card: XX"
 
   val stackLabel, trashLabel = new Label()
   stackLabel.text = "Stack"
@@ -39,6 +54,13 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   val drawPanel = new BoxPanel(Orientation.Horizontal) {
     contents += (new BoxPanel(Orientation.Vertical) {
       contents += stackLabel
+      // val layers=new JComponent(){add (new JLayeredPane(){
+      //   add(drawFromStackButton.peer,JLayeredPane.PALETTE_LAYER);
+      //   add(new CardGUI(controller.table.cardstack.getStackCard()).peer,JLayeredPane.DEFAULT_LAYER);
+      //   }
+      //   )
+      // }
+      // contents += wrap(layers)
       contents += drawFromStackButton
     }, new BoxPanel(Orientation.Vertical) {
       contents += trashLabel
@@ -64,7 +86,7 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     for (r <- 0 until grid.rows; c <- 0 until grid.columns)
       grid.contents += new CardGUI(mat.getCard(r, c))
     grid.background = new Color(0, 0, 0, 0)
-    val fixedSize = new Dimension((CardGUI.width + CardGUI.vpadding * 2) * grid.columns, (CardGUI.height + CardGUI.hpadding * 2) * grid.rows)
+    val fixedSize = new Dimension(CardGUI.width  * grid.columns, CardGUI.height* grid.rows)
     grid.preferredSize_=(fixedSize)
     grid.minimumSize_=(fixedSize)
     grid.maximumSize_=(fixedSize)
@@ -78,11 +100,14 @@ class GUI(controller: TableController) extends MainFrame with Observer:
       updateMatrix(i)
       contents += playerGridList(i)
   }
-  contents = new BoxPanel(Orientation.Vertical) {
+  val mainPanel=new BoxPanel(Orientation.Vertical){
+    focusable_=(true)
     contents += (drawPanel, Swing.VStrut(20), table)
+    requestFocus()
   }
+  contents = mainPanel
 
-  listenTo(drawFromTrashButton, drawFromStackButton, menuBar, quitMenu, undoMenu, redoMenu)
+  listenTo(drawFromTrashButton, drawFromStackButton, menuBar, quitMenu, undoMenu, redoMenu,mainPanel.keys)
 
   reactions += {
     case ButtonClicked(`drawFromTrashButton`) =>
@@ -91,11 +116,11 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     case ButtonClicked(`drawFromStackButton`) =>
       controller.drawFromStack()
       showMovePopup(true)
-    case ButtonClicked(`undoMenu`) =>
+    case ButtonClicked(`undoMenu`) | KeyPressed(_, Key.Z, Key.Modifier.Control, _)=>
       controller.careTaker.undo()
-    case ButtonClicked(`redoMenu`) =>
+    case ButtonClicked(`redoMenu`) | KeyPressed(_, Key.Y, Key.Modifier.Control, _) =>
       controller.careTaker.redo()
-    case ButtonClicked(`quitMenu`) =>
+    case ButtonClicked(`quitMenu`) | KeyPressed(_, Key.Q, Key.Modifier.Control, _)=>
       sys.exit(0)
   }
 
@@ -105,7 +130,7 @@ class GUI(controller: TableController) extends MainFrame with Observer:
       var swapped: Boolean = false
       val rowField, colField = new TextField { columns = 5 }
       val replaceButton = new Button { text = "Replace" }
-      val throwButton = new Button { text = "Throw" }
+      val throwButton = new Button { text = "Throw"; enabled_=(false); background=Color.green}
       val executeButton = new Button { text = "Execute" }
 
       contents = new BoxPanel(Orientation.Vertical) {
@@ -180,6 +205,7 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     for(grid<-0 until controller.table.Tabletop.length) updateMatrix(grid)
     validate();
     repaint();
+    mainPanel.requestFocus()
   }
 
   pack()
@@ -194,7 +220,7 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.fixedSize) ext
   def this(card: Card) = this(card.value, card.opened)
   val cardsurface = new BorderPanel() {
     if (open) {
-      add(new Label(value.toString), BorderPanel.Position.Center)
+      add(new Label(value.toString){font_=(font.deriveFont(20.0f));foreground_=(Color.black)}, BorderPanel.Position.Center)
       background = Color.green
     } else
       background = Color.blue
@@ -218,6 +244,6 @@ object CardGUI {
   val hpadding = 2
   val vpadding = 5
   val fixedSize = new Dimension(50, 70)
-  val width = fixedSize.width
-  val height = fixedSize.height
+  val width = fixedSize.width+2*vpadding
+  val height = fixedSize.height+2*hpadding
 }
