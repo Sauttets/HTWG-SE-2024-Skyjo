@@ -2,7 +2,7 @@ package de.htwg.se.skyjo.model
 import de.htwg.se.skyjo.util.CardStackStrategy
 
 case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrategy, playerCount: Int, currentPlayer: Int):
-    def this(playerCount: Int = 2, width: Int = 4, height: Int = 4,lcard:Boolean=true) = {
+    def this(playerCount: Int = 3, width: Int = 4, height: Int = 4,lcard:Boolean=true) = {
         this(List.tabulate(playerCount) { _ =>
             new PlayerMatrix(width, height)
             }, new LCardStack(), playerCount, 0)
@@ -31,8 +31,6 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
         str
     }
 
-    def getCardStack(): CardStackStrategy = cardstack
-    def getPlayerMatrices(): List[PlayerMatrix] = Tabletop
 
     def getPlayerMatricesString(): String = {
         val colors = Array("\u001B[31m", "\u001B[32m", "\u001B[35m", "\u001B[36m", "\u001B[33m")

@@ -1,7 +1,7 @@
 package de.htwg.se.skyjo
 package aview
 
-import model.{Move, Card, PlayerTable}
+import model.{Move, Card}
 import controller.TableController
 
 import scala.util.{Try, Success, Failure}
@@ -74,7 +74,7 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   val playerGridList = controller.table.Tabletop.map(mat => new GridPanel(mat.size, mat.rows.size))
   val table = new FlowPanel() {
     background = Color.black
-    for (i <- 0 until playerGridList.size)
+    for (i <- 0 until playerGridList.length)
       updateMatrix(i)
       contents += playerGridList(i)
   }
@@ -168,11 +168,11 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   }
 
   def refreshCards(): Unit = {
-    val cardStack = controller.table.getCardStack()
+    val cardStack = controller.table.cardstack
     drawFromStackButton.text = if (cardStack.getStackCard().opened) s"${cardStack.getStackCard().value}" else "XX"
     drawFromTrashButton.text = if (cardStack.getTrashCard().opened) s"${cardStack.getTrashCard().value}" else "XX"
     val currentPlayer = controller.table.currentPlayer
-    updateMatrix(if (currentPlayer - 1 == (-1)) controller.table.Tabletop.size - 1 else currentPlayer - 1)
+    for(grid<-0 until controller.table.Tabletop.length) updateMatrix(grid)
   }
 
   pack()
