@@ -2,7 +2,8 @@ package de.htwg.se.skyjo.util
 import de.htwg.se.skyjo.model._
 
 trait CardStackStrategy {
-  def flipStackTop() :CardStackStrategy
+  def openStackTop() :CardStackStrategy
+  def closeStackTop():CardStackStrategy
   def removeTrashTop(): CardStackStrategy
   def discard(card: Card): CardStackStrategy 
   def removeStackTop(): CardStackStrategy

@@ -13,10 +13,11 @@ class MoveCommand(controller: TableController, move: Move) extends Command:
     controller.notifyObservers
   
   override def undo(): Unit =
-    previousState.foreach { state =>
-      controller.table = state
-      controller.notifyObservers
-    }
+    previousState match
+      case Some(s) =>
+        controller.table = s.copy(s.Tabletop, s.cardstack.closeStackTop(), s.playerCount, s.currentPlayer)
+        controller.notifyObservers
+      case None => 
   
   override def redo(): Unit =
     execute()

@@ -2,7 +2,8 @@ package de.htwg.se.skyjo.model
 import scala.util.Random
 
 case class Card(value: Int, opened: Boolean = false) {
-  def flip() = copy(value = this.value, opened = true)
+  def open() = copy(value, true)
+  def close()= copy(value,false)
 }
 
 object CardBuilder {

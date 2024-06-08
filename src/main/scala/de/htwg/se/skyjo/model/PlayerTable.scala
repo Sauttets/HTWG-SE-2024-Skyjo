@@ -59,7 +59,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     }
 
     def drawFromStack() = {
-        copy(Tabletop, cardstack = cardstack.flipStackTop(), playerCount, currentPlayer)
+        copy(Tabletop, cardstack = cardstack.openStackTop(), playerCount, currentPlayer)
     }
 
     def drawFromTrash() = {
