@@ -28,6 +28,10 @@ import de.htwg.se.skyjo.aview.CardGUI.buttonBorder
 import javax.swing.text.Highlighter.Highlight
 import javax.swing.text.Highlighter
 import scala.collection.mutable.Buffer
+import java.awt.Graphics
+import java.awt.RenderingHints
+import javax.swing.JLabel
+import scala.compiletime.ops.float
 
 class GUI(controller: TableController) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -78,30 +82,32 @@ class GUI(controller: TableController) extends MainFrame with Observer:
       contents += (undoMenu, redoMenu, quitMenu)
     }
   }
-  def initMatrix(player:Int)={
-    val grid = playerGridList(player)
-    for (r <- 0 until grid.rows; c <- 0 until grid.columns)
-      grid.contents+=new ButtonPanel(r,c)
-    grid.opaque_=(false)
-    val fixedSize = new Dimension((CardGUI.width+3)  * grid.columns, (CardGUI.height+3)* grid.rows)
-    grid.preferredSize_=(fixedSize)
-    grid.minimumSize_=(fixedSize)
-    grid.maximumSize_=(fixedSize)
-    grid.border = EmptyBorder(10, 5, 10, 5)
-    updateMatrix(player)
+  def initMatrix()={
+    playerGridList.foreach(grid =>
+      for (r <- 0 until grid.rows; c <- 0 until grid.columns)
+        grid.contents+=new ButtonPanel(r,c){reactions+={case MousePressed(_,_,_,_,_)=>print(x+":"+y)}}
+      grid.opaque_=(false)
+      val fixedSize = new Dimension((CardGUI.width+3)  * grid.columns, (CardGUI.height+3)* grid.rows)
+      grid.preferredSize_=(fixedSize)
+      grid.minimumSize_=(fixedSize)
+      grid.maximumSize_=(fixedSize)
+      grid.border_=(EmptyBorder(10, 5, 10, 5))
+    )
   }
-  def updateMatrix(player: Int) = {
-    val grid = playerGridList(player)
-    val mat = controller.table.Tabletop(player)
-    for (r <- 0 until grid.rows; c <- 0 until grid.columns)
-      grid.contents(r*grid.columns+c).asInstanceOf[ButtonPanel].setContent(new CardGUI(mat.getCard(r, c)))
+  def updateMatrix(currplayer: Int) = {
+    for(i<-0 until playerGridList.length)
+      val grid = playerGridList(i)
+      val mat = controller.table.Tabletop(i)
+      grid.border_=(if (i!=currplayer)EmptyBorder(10, 5, 10, 5) else LineBorder(Color.red,5,true))
+      for (c <- 0 until grid.columns;r <- 0 until grid.rows)
+        grid.contents(r*grid.columns+c).asInstanceOf[ButtonPanel].setContent(new CardGUI(mat.getCard(r, c))).active_(i==currplayer).highlight_(false)
   }
 
-  val playerGridList = controller.table.Tabletop.map(mat => new GridPanel(mat.size, mat.rows.size))
+  val playerGridList = controller.table.Tabletop.map(mat =>{new GridPanel(mat.rows.size, mat.rows(0).size)})
   val table = new FlowPanel() {
     background = Color.black
+    initMatrix()
     for (i <- 0 until playerGridList.length)
-      initMatrix(i)
       contents += playerGridList(i)
   }
   val mainPanel=new BoxPanel(Orientation.Vertical){
@@ -176,7 +182,6 @@ class GUI(controller: TableController) extends MainFrame with Observer:
               close()
           }
       }
-
       centerOnScreen()
       open()
     }
@@ -208,7 +213,7 @@ class GUI(controller: TableController) extends MainFrame with Observer:
     stackCardButton.setContent(new CardGUI(cardStack.getStackCard()))
     trashCardButton.setContent(new CardGUI(cardStack.getTrashCard()))
     val currentPlayer = controller.table.currentPlayer
-    for(grid<-0 until controller.table.Tabletop.length) updateMatrix(grid)
+    updateMatrix(currentPlayer)
     validate();
     repaint();
     mainPanel.requestFocus()
@@ -223,13 +228,19 @@ end GUI
 class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.cardDim) extends BorderPanel {
   import CardGUI._
   def this(card: Card) = this(card.value, card.opened)
-  if (open) {
+  if (open) 
     add(new Label(value.toString){font_=(font.deriveFont(20.0f));foreground_=(Color.black)}, BorderPanel.Position.Center)
     add(new Label(value.toString,null,Alignment.Left){foreground_=(Color.black)}, BorderPanel.Position.North)
     add(new Label(value.toString,null,Alignment.Right){foreground_=(Color.black)}, BorderPanel.Position.South)
-    background_=(Color.green)
-  } else
-    background_=(Color.blue)
+    background_=(CardGUI.valueColor(value))
+  else
+    add(new GridPanel(2,2){
+      contents+=wrap(GradientPanel(true,Color.BLUE,Color.YELLOW))
+      contents+=wrap(GradientPanel(false,Color.YELLOW,Color.GREEN))
+      contents+=wrap(GradientPanel(false,new Color(153,0,153),Color.YELLOW))
+      contents+=wrap(GradientPanel(true,Color.YELLOW,Color.RED))
+    }
+    ,BorderPanel.Position.Center)
   val wborder = new LineBorder(Color.white, 3)
   val eborder = new EmptyBorder(2, 2, 2, 2)
   border_=(new CompoundBorder(eborder, wborder))
@@ -239,16 +250,29 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.cardDim) exten
   preferredSize_=(cardDim)
   minimumSize_=(cardDim)
   maximumSize_=(cardDim)
+  override def enabled_=(b: Boolean)= background_=(if(b)background.brighter() else background.darker())
 }
 
 object CardGUI {
-  val hpadding = 5
-  val vpadding = 8
+  val cardHPadding = 5
+  val cardVPadding = 8
   val cardDim = new Dimension(50, 70)
-  val width = cardDim.width+2*vpadding
-  val height = cardDim.height+2*hpadding
+  val width = cardDim.width+2*cardVPadding
+  val height = cardDim.height+2*cardHPadding
   val buttonBorder=new EmptyBorder(5,8,5,8)
   val cardButtonDim = new Dimension(width, height)
+  def valueColor(value:Int):Color={
+    if(value<0)
+      Color.blue
+    if(value==0)
+      Color.blue.brighter()
+    if(value<5)
+      Color.green
+    if(value<9)
+      Color.yellow
+    else
+      Color.red.brighter()
+  }
 }
 
 case class ButtonPanel(var active:Boolean,var highlight:Boolean,x:Int,y:Int)extends BoxPanel(Orientation.Vertical){
@@ -256,16 +280,32 @@ case class ButtonPanel(var active:Boolean,var highlight:Boolean,x:Int,y:Int)exte
   border_=(CardGUI.buttonBorder)
   opaque_=(false)
   def highlight_(high:Boolean)={
-    border_= (if (high)new CompoundBorder(new LineBorder(Color.yellow,3),new EmptyBorder(2,5,2,5)) 
+    border_= (if (high)new CompoundBorder(new LineBorder(Color.yellow,3,true),new EmptyBorder(2,5,2,5)) 
     else CardGUI.buttonBorder)
     highlight=high
   }
   def active_(act:Boolean)={
     contents.foreach(c=>c.enabled_=(act))
-    active=act;enabled_=(act)
+    enabled_=(act)
+    active=act
     this
   }
   def setContent(comp:Component)={contents.clear();contents+=comp; this}
   listenTo(mouse.clicks)
   reactions+={case MousePressed(_,_,_,_,_)=>if(active)highlight_(!highlight)}
+}
+
+class GradientPanel(startTop:Boolean,color1:Color,color2:Color) extends JPanel {
+  import java.awt._
+    override def paint(g: Graphics): Unit = 
+        var g2d = g.asInstanceOf[Graphics2D]
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
+        g2d.setRenderingHint(RenderingHints.KEY_DITHERING,RenderingHints.VALUE_DITHER_ENABLE)
+        val y1 = if(startTop) 0 else getHeight()
+        val y2 = if(!startTop) 0 else getHeight()
+        var gp = new GradientPaint(0, y1, color1, getWidth(), y2, color2)
+        g2d.setPaint(gp)
+        g2d.fillRect(0, 0, getWidth(), getHeight())
+        super.paint(g)
+    setOpaque(false)
 }

@@ -17,7 +17,7 @@ class MoveCommand(controller: TableController, move: Move) extends Command:
       case Some(s) =>
         controller.table = s.copy(s.Tabletop, s.cardstack.closeStackTop(), s.playerCount, s.currentPlayer)
         controller.notifyObservers
-      case None => 
+      case None => print("no previous state")
   
   override def redo(): Unit =
     execute()

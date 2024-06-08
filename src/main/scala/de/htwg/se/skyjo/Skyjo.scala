@@ -8,7 +8,7 @@ import scala.concurrent.Future
 import scala.swing.Swing
 
 @main def main(): Unit = {
-  val table = new PlayerTable()
+  val table = new PlayerTable(4,4,3)
   val tableController = new TableController(table)
   
   // Initialize TUI
