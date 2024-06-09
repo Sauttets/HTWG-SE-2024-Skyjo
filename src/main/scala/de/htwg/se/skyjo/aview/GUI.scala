@@ -32,6 +32,9 @@ import java.awt.Graphics
 import java.awt.RenderingHints
 import javax.swing.JLabel
 import scala.compiletime.ops.float
+import java.awt.Paint
+import java.awt.TexturePaint
+import java.awt.geom.Rectangle2D
 
 class GUI(controller: TableController) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -45,11 +48,11 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   val stackCardButton = new ButtonPanel(0,-1)
   val trashCardButton=new ButtonPanel(1,-1){
     reactions+={
-      case MousePressed(_,_,_,_,_)=>
+      case MousePressed(_,p,_,_,_)=>
         if (active)
           publish(new DrawEvent(false))
           stackCardButton.active_(false)
-        }
+      }
   }
   stackCardButton.reactions+={case MousePressed(_,_,_,_,_)=>{
       if(stackCardButton.active) 
@@ -223,24 +226,42 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   minimumSize_=(size)
   centerOnScreen()
   open()
+  println("Working Directory = " + System.getProperty("user.dir"))
 end GUI
 
 class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.cardDim) extends BorderPanel {
   import CardGUI._
   def this(card: Card) = this(card.value, card.opened)
-  if (open) 
+  override def paint(g: Graphics2D): Unit = {
+    super.paint(g)
+    if(open)
+      // new TexturePaint
+      g.setPaint(Color.white)
+      g.fillOval(2,3,20,20)
+      g.fillOval(28,47,20,20)
+    // else 
+    //   val p=new TexturePaint(photo1,bounds.asInstanceOf[Rectangle2D])
+    //   g.setPaint(p)
+    //   g.fillRect(bounds.x,bounds.x,bounds.width,bounds.height)
+    paintChildren(g)
+  }
+  if (open)
+    val text= if(value.toString().length()==2) value.toString() else " "+value
     add(new Label(value.toString){font_=(font.deriveFont(20.0f));foreground_=(Color.black)}, BorderPanel.Position.Center)
-    add(new Label(value.toString,null,Alignment.Left){foreground_=(Color.black)}, BorderPanel.Position.North)
-    add(new Label(value.toString,null,Alignment.Right){foreground_=(Color.black)}, BorderPanel.Position.South)
+    add(new Label(text,null,Alignment.Left){foreground_=(Color.black)}, BorderPanel.Position.North)
+    add(new Label(value.toString().padTo(2,' '),null,Alignment.Right){foreground_=(Color.black)}, BorderPanel.Position.South)
     background_=(CardGUI.valueColor(value))
   else
-    add(new GridPanel(2,2){
-      contents+=wrap(GradientPanel(true,Color.BLUE,Color.YELLOW))
-      contents+=wrap(GradientPanel(false,Color.YELLOW,Color.GREEN))
-      contents+=wrap(GradientPanel(false,new Color(153,0,153),Color.YELLOW))
-      contents+=wrap(GradientPanel(true,Color.YELLOW,Color.RED))
+    add(new GridPanel(1,1){
+      // opaque_=(false)
+      contents+=wrap(GradientPanel(true,Color.BLUE,Color.RED))
+      // contents+=wrap(GradientPanel(true,Color.BLUE,Color.YELLOW))
+      // contents+=wrap(GradientPanel(false,Color.YELLOW,Color.GREEN))
+      // contents+=wrap(GradientPanel(false,new Color(153,0,153),Color.YELLOW))
+      // contents+=wrap(GradientPanel(true,Color.YELLOW,Color.RED))
     }
     ,BorderPanel.Position.Center)
+  val photo1 = ImageIO.read(new File("pics"+File.separator+"backSide.png"))
   val wborder = new LineBorder(Color.white, 3)
   val eborder = new EmptyBorder(2, 2, 2, 2)
   border_=(new CompoundBorder(eborder, wborder))
@@ -273,13 +294,13 @@ object CardGUI {
   val cardButtonDim = new Dimension(width, height)
   def valueColor(value:Int):Color={
     if(value<0)
-      Color.blue
+      return Color.blue
     if(value==0)
-      Color.blue.brighter()
+      return Color(13,110,170,255)
     if(value<5)
-      Color.green
+      return Color.green
     if(value<9)
-      Color.yellow
+      return Color.yellow
     else
       Color.red.brighter()
   }
