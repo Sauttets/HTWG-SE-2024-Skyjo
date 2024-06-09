@@ -250,7 +250,17 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.cardDim) exten
   preferredSize_=(cardDim)
   minimumSize_=(cardDim)
   maximumSize_=(cardDim)
-  override def enabled_=(b: Boolean)= background_=(if(b)background.brighter() else background.darker())
+  override def enabled_=(b: Boolean)=
+    if(b) 
+      if(open)
+        background_=(background.brighter())
+      else
+        contents(0).asInstanceOf[Container].contents.foreach(c=>c.peer.asInstanceOf[GradientPanel].enabled_(true))
+    else 
+      if(open)
+        background_=(background.darker())
+      else
+        contents(0).asInstanceOf[Container].contents.foreach(c=>c.peer.asInstanceOf[GradientPanel].enabled_(false))
 }
 
 object CardGUI {
@@ -295,7 +305,7 @@ case class ButtonPanel(var active:Boolean,var highlight:Boolean,x:Int,y:Int)exte
   reactions+={case MousePressed(_,_,_,_,_)=>if(active)highlight_(!highlight)}
 }
 
-class GradientPanel(startTop:Boolean,color1:Color,color2:Color) extends JPanel {
+class GradientPanel(startTop:Boolean,var color1:Color,var color2:Color) extends JPanel {
   import java.awt._
     override def paint(g: Graphics): Unit = 
         var g2d = g.asInstanceOf[Graphics2D]
@@ -308,4 +318,12 @@ class GradientPanel(startTop:Boolean,color1:Color,color2:Color) extends JPanel {
         g2d.fillRect(0, 0, getWidth(), getHeight())
         super.paint(g)
     setOpaque(false)
+    def enabled_ (bool:Boolean)={
+      if(bool)
+        color1=color1.brighter()
+        color2=color2.brighter()
+      else
+        color1=color1.darker()
+        color2=color2.darker()
+    }
 }
