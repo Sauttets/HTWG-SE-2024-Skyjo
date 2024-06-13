@@ -100,13 +100,13 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   def updateMatrix(currplayer: Int) = {
     for(i<-0 until playerGridList.length)
       val grid = playerGridList(i)
-      val mat = controller.table.Tabletop(i)
+      val mat = controller.getTabletop()(i)
       grid.border_=(if (i!=currplayer)EmptyBorder(10, 5, 10, 5) else LineBorder(Color.red,5,true))
       for (c <- 0 until grid.columns;r <- 0 until grid.rows)
         grid.contents(r*grid.columns+c).asInstanceOf[ButtonPanel].setContent(new CardGUI(mat.getCard(r, c))).active_(i==currplayer).highlight_(false)
   }
 
-  val playerGridList = controller.table.Tabletop.map(mat =>{new GridPanel(mat.rows.size, mat.rows(0).size)})
+  val playerGridList = controller.getTabletop().map(mat =>{new GridPanel(mat.rows.size, mat.rows(0).size)})
   val table = new FlowPanel() {
     background = Color.black
     initMatrix()
@@ -212,10 +212,10 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   }
 
   def refreshCards(): Unit = {
-    val cardStack = controller.table.cardstack
+    val cardStack = controller.getStackCard()
     stackCardButton.setContent(new CardGUI(cardStack.getStackCard()))
     trashCardButton.setContent(new CardGUI(cardStack.getTrashCard()))
-    val currentPlayer = controller.table.currentPlayer
+    val currentPlayer = controller.getCurrenPlayer()
     updateMatrix(currentPlayer)
     validate();
     repaint();

@@ -23,26 +23,26 @@ class TUI(controller: TableController) extends Observer:
   def getInputAndPrintLoop(): Unit =
     inputAndPrint()
     if(controller.gameEnd())
-      println(controller.table.getPlayerString(controller.table.currentPlayer-1)+ " ENDED THE GAME: one more round to go")
+      println(controller.getPlayerString(controller.getCurrenPlayer()-1)+ " ENDED THE GAME: one more round to go")
       return
     getInputAndPrintLoop()
 
   def lastRound():Unit=
-    for (x<-1 to controller.table.playerCount-1)
+    for (x<-1 to controller.getPLayerCount()-1)
       inputAndPrint()
-    val scores=controller.table.getScores()
-    scores.foreach((score,player)=>println(controller.table.getPlayerString(player)+" : "+score))
+    val scores=controller.getScores()
+    scores.foreach((score,player)=>println(controller.getPlayerString(player)+" : "+score))
     val winner=scores.minBy((score,player)=>score)
-    println(controller.table.getPlayerString(winner(1))+" WON WITH ONLY "+winner(0)+" POINTS")
+    println(controller.getPlayerString(winner(1))+" WON WITH ONLY "+winner(0)+" POINTS")
 
   def inputAndPrint():Unit=
-    println(controller.table.getCurrenPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash), (u)ndo, (r)edo ")
+    println(controller.getCurrenPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash), (u)ndo, (r)edo ")
     drawInput() match
       case None  =>
       case Some(command) => command match
         case "drawStack" =>
           controller.drawFromStack()
-          println(controller.table.getCurrenPlayerString())
+          println(controller.getCurrenPlayerString())
           println("Please enter your move: (swapped, row, col)")
           moveInput(readLine, true) match
             case None       =>

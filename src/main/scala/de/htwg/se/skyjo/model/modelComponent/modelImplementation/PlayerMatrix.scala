@@ -1,4 +1,4 @@
-package de.htwg.se.skyjo.model
+package de.htwg.se.skyjo.model.modelComponent.modelImplementation
 
 
 case class PlayerMatrix(rows: Vector[Vector[Card]]):

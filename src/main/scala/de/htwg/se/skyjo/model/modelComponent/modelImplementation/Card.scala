@@ -1,7 +1,8 @@
-package de.htwg.se.skyjo.model
+package de.htwg.se.skyjo.model.modelComponent.modelImplementation
 import scala.util.Random
+import de.htwg.se.skyjo.model.modelComponent.modelInterface.CardInterface
 
-case class Card(value: Int, opened: Boolean = false) {
+case class Card(value: Int, opened: Boolean = false) extends CardInterface{
   def open() = copy(value, true)
   def close()= copy(value,false)
 }

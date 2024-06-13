@@ -5,7 +5,7 @@ import model._
 import util._
 
 
-case class TableController(var table: PlayerTable) extends Observable:
+case class TableController(var table: ModelInterface) extends Observable:
   
   val careTaker=new CareTaker()
 
@@ -18,8 +18,6 @@ case class TableController(var table: PlayerTable) extends Observable:
     table = table.drawFromTrash()
     notifyObservers
   }
-
-
 
   def doMove(move: Move): Unit = {
     val command = new MoveCommand(this, move)
@@ -45,3 +43,21 @@ case class TableController(var table: PlayerTable) extends Observable:
   }
 
   override def toString = table.getTableString()
+
+  def getPlayerString(player: Int): String = table.getPlayerString(player)
+
+  def getScores(): List[(Int, Int)] = table.getScores()
+
+  def getCurrenPlayerString(): String = table.getCurrenPlayerString()
+
+  def getCurrenPlayer(): Int = table.currentPlayer
+
+  def getPLayerCount(): Int = table.playerCount
+
+  def getStackCard(): Card = table.cardstack.getStackCard()
+
+  def getTrashCard(): Card = table.cardstack.getTrashCard()
+
+  def getTabletop(): Vector[PlayerMatrix] = table.Tabletop
+
+  

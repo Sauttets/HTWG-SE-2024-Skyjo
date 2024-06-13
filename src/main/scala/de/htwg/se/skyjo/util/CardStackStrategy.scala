@@ -5,8 +5,8 @@ trait CardStackStrategy {
   def openStackTop() :CardStackStrategy
   def closeStackTop():CardStackStrategy
   def removeTrashTop(): CardStackStrategy
-  def discard(card: Card): CardStackStrategy 
+  def discard(card: CardInterface): CardStackStrategy 
   def removeStackTop(): CardStackStrategy
-  def getStackCard(): Card
+  def getStackCard(): CardInterface
   def getTrashCard(): Card
 }

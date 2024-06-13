@@ -1,6 +1,6 @@
 package de.htwg.se.skyjo
 
-import de.htwg.se.skyjo.model.PlayerTable
+import de.htwg.se.skyjo.model.modelComponent._
 import de.htwg.se.skyjo.controller.TableController
 import de.htwg.se.skyjo.aview.{TUI, GUI}
 import scala.concurrent.ExecutionContext.Implicits.global

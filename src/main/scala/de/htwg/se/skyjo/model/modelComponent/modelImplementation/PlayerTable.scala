@@ -1,7 +1,9 @@
-package de.htwg.se.skyjo.model
+package de.htwg.se.skyjo.model.modelComponent.modelImplementation
 import de.htwg.se.skyjo.util.CardStackStrategy
 
-case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrategy, playerCount: Int, currentPlayer: Int):
+import de.htwg.se.skyjo.model.modelComponent.ModelInterface
+
+case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrategy, playerCount: Int, currentPlayer: Int) extends ModelInterface:
     def this(playerCount: Int = 2, width: Int = 4, height: Int = 4,lcard:Boolean=true) = {
         this(List.tabulate(playerCount) { _ =>
             new PlayerMatrix(height, width)
@@ -9,7 +11,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     }
     def setCardStackStrategy(strat:CardStackStrategy)= copy(Tabletop,strat,playerCount,currentPlayer)
 
-    def padValue(card: Card): String = {
+    private def padValue(card: Card): String = {
         if (card.opened) {
             if (card.value >= 0 && card.value < 10) {
                 "│ 0" + card.value + " "

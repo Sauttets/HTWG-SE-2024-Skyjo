@@ -1,4 +1,4 @@
-package de.htwg.se.skyjo.model
+package de.htwg.se.skyjo.model.modelComponent.modelImplementation
 import scala.util.Random
 import de.htwg.se.skyjo.util.CardStackStrategy
 

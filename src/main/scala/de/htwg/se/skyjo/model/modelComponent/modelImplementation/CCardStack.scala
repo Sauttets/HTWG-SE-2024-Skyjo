@@ -1,4 +1,4 @@
-package de.htwg.se.skyjo.model
+package de.htwg.se.skyjo.model.modelComponent.modelImplementation
 import de.htwg.se.skyjo.util.CardStackStrategy
 
 case class CCardStack(stackCard: Card, trashCard: Card) extends CardStackStrategy:
