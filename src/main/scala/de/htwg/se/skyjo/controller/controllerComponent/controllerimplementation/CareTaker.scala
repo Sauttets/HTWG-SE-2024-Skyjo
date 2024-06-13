@@ -1,8 +1,8 @@
 package de.htwg.se.skyjo
-package controller
+package controller.controllerComponent.controllerimplementation
 
 import scala.collection.mutable.Stack
-import model.Memento
+import util.Memento
 
 class CareTaker {
   private val undoStack: Stack[Memento] = Stack()

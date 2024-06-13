@@ -1,11 +1,11 @@
 package de.htwg.se.skyjo
 
-import de.htwg.se.skyjo.model.modelComponent._
-import de.htwg.se.skyjo.controller.TableController
+import de.htwg.se.skyjo.model.modelComponent.modelImplementation._
 import de.htwg.se.skyjo.aview.{TUI, GUI}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.swing.Swing
+import controller.controllerComponent.controllerimplementation.TableController
 
 @main def main(): Unit = {
   val table = new PlayerTable(4,4,3)

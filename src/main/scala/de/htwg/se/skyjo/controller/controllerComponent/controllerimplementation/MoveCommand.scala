@@ -1,21 +1,21 @@
 package de.htwg.se.skyjo
-package controller
+package controller.controllerComponent.controllerimplementation
 
-import model._
+import model.modelComponent._
 import util._
 
 class MoveCommand(controller: TableController, move: Move) extends Command:
-  private var previousState: Option[PlayerTable] = None
+  private var previousState: Option[ModelInterface] = None
 
   override def execute(): Unit =
-    previousState = Some(controller.table.copy())
+    previousState = Some(controller.table)
     controller.executeMove(move)
     controller.notifyObservers
   
   override def undo(): Unit =
     previousState match
       case Some(s) =>
-        controller.table = s.copy(s.Tabletop, s.cardstack.closeStackTop(), s.playerCount, s.currentPlayer)
+        controller.table=s
         controller.notifyObservers
       case None => print("no previous state")
   

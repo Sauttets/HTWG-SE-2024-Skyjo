@@ -1,7 +1,7 @@
 package de.htwg.se.skyjo.model.modelComponent.modelImplementation
 import de.htwg.se.skyjo.util.CardStackStrategy
 
-import de.htwg.se.skyjo.model.modelComponent.ModelInterface
+import de.htwg.se.skyjo.model.modelComponent._
 
 case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrategy, playerCount: Int, currentPlayer: Int) extends ModelInterface:
     def this(playerCount: Int = 2, width: Int = 4, height: Int = 4,lcard:Boolean=true) = {
@@ -11,7 +11,7 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     }
     def setCardStackStrategy(strat:CardStackStrategy)= copy(Tabletop,strat,playerCount,currentPlayer)
 
-    private def padValue(card: Card): String = {
+    private def padValue(card: CardInterface): String = {
         if (card.opened) {
             if (card.value >= 0 && card.value < 10) {
                 "│ 0" + card.value + " "
@@ -72,11 +72,24 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
         Tabletop.map(matrix=>matrix.getScore()).zipWithIndex
     }
 
-    def updateMatrix(player: Int, playerMatrix: PlayerMatrix) = {
-        copy(Tabletop.updated(player, playerMatrix), cardstack, playerCount, currentPlayer)
+    def swapCard(player: Int, row:Int,col:Int,card:CardInterface) = {
+        val tupel=Tabletop(player).changeCard(row, col, card)
+        (copy(Tabletop.updated(player, tupel(0)), cardstack, playerCount, currentPlayer),tupel(1))
     }
 
-    def updateCardstack(card: Card, drwawFromStack: Boolean) = {
+    def flipCard(player: Int, row:Int,col:Int)={
+        copy(Tabletop.updated(player, Tabletop(player).flipCard(row,col)))
+    }
+
+    def updateCardstack(card: CardInterface, drwawFromStack: Boolean) = {
         if drwawFromStack then copy(Tabletop, cardstack.discard(card).removeStackTop(), playerCount, currentPlayer)
         else copy(Tabletop, cardstack.removeTrashTop().discard(card), playerCount, currentPlayer)
     }
+
+    def nextPlayer()={
+        copy(Tabletop,cardstack,playerCount,(currentPlayer+1)%playerCount)
+    }
+    def getStackCard()=cardstack.getStackCard()
+    def getTrashCard()=cardstack.getTrashCard()
+
+    def gameEnd()=Tabletop.exists(_.checkFinished())

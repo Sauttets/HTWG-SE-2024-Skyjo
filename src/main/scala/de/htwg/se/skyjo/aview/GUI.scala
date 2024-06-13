@@ -1,20 +1,19 @@
 package de.htwg.se.skyjo
 package aview
 
-import model.{Move, Card}
-import controller.TableController
+import model.modelComponent.modelImplementation.{Card}
+import util.Move
+import controller.controllerComponent.controllerimplementation.TableController
 
 import scala.util.{Try, Success, Failure}
 import scala.swing._
 import scala.swing.Component._
 import scala.swing.event._
 import util.Observer
-import de.htwg.se.skyjo.model.CardBuilder.apply
 import javax.swing.border.LineBorder
 import java.awt.Color
 import scala.util.boundary
 import javax.swing.border.{EmptyBorder, Border, CompoundBorder}
-import de.htwg.se.skyjo.model.PlayerMatrix
 import javax.swing.UIManager
 import java.io.File
 import javax.imageio.ImageIO
@@ -35,15 +34,16 @@ import scala.compiletime.ops.float
 import java.awt.Paint
 import java.awt.TexturePaint
 import java.awt.geom.Rectangle2D
+import de.htwg.se.skyjo.model.modelComponent.CardInterface
+import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
 
-class GUI(controller: TableController) extends MainFrame with Observer:
+class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
   title = "Skyjo"
   controller.add(this)
 
   def update: Unit = {
     refreshCards()
-    println(controller)
   }
   val stackCardButton = new ButtonPanel(0,-1)
   val trashCardButton=new ButtonPanel(1,-1){
@@ -130,9 +130,9 @@ class GUI(controller: TableController) extends MainFrame with Observer:
       controller.drawFromStack()
       showMovePopup(true)
     case ButtonClicked(`undoMenu`) | KeyPressed(_, Key.Z, Key.Modifier.Control, _)=>
-      controller.careTaker.undo()
+      controller.undo()
     case ButtonClicked(`redoMenu`) | KeyPressed(_, Key.Y, Key.Modifier.Control, _) =>
-      controller.careTaker.redo()
+      controller.redo()
     case ButtonClicked(`quitMenu`) | KeyPressed(_, Key.Q, Key.Modifier.Control, _)=>
       sys.exit(0)
   }
@@ -212,9 +212,8 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   }
 
   def refreshCards(): Unit = {
-    val cardStack = controller.getStackCard()
-    stackCardButton.setContent(new CardGUI(cardStack.getStackCard()))
-    trashCardButton.setContent(new CardGUI(cardStack.getTrashCard()))
+    stackCardButton.setContent(new CardGUI(controller.getStackCard()))
+    trashCardButton.setContent(new CardGUI(controller.getTrashCard()))
     val currentPlayer = controller.getCurrenPlayer()
     updateMatrix(currentPlayer)
     validate();
@@ -226,23 +225,21 @@ class GUI(controller: TableController) extends MainFrame with Observer:
   minimumSize_=(size)
   centerOnScreen()
   open()
-  println("Working Directory = " + System.getProperty("user.dir"))
 end GUI
 
 class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.cardDim) extends BorderPanel {
   import CardGUI._
-  def this(card: Card) = this(card.value, card.opened)
+  def this(card: CardInterface) = this(card.value, card.opened)
   override def paint(g: Graphics2D): Unit = {
     super.paint(g)
     if(open)
-      // new TexturePaint
       g.setPaint(Color.white)
       g.fillOval(2,3,20,20)
       g.fillOval(28,47,20,20)
     // else 
-    //   val p=new TexturePaint(photo1,bounds.asInstanceOf[Rectangle2D])
+    //   val p=new TexturePaint(ImageIO.read(new File("pics"+File.separator+"backSide.png")),bounds.asInstanceOf[Rectangle2D])
     //   g.setPaint(p)
-    //   g.fillRect(bounds.x,bounds.x,bounds.width,bounds.height)
+    //   g.fillRect(bounds.x-CardGUI.cardVPadding,bounds.y-CardGUI.cardHPadding,bounds.width,bounds.height)
     paintChildren(g)
   }
   if (open)
@@ -261,7 +258,6 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = CardGUI.cardDim) exten
       // contents+=wrap(GradientPanel(true,Color.YELLOW,Color.RED))
     }
     ,BorderPanel.Position.Center)
-  val photo1 = ImageIO.read(new File("pics"+File.separator+"backSide.png"))
   val wborder = new LineBorder(Color.white, 3)
   val eborder = new EmptyBorder(2, 2, 2, 2)
   border_=(new CompoundBorder(eborder, wborder))

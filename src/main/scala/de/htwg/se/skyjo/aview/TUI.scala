@@ -1,14 +1,14 @@
 package de.htwg.se.skyjo
 package aview
 
-import model.Move
-import controller.TableController
+import controller.controllerComponent.ControllerInterface
 
 import scala.util.{Try, Success, Failure}
 import scala.io.StdIn.readLine
 import util.Observer
+import util.Move
 
-class TUI(controller: TableController) extends Observer:
+class TUI(controller: ControllerInterface) extends Observer:
   controller.add(this)
   def run =
     println("\u001B[34m"+"Welcome to Skyjo\u001B[0m")
@@ -52,8 +52,8 @@ class TUI(controller: TableController) extends Observer:
           moveInput(readLine, false) match
             case None       =>
             case Some(move) => controller.doMove(move)
-        case "undo" => controller.careTaker.undo()
-        case "redo" => controller.careTaker.redo()
+        case "undo" => controller.undo()
+        case "redo" => controller.redo()
 
   def drawInput(): Option[String] =
     while(true){
