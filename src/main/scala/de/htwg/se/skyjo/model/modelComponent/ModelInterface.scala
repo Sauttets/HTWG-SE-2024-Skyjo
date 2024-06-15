@@ -25,6 +25,7 @@ trait ModelInterface{
     def getStackCard():CardInterface
     def getTrashCard():CardInterface
     def gameEnd():Boolean
+    def reset():ModelInterface
 }
     
 

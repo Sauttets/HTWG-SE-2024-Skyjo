@@ -25,4 +25,5 @@ trait ControllerInterface extends Observable{
   def getTabletop(): List[PlayerMatrix]
   def undo():Unit
   def redo():Unit
+  def reset():Unit
 }

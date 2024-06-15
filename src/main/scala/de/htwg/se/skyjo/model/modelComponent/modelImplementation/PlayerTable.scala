@@ -93,3 +93,5 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     def getTrashCard()=cardstack.getTrashCard()
 
     def gameEnd()=Tabletop.exists(_.checkFinished())
+
+    def reset()=new PlayerTable(playerCount,Tabletop(0).rows.size,Tabletop(0).rows(0).size,true)
