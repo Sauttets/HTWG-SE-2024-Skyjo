@@ -122,11 +122,12 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
 
   val playerGridList = controller.getTabletop().map(mat =>{new GridPanel(mat.rows.size, mat.rows(0).size)})
+  val playerNameList = controller.getTabletop().zipWithIndex.map((mat,i) =>{new scala.swing.TextField("PLAYER "+(i+1)){foreground_=(playerColor(i,playerGridList.size));opaque_=(false)}})
   val table = new FlowPanel() {
     initMatrix()
     for (i <- 0 until playerGridList.length)
       contents += new BoxPanel(Orientation.Vertical){
-        contents+=(new scala.swing.Label("PLAYER "+(i+1)){foreground_=(playerColor(i,playerGridList.size))},playerGridList(i))
+        contents+=(playerNameList(i),playerGridList(i))
         opaque_=(false)
       }
     opaque_=(false)
@@ -172,15 +173,17 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   def winScreen()={
     val scores=controller.getScores().sortBy(s=>s._1)
     val winner=scores(0)
-    new Dialog(this,null){
-      val Winlabel=new Label("PLAYER "+(winner(1)+1)+" WON    "){
+    val frame=peer
+    new Dialog(this){
+      frame.enable(false)
+      val Winlabel=new Label(playerNameList(winner(1)).text+" WON    "){
         font_=(font.deriveFont(40.0f))
         foreground_=(playerColor(winner(1),playerGridList.size))
       }
       val scoreText=new TextArea(){
         rows_=(scores.length)
         this.
-        text_=(scores.map(s=>"Player "+(s._2+1)+": "+s._1).mkString(sys.props("line.separator")))
+        text_=(scores.map(s=>playerNameList(s._2).text+": "+s._1).mkString(sys.props("line.separator")))
         font_=(font.deriveFont(20.0f))
       }
       contents_=(new BoxPanel(Orientation.Vertical){contents+=(Winlabel,scoreText)})
@@ -192,6 +195,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
         controller.reset()
         lastplayer=(-1)
         refreshCards()
+        frame.enable(true)
       }
     }
   }
@@ -203,7 +207,6 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     val currentPlayer = controller.getCurrenPlayer()
     if(controller.gameEnd()&& lastplayer==(-1))
       lastplayer=(currentPlayer+controller.getPLayerCount()-1)%controller.getPLayerCount()
-      print(lastplayer)
     updateMatrix(currentPlayer)
     validate();
     repaint();
