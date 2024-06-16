@@ -66,6 +66,6 @@ case class TableController(var table: ModelInterface) extends Observable, Contro
   def undo()=careTaker.undo()
   def redo()=careTaker.redo()
 
-  def reset()=table=table.reset()
+  def reset()={table=table.reset()}
 
   

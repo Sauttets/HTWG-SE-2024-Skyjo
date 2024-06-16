@@ -41,6 +41,7 @@ import de.htwg.se.skyjo.aview.Util.colors
 import de.htwg.se.skyjo.aview.Util.idx1
 import de.htwg.se.skyjo.aview.Util.idx2
 import de.htwg.se.skyjo.aview.Util.Backgrounds
+import de.htwg.se.skyjo.aview.Util.playerColor
 
 class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -124,7 +125,10 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   val table = new FlowPanel() {
     initMatrix()
     for (i <- 0 until playerGridList.length)
-      contents += playerGridList(i)
+      contents += new BoxPanel(Orientation.Vertical){
+        contents+=(new scala.swing.Label("PLAYER "+(i+1)){foreground_=(playerColor(i,playerGridList.size))},playerGridList(i))
+        opaque_=(false)
+      }
     opaque_=(false)
   }
   val mainPanel=new BoxPanel(Orientation.Vertical){
@@ -166,28 +170,28 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       sys.exit(0)
   }
   def winScreen()={
-    val scores=controller.getScores()
-    val winner=scores.minBy(s=>s._1)
+    val scores=controller.getScores().sortBy(s=>s._1)
+    val winner=scores(0)
     new Dialog(this,null){
-      val Winlabel=new Label("PLAYER "+(winner(1)+1)+" WON"){
+      val Winlabel=new Label("PLAYER "+(winner(1)+1)+" WON    "){
         font_=(font.deriveFont(40.0f))
-        foreground_=(Color.RED)
+        foreground_=(playerColor(winner(1),playerGridList.size))
       }
       val scoreText=new TextArea(){
         rows_=(scores.length)
         this.
         text_=(scores.map(s=>"Player "+(s._2+1)+": "+s._1).mkString(sys.props("line.separator")))
-        print(text)
-        
+        font_=(font.deriveFont(20.0f))
       }
       contents_=(new BoxPanel(Orientation.Vertical){contents+=(Winlabel,scoreText)})
       centerOnScreen()
       open()
-      peer.setDefaultCloseOperation(2)
-      override def dispose()= {
+      pack()
+      minimumSize_=(size)
+      override def closeOperation()= {
         controller.reset()
-        print("hi")
-        // super.dispose()
+        lastplayer=(-1)
+        refreshCards()
       }
     }
   }
@@ -209,7 +213,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
   
   refreshCards()
-  Timer(Backgrounds.size){
+  Timer(10){
       import util._
       idx1=(idx1+1)%colors.size
       idx2=(idx2-1+colors.size)%colors.size
@@ -246,10 +250,6 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = Util.cardDim) extends 
     add(new GridPanel(1,1){
       // opaque_=(false)
       contents+=wrap(AnimatedPanel(true))
-      // contents+=wrap(GradientPanel(true,Color.BLUE,Color.YELLOW))
-      // contents+=wrap(GradientPanel(false,Color.YELLOW,Color.GREEN))
-      // contents+=wrap(GradientPanel(false,new Color(153,0,153),Color.YELLOW))
-      // contents+=wrap(GradientPanel(true,Color.YELLOW,Color.RED))
     }
     ,BorderPanel.Position.Center)
   val wborder = new LineBorder(Color.white, 3)
@@ -258,9 +258,7 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = Util.cardDim) extends 
   preferredSize_=(dim)
   minimumSize_=(dim)
   maximumSize_=(dim)
-  preferredSize_=(cardDim)
-  minimumSize_=(cardDim)
-  maximumSize_=(cardDim)
+
   override def enabled_=(b: Boolean)=
     if(b) 
       if(open)
@@ -294,6 +292,7 @@ object Util {
     else
       Color.red.brighter()
   }
+  def playerColor(i:Int,max:Int)=colors(colors.size/max*i)
   val steps=100
   val r=scala.List.tabulate(steps)(r=>new Color(r*255/100,       255,         0));
   val g=scala.List.tabulate(steps)(g=>new Color(      255, (100-g)*255/100,         0));
@@ -322,7 +321,10 @@ case class ButtonPanel(var active:Boolean,var highlight:Boolean,x:Int,y:Int)exte
     active=act
     this
   }
-  def setContent(comp:Component)={contents.clear();contents+=comp; this}
+  def setContent(comp:Component)={
+    contents.clear();
+    contents+=comp; 
+    this}
   listenTo(mouse.clicks)
   reactions+={case MousePressed(_,_,_,_,_)=>if(active)highlight_(!highlight)}
 }

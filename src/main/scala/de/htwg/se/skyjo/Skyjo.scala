@@ -8,7 +8,7 @@ import scala.swing.Swing
 import controller.controllerComponent.controllerimplementation.TableController
 
 @main def main(): Unit = {
-  val table = new PlayerTable(2,4,4)
+  val table = new PlayerTable(5,1,2)
   val tableController = new TableController(table)
   
   // Initialize TUI
