@@ -40,6 +40,7 @@ import javax.swing.JFrame
 import de.htwg.se.skyjo.aview.Util.colors
 import de.htwg.se.skyjo.aview.Util.idx1
 import de.htwg.se.skyjo.aview.Util.idx2
+import de.htwg.se.skyjo.aview.Util.Backgrounds
 
 class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -128,7 +129,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
   val mainPanel=new BoxPanel(Orientation.Vertical){
     focusable_=(true)
-    contents += (drawPanel, Swing.VStrut(20), table)
+    contents += (drawPanel, Swing.VStrut(20), table,Swing.VStrut(20))
     requestFocus()
     override def paint(g: Graphics2D)={
       super.paint(g)
@@ -164,79 +165,6 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     case ButtonClicked(`quitMenu`) | KeyPressed(_, Key.Q, Key.Modifier.Control, _)=>
       sys.exit(0)
   }
-  // def showMovePopup(draw: Boolean): Unit = {
-  //   val dialog = new Dialog {
-  //     title = "Enter Move Details"
-  //     var swapped: Boolean = false
-  //     val rowField, colField = new TextField { columns = 5 }
-  //     val replaceButton = new Button { text = "Replace" }
-  //     val throwButton = new Button { text = "Throw"; enabled_=(false); background=Color.green}
-  //     val executeButton = new Button { text = "Execute" }
-
-  //     contents = new BoxPanel(Orientation.Vertical) {
-  //       contents ++= Seq(
-  //         new BoxPanel(Orientation.Horizontal) {
-  //           contents ++= Seq(replaceButton, throwButton)
-  //         },
-  //         new Label("Row:"), rowField,
-  //         new Label("Column:"), colField,
-  //         executeButton
-  //       )
-  //       border = Swing.EmptyBorder(10, 10, 10, 10)
-  //     }
-
-  //     listenTo(replaceButton, throwButton, executeButton)
-
-  //     reactions += {
-  //       case ButtonClicked(`replaceButton`) =>
-  //         swapped = true
-  //         replaceButton.enabled_=(false)
-  //         replaceButton.background=Color.green
-  //         throwButton.enabled_=(true)
-  //         throwButton.background=new Button().background
-  //       case ButtonClicked(`throwButton`) =>
-  //         swapped = false
-  //         throwButton.enabled_=(false)
-  //         throwButton.background=Color.green
-  //         replaceButton.enabled_=(true)
-  //         replaceButton.background=new Button().background
-  //       case ButtonClicked(`executeButton`) =>
-  //         val moveInputString = s" ${if (swapped) "S" else "T"} ${rowField.text} ${colField.text}"
-  //         moveInput(moveInputString, draw) match {
-  //           case None =>
-  //             Dialog.showMessage(contents.head, "Invalid move input", title = "Error", Dialog.Message.Error)
-  //           case Some(move) =>
-  //             controller.doMove(move)
-  //             stackCardButton.active_(true).highlight_(false)
-  //             trashCardButton.active_(true).highlight_(false)
-  //             close()
-  //         }
-  //     }
-  //     centerOnScreen()
-  //     open()
-  //   }
-  // }
-
-  // def moveInput(input: String, draw: Boolean): Option[Move] = {
-  //   val Input = (" " + input).toUpperCase().replaceAll("\\s+", " ")
-  //   if (Input.replaceAll(" ", "") == "Q") sys.exit(0)
-
-  //   val parts = Input.split(" ")
-  //   if (parts.length < 4) None
-  //   else {
-  //     Try {
-  //       val swapped = parts(1) match {
-  //         case "S" | "SWAP" => true
-  //         case "T" | "D" | "DISCARD" => false
-  //         case _ => throw new IllegalArgumentException("Invalid action")
-  //       }
-  //       Move(draw, swapped, parts(2).toInt, parts(3).toInt)
-  //     } match {
-  //       case Success(move) => Some(move)
-  //       case Failure(_) => None
-  //     }
-  //   }
-  // }
   def winScreen()={
     val scores=controller.getScores()
     val winner=scores.minBy(s=>s._1)
@@ -265,6 +193,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
   var lastplayer=(-1)
   def refreshCards(): Unit = {
+    Backgrounds=scala.List[AnimatedPanel]()
     stackCardButton.setContent(new CardGUI(controller.getStackCard()))
     trashCardButton.setContent(new CardGUI(controller.getTrashCard()))
     val currentPlayer = controller.getCurrenPlayer()
@@ -280,6 +209,12 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
   
   refreshCards()
+  Timer(Backgrounds.size){
+      import util._
+      idx1=(idx1+1)%colors.size
+      idx2=(idx2-1+colors.size)%colors.size
+      Backgrounds.foreach(b=>{b.validate();b.repaint(20)})
+  }
   pack()
   minimumSize_=(size)
   centerOnScreen()
@@ -369,6 +304,7 @@ object Util {
   val colors = scala.List(r,g,b,r2,g2,b2).flatten.appended(new Color(        0,       255,         0));
   var idx1=0
   var idx2=colors.size/2
+  var Backgrounds=scala.List[AnimatedPanel]()
 }
 
 case class ButtonPanel(var active:Boolean,var highlight:Boolean,x:Int,y:Int)extends BoxPanel(Orientation.Vertical){
@@ -394,20 +330,8 @@ case class ButtonPanel(var active:Boolean,var highlight:Boolean,x:Int,y:Int)exte
 class AnimatedPanel(startTop:Boolean) extends JPanel {
   import java.awt._
   import Util._
+    Backgrounds=Backgrounds.appended(this)
     var state=true
-    Timer(100){
-      import util._
-      idx1=(idx1+1)%colors.size
-      idx2=(idx2-1+colors.size)%colors.size
-      validate()
-      repaint(20)
-    }
-    // for (int g=100; g>0; g--) colors.add(new Color(      255, g*255/100,         0));
-    // for (int b=0; b<100; b++) colors.add(new Color(      255,         0, b*255/100));
-    // for (int r=100; r>0; r--) colors.add(new Color(r*255/100,         0,       255));
-    // for (int g=0; g<100; g++) colors.add(new Color(        0, g*255/100,       255));
-    // for (int b=100; b>0; b--) colors.add(new Color(        0,       255, b*255/100));
-    //                       colors.add(new Color(        0,       255,         0));
     override def paint(g: Graphics): Unit = 
         var g2d = g.asInstanceOf[Graphics2D]
         val second=System.currentTimeMillis()%1000
