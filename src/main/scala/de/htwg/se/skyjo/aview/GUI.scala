@@ -182,7 +182,15 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     val frame=peer
     val paritys=controller.getParitys()
     controller.openAll()
-    // if(paritys.size>0)
+    if(paritys.size>0)
+      paritys.foreach((player,idx)=>{
+        val grid=playerGridList(player)
+        for(r<- 0 until grid.columns)
+          val cards=grid.contents(grid.rows*idx+r).asInstanceOf[ButtonPanel].contents(0).asInstanceOf[CardGUI]
+          cards.opaque_=(false)
+          cards.repaint()
+      })
+      Thread.sleep(1000)
     new Dialog(this){
       frame.enable(false)
       val Winlabel=new Label(playerNameList(winner(1)).text+" WON    "){
