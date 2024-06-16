@@ -26,6 +26,8 @@ trait ModelInterface{
     def getTrashCard():CardInterface
     def gameEnd():Boolean
     def reset():ModelInterface
+    def getParitys():List[(Int,Int)]
+    def openAll():ModelInterface
 }
     
 

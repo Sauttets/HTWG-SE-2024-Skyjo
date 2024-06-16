@@ -36,5 +36,10 @@ case class PlayerMatrix(rows: Vector[Vector[CardInterface]]):
   }
   
   def getScore()={
-    rows.map(row=>row.map(card=>card.value).sum).sum
+    rows.map(row=>{
+      if(row.forall(c=>row(0).value==c.value))
+        0
+      else
+        row.map(c=>c.value).sum
+    }).sum
   }

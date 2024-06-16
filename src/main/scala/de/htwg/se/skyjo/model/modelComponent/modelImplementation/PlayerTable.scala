@@ -2,6 +2,7 @@ package de.htwg.se.skyjo.model.modelComponent.modelImplementation
 import de.htwg.se.skyjo.util.CardStackStrategy
 
 import de.htwg.se.skyjo.model.modelComponent._
+import scala.collection.mutable.ListBuffer
 
 case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrategy, playerCount: Int, currentPlayer: Int) extends ModelInterface:
     def this(playerCount: Int = 2, width: Int = 4, height: Int = 4,lcard:Boolean=true) = {
@@ -95,3 +96,10 @@ case class PlayerTable(Tabletop: List[PlayerMatrix], cardstack: CardStackStrateg
     def gameEnd()=Tabletop.exists(_.checkFinished())
 
     def reset()=new PlayerTable(playerCount,Tabletop(0).rows(0).size,Tabletop(0).rows.size,true)
+
+    def getParitys()={
+        val paritys=ListBuffer[(Int,Int)]()
+        Tabletop.zipWithIndex.foreach((m,player)=>m.rows.zipWithIndex.foreach((row,idx)=>{if(row.forall(card=>card.value==row(0).value))paritys+=((player,idx))}))
+        paritys.toList
+    } 
+    def openAll()=copy(Tabletop.map(mat=>PlayerMatrix(mat.rows.map(row=>row.map(c=>c.open())))),cardstack,playerCount,currentPlayer)

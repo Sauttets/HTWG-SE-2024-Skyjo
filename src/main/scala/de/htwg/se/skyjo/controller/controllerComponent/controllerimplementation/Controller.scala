@@ -68,4 +68,6 @@ case class TableController(var table: ModelInterface) extends Observable, Contro
 
   def reset()={table=table.reset()}
 
-  
+  def getParitys()=table.getParitys()
+
+  def openAll()={table=table.openAll();notifyObservers}

@@ -42,6 +42,8 @@ import de.htwg.se.skyjo.aview.Util.idx1
 import de.htwg.se.skyjo.aview.Util.idx2
 import de.htwg.se.skyjo.aview.Util.Backgrounds
 import de.htwg.se.skyjo.aview.Util.playerColor
+import scala.collection.mutable.ListBuffer
+import de.htwg.se.skyjo.aview.Util.Timerlist
 
 class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -112,22 +114,26 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       grid.border_=(EmptyBorder(10, 5, 10, 5))
     )
   }
+  var currentPlayerGrid=new GridPanel(1,1)
   def updateMatrix(currplayer: Int) = {
     for(i<-0 until playerGridList.length)
       val grid = playerGridList(i)
       val mat = controller.getTabletop()(i)
-      grid.border_=(if (i!=currplayer)EmptyBorder(10, 5, 10, 5) else LineBorder(Color.red,5,true))
+      if((i!=currplayer))
+       grid.border_=(EmptyBorder(10, 5, 10, 5))
+      else
+        currentPlayerGrid=grid
       for (c <- 0 until grid.columns;r <- 0 until grid.rows)
         grid.contents(r*grid.columns+c).asInstanceOf[ButtonPanel].setContent(new CardGUI(mat.getCard(r, c))).active_(i==currplayer).highlight_(false)
   }
 
   val playerGridList = controller.getTabletop().map(mat =>{new GridPanel(mat.rows.size, mat.rows(0).size)})
-  val playerNameList = controller.getTabletop().zipWithIndex.map((mat,i) =>{new scala.swing.TextField("PLAYER "+(i+1)){foreground_=(playerColor(i,playerGridList.size));opaque_=(false)}})
+  val playerNameList = controller.getTabletop().zipWithIndex.map((mat,i) =>{new scala.swing.TextField("PLAYER "+(i+1)){foreground_=(playerColor(i,playerGridList.size))}})
   val table = new FlowPanel() {
     initMatrix()
     for (i <- 0 until playerGridList.length)
       contents += new BoxPanel(Orientation.Vertical){
-        contents+=(playerNameList(i),playerGridList(i))
+        contents+=(playerNameList(i), Swing.VStrut(10),playerGridList(i))
         opaque_=(false)
       }
     opaque_=(false)
@@ -174,6 +180,9 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     val scores=controller.getScores().sortBy(s=>s._1)
     val winner=scores(0)
     val frame=peer
+    val paritys=controller.getParitys()
+    controller.openAll()
+    // if(paritys.size>0)
     new Dialog(this){
       frame.enable(false)
       val Winlabel=new Label(playerNameList(winner(1)).text+" WON    "){
@@ -212,6 +221,8 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     repaint();
     mainPanel.requestFocus()
     if(currentPlayer==lastplayer)
+      lastplayer=(-1)
+      controller.openAll()
       winScreen()
   }
   
@@ -221,6 +232,8 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       idx1=(idx1+1)%colors.size
       idx2=(idx2-1+colors.size)%colors.size
       Backgrounds.foreach(b=>{b.validate();b.repaint(20)})
+      currentPlayerGrid.border_=(new LineBorder(colors((idx1*2)%colors.size),3,true))
+      currentPlayerGrid.repaint()
   }
   pack()
   minimumSize_=(size)
@@ -250,12 +263,13 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = Util.cardDim) extends 
     add(new Label(value.toString().padTo(2,' '),null,Alignment.Right){foreground_=(Color.black)}, BorderPanel.Position.South)
     background_=(Util.valueColor(value))
   else
+    opaque_=(false)
     add(new GridPanel(1,1){
       // opaque_=(false)
       contents+=wrap(AnimatedPanel(true))
     }
     ,BorderPanel.Position.Center)
-  val wborder = new LineBorder(Color.white, 3)
+  val wborder = new LineBorder(Color.white, 3,true)
   val eborder = new EmptyBorder(2, 2, 2, 2)
   border_=(new CompoundBorder(eborder, wborder))
   preferredSize_=(dim)
@@ -295,6 +309,7 @@ object Util {
     else
       Color.red.brighter()
   }
+  val Timerlist=ListBuffer[javax.swing.Timer]()
   def playerColor(i:Int,max:Int)=colors(colors.size/max*i)
   val steps=100
   val r=scala.List.tabulate(steps)(r=>new Color(r*255/100,       255,         0));
@@ -339,12 +354,10 @@ class AnimatedPanel(startTop:Boolean) extends JPanel {
     var state=true
     override def paint(g: Graphics): Unit = 
         var g2d = g.asInstanceOf[Graphics2D]
-        val second=System.currentTimeMillis()%1000
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
-        // g2d.setRenderingHint(RenderingHints.KEY_DITHERING,RenderingHints.VALUE_DITHER_ENABLE)
         val y1 = if(startTop) 0 else getHeight()
         val y2 = if(!startTop) 0 else getHeight()
-        var gp = if(state) new GradientPaint(0, y1, colors(idx1), getWidth(), y2, colors(idx2)) else new GradientPaint(0, y1, colors(idx1).darker(), getWidth(), y2, colors(idx2).darker())
+        val gp = if(state) new GradientPaint(0, y1, colors(idx1), getWidth(), y2, colors(idx2)) else new GradientPaint(0, y1, colors(idx1).darker(), getWidth(), y2, colors(idx2).darker())
         g2d.setPaint(gp)
         g2d.fillRect(0, 0, getWidth(), getHeight())
         super.paint(g)
@@ -359,8 +372,9 @@ object Timer {
     val timeOut = new javax.swing.AbstractAction() {
       def actionPerformed(e : java.awt.event.ActionEvent) = op
     }
-    val t = new javax.swing.Timer(interval, timeOut)
-    t.setRepeats(repeats)
-    t.start()
+    val timer = new javax.swing.Timer(interval, timeOut)
+    Util.Timerlist+=(timer)
+    timer.setRepeats(repeats)
+    timer.start()
   }
 }
