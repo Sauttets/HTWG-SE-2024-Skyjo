@@ -15,7 +15,7 @@ class SkyjoModule extends AbstractModule with ScalaModule {
 
   val defaultPlayerCount: Int = 2
   val defaultWidth: Int = 4
-  val defaultHeight: Int = 4
+  val defaultHeight: Int = 3
   val defaultCardStackStrategy: CardStackStrategy = new LCardStack
   val defaultCurrentPlayer: Int = 0
   val defaultTabletop: List[PlayerMatrix] = List.tabulate(defaultPlayerCount)(_ => new PlayerMatrix(defaultHeight, defaultWidth))

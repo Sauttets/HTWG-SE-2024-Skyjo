@@ -97,11 +97,6 @@ case class PlayerTable @Inject() (@Named("DefaultPlayerCount") playerCount: Int,
 
   def gameEnd(): Boolean = Tabletop.exists(_.checkFinished())
 
-  def reset(): PlayerTable = {
-    val newTabletop = List.tabulate(playerCount)(_ => new PlayerMatrix(height, width))
-    PlayerTable(playerCount, width, height, currentPlayer, new LCardStack, newTabletop)
-  }
-
   def getParitys(): List[(Int, Int)] = {
     val paritys = ListBuffer[(Int, Int)]()
     Tabletop.zipWithIndex.foreach { case (m, player) =>

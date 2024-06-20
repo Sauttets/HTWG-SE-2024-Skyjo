@@ -15,6 +15,7 @@ import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
 class TableController @Inject()(var table: ModelInterface) extends Observable, ControllerInterface {
 
   val careTaker = new CareTaker()
+  val injector= Guice.createInjector(new SkyjoModule)
 
   def drawFromStack(): Unit = {
     table = table.drawFromStack()
@@ -68,7 +69,7 @@ class TableController @Inject()(var table: ModelInterface) extends Observable, C
   def undo() = careTaker.undo()
   def redo() = careTaker.redo()
 
-  def reset() = { table = table.reset() }
+  def reset() = { table = injector.getInstance(classOf[ModelInterface])}
 
   def getParitys() = table.getParitys()
 
