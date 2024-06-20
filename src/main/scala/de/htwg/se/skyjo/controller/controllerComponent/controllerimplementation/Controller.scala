@@ -1,6 +1,10 @@
 package de.htwg.se.skyjo
 package controller.controllerComponent.controllerimplementation
 
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
+
 import model.modelComponent._
 import model.modelComponent.modelImplementation._
 import util._
@@ -8,10 +12,9 @@ import util.Memento
 import util.Move
 import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
 
+class TableController @Inject()(var table: ModelInterface) extends Observable, ControllerInterface {
 
-case class TableController(var table: ModelInterface) extends Observable, ControllerInterface:
-  
-  val careTaker=new CareTaker()
+  val careTaker = new CareTaker()
 
   def drawFromStack(): Unit = {
     table = table.drawFromStack()
@@ -30,21 +33,20 @@ case class TableController(var table: ModelInterface) extends Observable, Contro
   }
 
   def executeMove(move: Move): Unit = {
-    val handCard = if move.drawnFromStack then table.getStackCard() else table.getTrashCard()
-    if move.swapped then
-      val tupel = table.swapCard(table.currentPlayer,move.row,move.col,handCard)
+    val handCard = if (move.drawnFromStack) table.getStackCard() else table.getTrashCard()
+    if (move.swapped) {
+      val tupel = table.swapCard(table.currentPlayer, move.row, move.col, handCard)
       table = tupel(0)
       table = table.updateCardstack(tupel(1), move.drawnFromStack)
-    else
-      table = table.flipCard(table.currentPlayer,move.row,move.col)
+    } else {
+      table = table.flipCard(table.currentPlayer, move.row, move.col)
       table = table.updateCardstack(handCard, move.drawnFromStack)
+    }
     table = table.nextPlayer()
   }
 
-
-  def gameEnd()=table.gameEnd()
+  def gameEnd() = table.gameEnd()
   
-
   override def toString = table.getTableString()
 
   def getPlayerString(player: Int): String = table.getPlayerString(player)
@@ -63,11 +65,12 @@ case class TableController(var table: ModelInterface) extends Observable, Contro
 
   def getTabletop(): List[PlayerMatrix] = table.Tabletop
 
-  def undo()=careTaker.undo()
-  def redo()=careTaker.redo()
+  def undo() = careTaker.undo()
+  def redo() = careTaker.redo()
 
-  def reset()={table=table.reset()}
+  def reset() = { table = table.reset() }
 
-  def getParitys()=table.getParitys()
+  def getParitys() = table.getParitys()
 
-  def openAll()={table=table.openAll();notifyObservers}
+  def openAll() = { table = table.openAll(); notifyObservers }
+}
