@@ -1,6 +1,10 @@
 package de.htwg.se.skyjo
 package controller.controllerComponent.controllerimplementation
 
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
+
 import model.modelComponent._
 import model.modelComponent.modelImplementation._
 import util._
@@ -9,9 +13,15 @@ import util.Move
 import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
 
 
-case class TableController(var table: ModelInterface) extends Observable, ControllerInterface:
+case class TableController @Inject() (var table: ModelInterface) extends Observable, ControllerInterface:
   
+  val injector = Guice.createInjector(new SudokuModule)
   val careTaker=new CareTaker()
+
+  def createPlayerTable: Unit = {
+    table = injector.instance[ModelInterface](Names.named("tiny"))
+    notifyObservers
+  }
 
   def drawFromStack(): Unit = {
     table = table.drawFromStack()

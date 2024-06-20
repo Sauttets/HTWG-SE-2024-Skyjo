@@ -8,8 +8,8 @@ import scala.swing.Swing
 import controller.controllerComponent.controllerimplementation.TableController
 
 @main def main(): Unit = {
-  val table = new PlayerTable(2,2,2)
-  val tableController = new TableController(table)
+    val injector = Guice.createInjector(new SkyjoModule)
+  val tableController = injector.getInstance(classOf[ControllerInterface])
   
   // Initialize TUI
   val tui = new TUI(tableController)
