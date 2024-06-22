@@ -17,6 +17,11 @@ class TableController @Inject()(var table: ModelInterface) extends Observable, C
   val careTaker = new CareTaker()
   val injector= Guice.createInjector(new SkyjoModule)
 
+  def createPlayerTable: Unit = {
+    table = injector.instance[ModelInterface](Names.named("tiny"))
+    notifyObservers
+  }
+
   def drawFromStack(): Unit = {
     table = table.drawFromStack()
     notifyObservers

@@ -13,5 +13,4 @@ lazy val root = project
     libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
     libraryDependencies += "com.google.inject" % "guice" % "4.1.0",
     libraryDependencies += "net.codingwell" %% "scala-guice" % "7.0.0"
-
   )
