@@ -44,6 +44,7 @@ import de.htwg.se.skyjo.aview.Util.Backgrounds
 import de.htwg.se.skyjo.aview.Util.playerColor
 import scala.collection.mutable.ListBuffer
 import de.htwg.se.skyjo.aview.Util.Timerlist
+import scala.swing.ScrollPane.BarPolicy
 
 class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -52,6 +53,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
 
   def update: Unit = {
     refreshCards()
+    println(Instructions.bounds.toString()+"  "+drawPanel.bounds)
   }
   val stackCardButton = new ButtonPanel(0,-1)
   val trashCardButton=new ButtonPanel(1,-1){
@@ -68,22 +70,30 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
         stackCardButton.active_(false)
   }
   case class DrawEvent(stack:Boolean) extends Event
-  val stackLabel, trashLabel = new Label()
-  stackLabel.text = "Stack"
-  trashLabel.text = "Trash"
+  val stackLabel =new Label("Stack"){font_=(Util.fancyFont.deriveFont(22.0f));foreground_=(Color.BLACK)}
+  val trashLabel = new Label("Trash"){font_=(Util.fancyFont.deriveFont(22.0f));foreground_=(Color.BLACK)}
 
   val drawPanel = new BoxPanel(Orientation.Horizontal) {
     opaque_=(false)
-    val stackPanel=new BoxPanel(Orientation.Vertical) {
+    val stackPanel=new BorderPanel() {
       opaque_=(false)
-      contents += stackLabel += stackCardButton
+      add(stackLabel,BorderPanel.Position.North)
+      add(stackCardButton,BorderPanel.Position.South)
     }
-    val trashPanel=new BoxPanel(Orientation.Vertical) {
+    val trashPanel=new BorderPanel() {
       opaque_=(false)
-      contents += trashLabel += trashCardButton
+      add(trashLabel,BorderPanel.Position.North)
+      add(trashCardButton,BorderPanel.Position.South)
     }
     contents +=stackPanel+=trashPanel
-    border = Swing.EmptyBorder(10, 0, 10, 0)
+    border = Swing.LineBorder(Color.BLACK,5)
+    override def paint(g: Graphics2D)={
+      val p=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"Mat.jpg")),new Rectangle(0,0,bounds.width,bounds.height))
+      g.setPaint(p)
+      g.fillRect(0,0,bounds.width,bounds.height)
+      super.paint(g)
+      paintChildren(g)
+    }
   }
 
   val undoMenu = new MenuItem("Undo") { mnemonic = Key.Z }
@@ -128,7 +138,13 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
 
   val playerGridList = controller.getTabletop().map(mat =>{new GridPanel(mat.rows.size, mat.rows(0).size)})
-  val playerNameList = controller.getTabletop().zipWithIndex.map((mat,i) =>{new scala.swing.TextField("PLAYER "+(i+1)){foreground_=(playerColor(i,playerGridList.size))}})
+  val playerNameList = controller.getTabletop().zipWithIndex.map((mat,i) =>{
+    new scala.swing.TextField("PLAYER "+(i+1)){
+      foreground_=(playerColor(i,playerGridList.size))
+      font_=(Util.fancyFont.deriveFont(20.0f))
+      opaque_=(false)
+    }
+  })
   val table = new FlowPanel() {
     initMatrix()
     for (i <- 0 until playerGridList.length)
@@ -138,13 +154,30 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       }
     opaque_=(false)
   }
+  val Instructions=new ScrollPane(new TextArea(){
+    font_=(Util.fancyFont.deriveFont(18.0f))
+    text_=(scala.io.Source.fromFile("assets"+File.separator+"Instructions.txt").mkString)
+    foreground_=(Color.BLACK)
+    opaque_=(false)
+    val backgroundPaint=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"Paper.jpg")),new Rectangle(0,0,355,(font.getSize()+3)*(text.split('\n').size+1)))
+     override def paint(g: Graphics2D)={
+      // val p=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"Paper.jpg")),new Rectangle(0,0,bounds.width,bounds.height))
+      g.setPaint(backgroundPaint)
+      g.fillRect(0,0,bounds.width,bounds.height)
+      super.paint(g)
+    }
+  }){
+    preferredSize_=(java.awt.Dimension(355,200))
+    opaque_=(false)
+  }
+  val upperPanel=new FlowPanel(Instructions,Swing.HStrut(40),drawPanel){opaque_=(false)}
   val mainPanel=new BoxPanel(Orientation.Vertical){
     focusable_=(true)
-    contents += (drawPanel, Swing.VStrut(20), table,Swing.VStrut(20))
+    contents += (Swing.HStrut(1),upperPanel, Swing.VStrut(20), table,Swing.VStrut(20))
     requestFocus()
     override def paint(g: Graphics2D)={
       super.paint(g)
-      val p=new TexturePaint(ImageIO.read(new File("pics"+File.separator+"Wood2.png")),new Rectangle(0,0,bounds.width,bounds.height))
+      val p=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"Woodie.jpg")),new Rectangle(0,0,bounds.width,bounds.height))
       g.setPaint(p)
       g.fillRect(0,0,bounds.width,bounds.height)
       paintChildren(g)
@@ -163,12 +196,10 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       else
         controller.drawFromTrash()
         phase2=true
-      // showMovePopup(false)
     case DrawEvent(true) =>
       if(!phase2)
         controller.drawFromStack()
         phase2=true
-        // showMovePopup(true)
     case ButtonClicked(`undoMenu`) | KeyPressed(_, Key.Z, Key.Modifier.Control, _)=>
       controller.undo()
     case ButtonClicked(`redoMenu`) | KeyPressed(_, Key.Y, Key.Modifier.Control, _) =>
@@ -190,7 +221,6 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
           cards.opaque_=(false)
           cards.repaint()
       })
-      Thread.sleep(1000)
     new Dialog(this){
       frame.enable(false)
       val Winlabel=new Label(playerNameList(winner(1)).text+" WON    "){
@@ -298,6 +328,7 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = Util.cardDim) extends 
 }
 
 object Util {
+  val fancyFont=java.awt.Font.createFont(0, new File("assets"+File.separator+"oldie.ttf"))
   val cardHPadding = 5
   val cardVPadding = 8
   val cardDim = new Dimension(50, 70)

@@ -1,0 +1,9 @@
+
+    
+                    Welcome to Skyjo
+
+    How to play:
+    1.  Draw a Card from the "Stack" or "Trash"
+    2a. Swap it with a Card from your Field
+    2b. Discard it by clicking on the trash
+        and flip open a card from your Field
