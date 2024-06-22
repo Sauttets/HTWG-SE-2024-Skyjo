@@ -61,7 +61,9 @@ case class PlayerTable @Inject() (@Named("DefaultPlayerCount") playerCount: Int,
   def getTableString(): String = {
     getPlayerMatricesString() + getCardStackString()
   }
-
+  def closeStackTop():ModelInterface={
+    copy(cardstack = cardstack.closeStackTop())
+  }
   def drawFromStack(): PlayerTable = {
     copy(cardstack = cardstack.openStackTop())
   }

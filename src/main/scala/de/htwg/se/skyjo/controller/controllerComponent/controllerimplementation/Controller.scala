@@ -28,22 +28,10 @@ class TableController @Inject()(var table: ModelInterface) extends Observable, C
   }
 
   def doMove(move: Move): Unit = {
-    val command = new MoveCommand(this, move)
-    command.execute()
-    careTaker.save(Memento(command))
-  }
-
-  def executeMove(move: Move): Unit = {
-    val handCard = if (move.drawnFromStack) table.getStackCard() else table.getTrashCard()
-    if (move.swapped) {
-      val tupel = table.swapCard(table.currentPlayer, move.row, move.col, handCard)
-      table = tupel(0)
-      table = table.updateCardstack(tupel(1), move.drawnFromStack)
-    } else {
-      table = table.flipCard(table.currentPlayer, move.row, move.col)
-      table = table.updateCardstack(handCard, move.drawnFromStack)
-    }
-    table = table.nextPlayer()
+    val command = new MoveCommand(this.table, move)
+    careTaker.save(Memento(table))
+    table=command.execute().state
+    notifyObservers
   }
 
   def gameEnd() = table.gameEnd()
@@ -66,8 +54,18 @@ class TableController @Inject()(var table: ModelInterface) extends Observable, C
 
   def getTabletop(): List[PlayerMatrix] = table.Tabletop
 
-  def undo() = careTaker.undo()
-  def redo() = careTaker.redo()
+  def undo() =
+    careTaker.undo(Memento(table)) match{
+      case Some(m)=>table=m.state.closeStackTop()
+      case None => 
+    }
+    notifyObservers
+  def redo() =
+    careTaker.redo(Memento(table)) match{
+      case Some(m)=>table=m.state
+      case None => 
+    }
+    notifyObservers
 
   def reset() = { table = injector.getInstance(classOf[ModelInterface])}
 
