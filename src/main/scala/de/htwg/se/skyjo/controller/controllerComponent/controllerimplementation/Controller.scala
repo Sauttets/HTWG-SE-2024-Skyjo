@@ -12,11 +12,10 @@ import util.Memento
 import util.Move
 import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
 
+class TableController @Inject()(var table: ModelInterface) extends Observable, ControllerInterface {
 
-case class TableController @Inject() (var table: ModelInterface) extends Observable, ControllerInterface:
-  
-  val injector = Guice.createInjector(new SudokuModule)
-  val careTaker=new CareTaker()
+  val careTaker = new CareTaker()
+  val injector= Guice.createInjector(new SkyjoModule)
 
   def createPlayerTable: Unit = {
     table = injector.instance[ModelInterface](Names.named("tiny"))
@@ -34,27 +33,14 @@ case class TableController @Inject() (var table: ModelInterface) extends Observa
   }
 
   def doMove(move: Move): Unit = {
-    val command = new MoveCommand(this, move)
-    command.execute()
-    careTaker.save(Memento(command))
+    val command = new MoveCommand(this.table, move)
+    careTaker.save(Memento(table))
+    table=command.execute().state
+    notifyObservers
   }
 
-  def executeMove(move: Move): Unit = {
-    val handCard = if move.drawnFromStack then table.getStackCard() else table.getTrashCard()
-    if move.swapped then
-      val tupel = table.swapCard(table.currentPlayer,move.row,move.col,handCard)
-      table = tupel(0)
-      table = table.updateCardstack(tupel(1), move.drawnFromStack)
-    else
-      table = table.flipCard(table.currentPlayer,move.row,move.col)
-      table = table.updateCardstack(handCard, move.drawnFromStack)
-    table = table.nextPlayer()
-  }
-
-
-  def gameEnd()=table.gameEnd()
+  def gameEnd() = table.gameEnd()
   
-
   override def toString = table.getTableString()
 
   def getPlayerString(player: Int): String = table.getPlayerString(player)
@@ -73,11 +59,22 @@ case class TableController @Inject() (var table: ModelInterface) extends Observa
 
   def getTabletop(): List[PlayerMatrix] = table.Tabletop
 
-  def undo()=careTaker.undo()
-  def redo()=careTaker.redo()
+  def undo() =
+    careTaker.undo(Memento(table)) match{
+      case Some(m)=>table=m.state.closeStackTop()
+      case None => 
+    }
+    notifyObservers
+  def redo() =
+    careTaker.redo(Memento(table)) match{
+      case Some(m)=>table=m.state
+      case None => 
+    }
+    notifyObservers
 
-  def reset()={table=table.reset()}
+  def reset() = { table = injector.getInstance(classOf[ModelInterface])}
 
-  def getParitys()=table.getParitys()
+  def getParitys() = table.getParitys()
 
-  def openAll()={table=table.openAll();notifyObservers}
+  def openAll() = { table = table.openAll(); notifyObservers }
+}

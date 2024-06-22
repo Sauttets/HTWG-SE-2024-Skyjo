@@ -12,7 +12,6 @@ trait ControllerInterface extends Observable{
   def drawFromStack(): Unit
   def drawFromTrash(): Unit
   def doMove(move: Move): Unit
-  def executeMove(move: Move): Unit
   def gameEnd():Boolean
   def toString :String
   def getPlayerString(player: Int): String

@@ -8,18 +8,22 @@ class CareTaker {
   private val undoStack: Stack[Memento] = Stack()
   private val redoStack: Stack[Memento] = Stack()
 
-  def undo(): Unit = {
+  def undo(current:Memento): Option[Memento] = {
   if undoStack.nonEmpty then
     val snapshot = undoStack.pop()
-    snapshot.state.undo()
-    redoStack.push(snapshot)
+    redoStack.push(current)
+    Some(snapshot)
+  else 
+    None
   }
 
-  def redo(): Unit = {
+  def redo(current:Memento): Option[Memento] = {
     if redoStack.nonEmpty then
       val snapshot = redoStack.pop()
-      snapshot.state.redo()
-      undoStack.push(snapshot)
+      undoStack.push(current)
+      Some(snapshot)
+    else 
+      None
   }
   def save(snapshot:Memento):Unit = {
     undoStack.push(snapshot)

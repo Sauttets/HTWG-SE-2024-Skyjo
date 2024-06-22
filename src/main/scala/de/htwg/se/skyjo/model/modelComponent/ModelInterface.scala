@@ -15,6 +15,7 @@ trait ModelInterface{
     def getCurrenPlayerString(): String
     def getPlayerString(player:Int): String
     def getTableString(): String
+    def closeStackTop():ModelInterface
     def drawFromStack(): ModelInterface
     def drawFromTrash(): ModelInterface
     def getScores(): List[(Int, Int)]
@@ -25,7 +26,6 @@ trait ModelInterface{
     def getStackCard():CardInterface
     def getTrashCard():CardInterface
     def gameEnd():Boolean
-    def reset():ModelInterface
     def getParitys():List[(Int,Int)]
     def openAll():ModelInterface
 }

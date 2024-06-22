@@ -2,6 +2,6 @@ package de.htwg.se.skyjo
 package util
 
 
-import util.Command
+import model.modelComponent.ModelInterface
 
-case class Memento(state:Command)
+case class Memento(state:ModelInterface)
