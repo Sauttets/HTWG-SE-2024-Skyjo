@@ -157,13 +157,13 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     text_=(scala.io.Source.fromFile("assets"+File.separator+"Instructions.txt").mkString)
     foreground_=(Color.BLACK)
     opaque_=(false)
-    val backgroundPaint=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"GreyVectors.jfif")),new Rectangle(0,0,600,450)) //(font.getSize()+3)*(text.split('\n').size+1)
-     override def paint(g: Graphics2D)={
-      // val p=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"Paper.jpg")),new Rectangle(0,0,bounds.width,bounds.height))
-      g.setPaint(backgroundPaint)
-      g.fillRect(0,0,bounds.width,bounds.height)
-      super.paint(g)
-    }
+    // val backgroundPaint=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"GreyVectors.jfif")),new Rectangle(0,0,600,450)) //(font.getSize()+3)*(text.split('\n').size+1)
+    //  override def paint(g: Graphics2D)={
+    //   // val p=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"Paper.jpg")),new Rectangle(0,0,bounds.width,bounds.height))
+    //   g.setPaint(backgroundPaint)
+    //   g.fillRect(0,0,bounds.width,bounds.height)
+    //   super.paint(g)
+    // }
   }){
     preferredSize_=(java.awt.Dimension(400,230))
     opaque_=(false)
