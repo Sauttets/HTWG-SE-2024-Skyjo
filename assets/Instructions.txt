@@ -1,9 +1,16 @@
 
-    
                     Welcome to Skyjo
 
-    How to play:
-    1.  Draw a Card from the "Stack" or "Trash"
-    2a. Swap it with a Card from your Field
-    2b. Discard it by clicking on the trash
-        and flip open a card from your Field
+ How to play:
+
+ 1.  Draw a card from the "Stack" or "Trash"
+ 2a. Swap it with a card from your Field
+ 2b. Discard it by clicking on the trash
+     and flip open a card from your Field
+
+ The goal of the game is to have the least 
+ amount of points on the board (closed 
+ cards included,they get flipped open at the 
+ end of the game). If a row has only cards 
+ with the same value the player gets 0 
+ points instead of the rows card-values.    
