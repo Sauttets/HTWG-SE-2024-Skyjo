@@ -155,8 +155,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   val Instructions=new ScrollPane(new TextArea(){
     font_=(Util.mainFont.deriveFont(12.0f))
     text_=(scala.io.Source.fromFile("assets"+File.separator+"Instructions.txt").mkString)
-    foreground_=(Color.BLACK)
-    opaque_=(false)
+    background_=(Color.black)
     // val backgroundPaint=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"GreyVectors.jfif")),new Rectangle(0,0,600,450)) //(font.getSize()+3)*(text.split('\n').size+1)
     //  override def paint(g: Graphics2D)={
     //   // val p=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"Paper.jpg")),new Rectangle(0,0,bounds.width,bounds.height))
@@ -268,7 +267,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       idx1=(idx1+1)%colors.size
       idx2=(idx2-1+colors.size)%colors.size
       Backgrounds.foreach(b=>{b.validate();b.repaint(20)})
-      currentPlayerGrid.border_=(new LineBorder(colors((idx1*2)%colors.size),3,true))
+      currentPlayerGrid.border_=(new LineBorder(colors((idx1*4)%colors.size),3,true))
       drawPanel.border_=(CompoundBorder(LineBorder(colors((idx1)%colors.size),3,true),EmptyBorder(4,4,4,4)))
       stackLabel.foreground_=(colors((idx1+colors.size/2)%colors.size))
       trashLabel.foreground_=(colors((idx1+colors.size/2)%colors.size))

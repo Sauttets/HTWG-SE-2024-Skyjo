@@ -3,7 +3,7 @@
 
  How to play:
 
- 1.  Draw a card from the "Stack" or "Trash"
+ 1.  Draw a card from the ''Stack'' or ''Trash''
  2a. Swap it with a card from your Field
  2b. Discard it by clicking on the trash
      and flip open a card from your Field
