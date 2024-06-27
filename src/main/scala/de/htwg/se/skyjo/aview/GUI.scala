@@ -50,6 +50,7 @@ import javax.swing.filechooser.FileNameExtensionFilter
 import de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoJsonImpl.FileIO as JsonFileIO
 import de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoXmlImpl.FileIO as XmlFileIO
 import javax.swing.JFileChooser
+import de.htwg.se.skyjo.aview.Util.pixel
 
 class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -74,8 +75,8 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
         stackCardButton.active_(false)
   }
   case class DrawEvent(stack:Boolean) extends Event
-  val stackLabel =new Label("STACK"){font_=(Util.mainFont.deriveFont(14.0f));foreground_=(Color.WHITE)}
-  val trashLabel = new Label("TRASH"){font_=(Util.mainFont.deriveFont(14.0f));foreground_=(Color.WHITE)}
+  val stackLabel =new Label("STACK"){font_=(Util.mainFont.deriveFont(3.0f*pixel));foreground_=(Color.WHITE)}
+  val trashLabel = new Label("TRASH"){font_=(Util.mainFont.deriveFont(3.0f*pixel));foreground_=(Color.WHITE)}
 
   val drawPanel = new BoxPanel(Orientation.Horizontal) {
     opaque_=(false)
@@ -102,19 +103,19 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     case _:JsonFileIO=> new FileNameExtensionFilter("JSON","json","JSON")
     case _:XmlFileIO=> new FileNameExtensionFilter("XML","xml","XML")
   }
-  val undoMenu = new MenuItem("Undo") { mnemonic = Key.Z; peer.setAccelerator(KeyStroke.getKeyStroke("control Z")) }
-  val redoMenu = new MenuItem("Redo") { mnemonic = Key.Y; peer.setAccelerator(KeyStroke.getKeyStroke("control Y")) }
-  val quitMenu = new MenuItem("Quit") { mnemonic = Key.Q; peer.setAccelerator(KeyStroke.getKeyStroke("control Q")) }
-  val loadMenu= new MenuItem("Load") { mnemonic = Key.L; peer.setAccelerator(KeyStroke.getKeyStroke("control L")) }
+  val undoMenu = new MenuItem("Undo") { mnemonic = Key.Z; peer.setAccelerator(KeyStroke.getKeyStroke("control Z")); icon_=(ImageIcon(ImageIO.read(File("assets"+File.separator+"Undo.png"))))}
+  val redoMenu = new MenuItem("Redo") { mnemonic = Key.Y; peer.setAccelerator(KeyStroke.getKeyStroke("control Y")); icon_=(ImageIcon(ImageIO.read(File("assets"+File.separator+"Redo.png"))))}
+  val quitMenu = new MenuItem("Quit") { mnemonic = Key.Q; peer.setAccelerator(KeyStroke.getKeyStroke("control Q")); icon_=(ImageIcon(ImageIO.read(File("assets"+File.separator+"Quit.png"))))}
+  val loadMenu= new MenuItem("Load") { mnemonic = Key.L; peer.setAccelerator(KeyStroke.getKeyStroke("control L")); icon_=(ImageIcon(ImageIO.read(File("assets"+File.separator+"Load.png"))))}
   val loadChooser=new FileChooser(new File("saves")) { fileFilter_=(extenstionFilter); title_=("Load File")}
-  val saveMenu= new MenuItem("Save") { mnemonic = Key.S; peer.setAccelerator(KeyStroke.getKeyStroke("control S")) }
+  val saveMenu= new MenuItem("Save") { mnemonic = Key.S; peer.setAccelerator(KeyStroke.getKeyStroke("control S")); icon_=(ImageIcon(ImageIO.read(File("assets"+File.separator+"Save.png"))))}
   val saveChooser=new FileChooser(new File("saves")) { fileFilter_=(extenstionFilter); title_=("Save File")}
   menuBar = new MenuBar {
-    contents += new Menu("Util") {
+    contents += new Menu("  Util  ") {
       mnemonic = Key.U
       contents += (undoMenu, redoMenu, quitMenu)
     }
-    contents+=new Menu("FileIO"){
+    contents+=new Menu("  FileIO  "){
       mnemonic = Key.F
       contents+=(loadMenu,saveMenu)
     }
@@ -140,7 +141,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
   var currentPlayerGrid=new GridPanel(1,1)
   def updateMatrix(currplayer: Int) = {
-    for(i<-0 until playerGridList.length)
+    for(i<-0 until controller.getPLayerCount())
       val grid = playerGridList(i)
       val mat = controller.getTabletop()(i)
       if((i!=currplayer))
@@ -155,7 +156,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   val playerNameList = controller.getTabletop().zipWithIndex.map((mat,i) =>{
     new scala.swing.TextField("PLAYER "+(i+1)){
       foreground_=(playerColor(i,playerGridList.size))
-      font_=(Util.mainFont.deriveFont(20.0f))
+      font_=(Util.mainFont.deriveFont(4.0f*pixel))
       opaque_=(false)
     }
   })
@@ -169,11 +170,11 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     opaque_=(false)
   }
   val Instructions=new ScrollPane(new TextArea(){
-    font_=(Util.mainFont.deriveFont(14.0f))
+    font_=(Util.mainFont.deriveFont(3.0f*pixel))
     text_=(scala.io.Source.fromFile("assets"+File.separator+"Instructions.txt").mkString)
     background_=(Color.black)
   }){
-    preferredSize_=(java.awt.Dimension(400,230))
+    preferredSize_=(java.awt.Dimension(80*pixel,45*pixel))
     opaque_=(false)
   }
   val upperPanel=new FlowPanel(Instructions,Swing.HStrut(40),drawPanel){opaque_=(false)}
@@ -182,6 +183,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     contents += (Swing.HStrut(1),upperPanel, Swing.VStrut(20), table,Swing.VStrut(20))
     override def paint(g: Graphics2D)={
       super.paint(g)
+      g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
       val MainbackgroundPaint=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"BlackVectors.png")),new Rectangle(0,0,bounds.width,bounds.height+20))
       g.setPaint(MainbackgroundPaint)
       g.fillRect(0,0,bounds.width,bounds.height)
@@ -217,8 +219,9 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
         controller.load(new File(loadChooser.selectedFile.toString().replaceAll("\\..*","")))
     case ButtonClicked(`saveMenu`) =>
       val r=saveChooser.showSaveDialog(null)
-      if(r.equals(FileChooser.Result.Approve))
+      if(r.equals(FileChooser.Result.Approve)){
         controller.save((new File(saveChooser.selectedFile.toString().replaceAll("\\..*",""))))
+      }
   }
   def winScreen()={
     val scores=controller.getScores().sortBy(s=>s._1)
@@ -237,14 +240,14 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     new Dialog(this){
       frame.enable(false)
       val Winlabel=new Label(playerNameList(winner(1)).text+" WON    "){
-        font_=(Util.mainFont.deriveFont(40.0f))
+        font_=(Util.mainFont.deriveFont(8.0f*pixel))
         foreground_=(playerColor(winner(1),playerGridList.size))
       }
       val scoreText=new TextArea(){
         rows_=(scores.length)
         this.
         text_=(scores.zipWithIndex.map((s,idx)=>(idx+1)+".  "+playerNameList(s._2).text+":\t"+s._1).mkString(sys.props("line.separator")))
-        font_=(Util.mainFont.deriveFont(20.0f))
+        font_=(Util.mainFont.deriveFont(4.0f*pixel))
       }
       contents_=(new BoxPanel(Orientation.Vertical){contents+=(Winlabel,scoreText)})
       centerOnScreen()
@@ -302,20 +305,23 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = Util.cardDim) extends 
     super.paint(g)
     if(open)
       g.setPaint(Color.white)
-      g.fillOval(2,3,20,20)
-      g.fillOval(28,47,20,20)
+      g.fillOval(pixel/2,pixel/2,pixel*4,pixel*4)
+      g.fillOval(5*pixel,bounds.height-5*pixel,pixel*4,pixel*4)
     // else 
     //   val p=new TexturePaint(ImageIO.read(new File("pics"+File.separator+"backSide.png")),bounds.asInstanceOf[Rectangle2D])
     //   g.setPaint(p)
     //   g.fillRect(bounds.x-CardGUI.cardVPadding,bounds.y-CardGUI.cardHPadding,bounds.width,bounds.height)
     paintChildren(g)
   }
+  val eWidth=if(pixel%2==0)pixel/2 else pixel/2+1
+  val wWidth=if(pixel%2==1)pixel/2 else pixel/2+1
   if (open)
     val paddedValue= if(value.toString().length()==2) " "+value else "  "+value
-    add(new Label(value.toString){font_=(Util.cardFont.deriveFont(20.0f));foreground_=(Color.black)}, BorderPanel.Position.Center)
-    add(new Label(paddedValue,null,Alignment.Left){font_=(Util.cardFont.deriveFont(font.getSize2D()));foreground_=(Color.black)}, BorderPanel.Position.North)
-    add(new Label(value.toString().padTo(3,' '),null,Alignment.Right){font_=(Util.cardFont.deriveFont(font.getSize2D()));foreground_=(Color.black)}, BorderPanel.Position.South)
+    add(new Label(value.toString){font_=(Util.cardFont.deriveFont(4.0f*pixel));foreground_=(Color.black)}, BorderPanel.Position.Center)
+    add(new Label(paddedValue,null,Alignment.Left){font_=(Util.cardFont.deriveFont(2.5f*pixel));foreground_=(Color.black)}, BorderPanel.Position.North)
+    add(new Label(value.toString().padTo(3,' '),null,Alignment.Right){font_=(Util.cardFont.deriveFont(2.5f*pixel));foreground_=(Color.black)}, BorderPanel.Position.South)
     background_=(Util.valueColor(value))
+    border_=(CompoundBorder(LineBorder(Util.valueColor(value), wWidth,true),LineBorder(Color.white, eWidth,true)))
   else
     opaque_=(false)
     add(new GridPanel(1,1){
@@ -323,9 +329,7 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = Util.cardDim) extends 
       contents+=wrap(AnimatedPanel(true))
     }
     ,BorderPanel.Position.Center)
-  val wborder = new LineBorder(Color.white, 3,true)
-  val eborder = new EmptyBorder(2, 2, 2, 2)
-  border_=(new CompoundBorder(eborder, wborder))
+    border_=(LineBorder(Color.white, eWidth,true))
   preferredSize_=(dim)
   minimumSize_=(dim)
   maximumSize_=(dim)
@@ -344,14 +348,15 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = Util.cardDim) extends 
 }
 
 object Util {
+  var pixel=8
   val mainFont=java.awt.Font.createFont(0, new File("assets"+File.separator+"Glitch.ttf"))
   val cardFont=java.awt.Font.createFont(0, new File("assets"+File.separator+"MarqueeMoon-Regular.ttf"))
-  val cardHPadding = 5
-  val cardVPadding = 8
-  val cardDim = new Dimension(50, 70)
+  val cardHPadding = pixel
+  val cardVPadding = pixel
+  val cardDim = new Dimension(10*pixel, 14*pixel)
   val width = cardDim.width+2*cardVPadding
   val height = cardDim.height+2*cardHPadding
-  val buttonBorder=new EmptyBorder(5,8,5,8)
+  val buttonBorder=new EmptyBorder(cardHPadding,cardVPadding,cardHPadding,cardVPadding)
   val cardButtonDim = new Dimension(width, height)
   def valueColor(value:Int):Color={
     if(value<0)
@@ -385,7 +390,10 @@ case class ButtonPanel(var active:Boolean,var highlight:Boolean,x:Int,y:Int)exte
   border_=(Util.buttonBorder)
   opaque_=(false)
   def highlight_(high:Boolean)={
-    border_= (if (high)new CompoundBorder(new LineBorder(Color.yellow,3,true),new EmptyBorder(2,5,2,5)) 
+    val width:Int=Util.pixel/2
+    val hPad=Util.cardHPadding-width;
+    val vPad=Util.cardVPadding-width;
+    border_= (if (high)new CompoundBorder(new LineBorder(Color.yellow,width,true),new EmptyBorder(hPad,vPad,hPad,vPad)) 
     else Util.buttonBorder)
     highlight=high
   }
@@ -410,7 +418,6 @@ class AnimatedPanel(startTop:Boolean) extends JPanel {
     var state=true
     override def paint(g: Graphics): Unit = 
         var g2d = g.asInstanceOf[Graphics2D]
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
         val y1 = if(startTop) 0 else getHeight()
         val y2 = if(!startTop) 0 else getHeight()
         val gp = if(state) new GradientPaint(0, y1, colors(idx1), getWidth(), y2, colors(idx2)) else new GradientPaint(0, y1, colors(idx1).darker(), getWidth(), y2, colors(idx2).darker())
