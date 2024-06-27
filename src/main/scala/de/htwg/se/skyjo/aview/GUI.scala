@@ -45,6 +45,11 @@ import de.htwg.se.skyjo.aview.Util.playerColor
 import scala.collection.mutable.ListBuffer
 import de.htwg.se.skyjo.aview.Util.Timerlist
 import scala.swing.ScrollPane.BarPolicy
+import javax.swing.KeyStroke
+import javax.swing.filechooser.FileNameExtensionFilter
+import de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoJsonImpl.FileIO as JsonFileIO
+import de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoXmlImpl.FileIO as XmlFileIO
+import javax.swing.JFileChooser
 
 class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -93,14 +98,25 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       paintChildren(g)
     }
   }
-
-  val undoMenu = new MenuItem("Undo") { mnemonic = Key.Z }
-  val redoMenu = new MenuItem("Redo") { mnemonic = Key.Y }
-  val quitMenu = new MenuItem("Quit") { mnemonic = Key.Q }
+  val extenstionFilter = controller.fileIO match{
+    case _:JsonFileIO=> new FileNameExtensionFilter("JSON","json","JSON")
+    case _:XmlFileIO=> new FileNameExtensionFilter("XML","xml","XML")
+  }
+  val undoMenu = new MenuItem("Undo") { mnemonic = Key.Z; peer.setAccelerator(KeyStroke.getKeyStroke("control Z")) }
+  val redoMenu = new MenuItem("Redo") { mnemonic = Key.Y; peer.setAccelerator(KeyStroke.getKeyStroke("control Y")) }
+  val quitMenu = new MenuItem("Quit") { mnemonic = Key.Q; peer.setAccelerator(KeyStroke.getKeyStroke("control Q")) }
+  val loadMenu= new MenuItem("Load") { mnemonic = Key.L; peer.setAccelerator(KeyStroke.getKeyStroke("control L")) }
+  val loadChooser=new FileChooser(new File("saves")) { fileFilter_=(extenstionFilter); title_=("Load File")}
+  val saveMenu= new MenuItem("Save") { mnemonic = Key.S; peer.setAccelerator(KeyStroke.getKeyStroke("control S")) }
+  val saveChooser=new FileChooser(new File("saves")) { fileFilter_=(extenstionFilter); title_=("Save File")}
   menuBar = new MenuBar {
     contents += new Menu("Util") {
       mnemonic = Key.U
       contents += (undoMenu, redoMenu, quitMenu)
+    }
+    contents+=new Menu("FileIO"){
+      mnemonic = Key.F
+      contents+=(loadMenu,saveMenu)
     }
   }
   def initMatrix()={
@@ -153,7 +169,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     opaque_=(false)
   }
   val Instructions=new ScrollPane(new TextArea(){
-    font_=(Util.mainFont.deriveFont(12.0f))
+    font_=(Util.mainFont.deriveFont(14.0f))
     text_=(scala.io.Source.fromFile("assets"+File.separator+"Instructions.txt").mkString)
     background_=(Color.black)
   }){
@@ -164,7 +180,6 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   val mainPanel=new BoxPanel(Orientation.Vertical){
     focusable_=(true)
     contents += (Swing.HStrut(1),upperPanel, Swing.VStrut(20), table,Swing.VStrut(20))
-    requestFocus()
     override def paint(g: Graphics2D)={
       super.paint(g)
       val MainbackgroundPaint=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"BlackVectors.png")),new Rectangle(0,0,bounds.width,bounds.height+20))
@@ -175,7 +190,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
   contents = mainPanel
 
-  listenTo(trashCardButton, stackCardButton, menuBar, quitMenu, undoMenu, redoMenu,mainPanel.keys)
+  listenTo(trashCardButton, stackCardButton, menuBar, quitMenu, undoMenu, redoMenu,loadMenu,saveMenu)
 
   var phase2=false
   var swapped=true
@@ -190,12 +205,20 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       if(!phase2)
         controller.drawFromStack()
         phase2=true
-    case ButtonClicked(`undoMenu`) | KeyPressed(_, Key.Z, Key.Modifier.Control, _)=>
+    case ButtonClicked(`undoMenu`)=>
       controller.undo()
-    case ButtonClicked(`redoMenu`) | KeyPressed(_, Key.Y, Key.Modifier.Control, _) =>
+    case ButtonClicked(`redoMenu`)=>
       controller.redo()
-    case ButtonClicked(`quitMenu`) | KeyPressed(_, Key.Q, Key.Modifier.Control, _)=>
+    case ButtonClicked(`quitMenu`)=>
       sys.exit(0)
+    case ButtonClicked(`loadMenu`) =>
+      val r=loadChooser.showOpenDialog(null)
+      if(r.equals(FileChooser.Result.Approve))
+        controller.load(new File(loadChooser.selectedFile.toString().replaceAll("\\..*","")))
+    case ButtonClicked(`saveMenu`) =>
+      val r=saveChooser.showSaveDialog(null)
+      if(r.equals(FileChooser.Result.Approve))
+        controller.save((new File(saveChooser.selectedFile.toString().replaceAll("\\..*",""))))
   }
   def winScreen()={
     val scores=controller.getScores().sortBy(s=>s._1)
@@ -247,7 +270,6 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     updateMatrix(currentPlayer)
     validate();
     repaint();
-    mainPanel.requestFocus()
     if(currentPlayer==lastplayer)
       lastplayer=(-1)
       controller.openAll()
@@ -322,7 +344,7 @@ class CardGUI(value: Int, open: Boolean, dim: Dimension = Util.cardDim) extends 
 }
 
 object Util {
-  val mainFont=java.awt.Font.createFont(0, new File("assets"+File.separator+"NEONCLUBMUSIC-Bold.ttf"))
+  val mainFont=java.awt.Font.createFont(0, new File("assets"+File.separator+"Glitch.ttf"))
   val cardFont=java.awt.Font.createFont(0, new File("assets"+File.separator+"MarqueeMoon-Regular.ttf"))
   val cardHPadding = 5
   val cardVPadding = 8

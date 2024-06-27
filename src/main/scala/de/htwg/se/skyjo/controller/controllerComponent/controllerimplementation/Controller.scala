@@ -11,8 +11,9 @@ import util._
 import util.Memento
 import util.Move
 import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
+import java.io.File
 
-class TableController @Inject()(var table: ModelInterface, @Inject val fileIo: FileIOInterface) extends Observable, ControllerInterface {
+class TableController @Inject()(var table: ModelInterface, @Inject val fileIO: FileIOInterface) extends Observable, ControllerInterface {
 
   val careTaker = new CareTaker()
   val injector= Guice.createInjector(new SkyjoModule)
@@ -78,12 +79,12 @@ class TableController @Inject()(var table: ModelInterface, @Inject val fileIo: F
 
   def openAll() = { table = table.openAll(); notifyObservers }
 
-  def save() = {
-    fileIo.save(table)
+  def save(path:File) = {
+    fileIO.save(table,path)
   }
 
-  def load() = {
-    table = fileIo.load
+  def load(path:File) = {
+    table =fileIO.load(path)
     notifyObservers
   }
 }

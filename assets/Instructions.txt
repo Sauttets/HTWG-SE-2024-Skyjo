@@ -11,6 +11,6 @@
  The goal of the game is to have the least 
  amount of points on the board ( closed 
  cards included, they get flipped open at the 
- end of the game ). If a row has only cards 
- with the same value the player gets 0 
- points instead of the rows card-values.    
+ end of the game ) . If a row has only cards 
+ with the same value, the whole row is not
+ counted towards the points.    

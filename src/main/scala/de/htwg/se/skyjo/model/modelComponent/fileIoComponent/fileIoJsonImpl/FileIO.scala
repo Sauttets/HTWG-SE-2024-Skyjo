@@ -89,9 +89,9 @@ class FileIO extends FileIOInterface {
     } yield PlayerTable(playerCount, width, height, currentPlayer, cardstack, tabletop)
   }
 
-  override def load: ModelInterface = {
+  override def load(path:File): ModelInterface = {
     var table: PlayerTable = null
-    val source: String = Source.fromFile("table.json").getLines.mkString
+    val source: String = Source.fromFile(path.toString()+".json").getLines.mkString
     val json: JsValue = Json.parse(source)
     val playerCount = (json \ "playerCount").as[Int]
     val width = (json \ "width").as[Int]
@@ -104,9 +104,9 @@ class FileIO extends FileIOInterface {
     table
   }
 
-  override def save(model: ModelInterface): Unit = {
+  override def save(model: ModelInterface,path:File): Unit = {
     val table = model.asInstanceOf[PlayerTable]
-    val pw = new PrintWriter(new File("table.json"))
+    val pw = new PrintWriter(new File(path.toString()+".json"))
     val json = Json.obj(
       "playerCount" -> table.playerCount,
       "width" -> table.width,

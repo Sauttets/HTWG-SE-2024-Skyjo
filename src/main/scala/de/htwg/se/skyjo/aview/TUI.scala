@@ -7,6 +7,7 @@ import scala.util.{Try, Success, Failure}
 import scala.io.StdIn.readLine
 import util.Observer
 import util.Move
+import java.io.File
 
 class TUI(controller: ControllerInterface) extends Observer:
   controller.add(this)
@@ -54,8 +55,8 @@ class TUI(controller: ControllerInterface) extends Observer:
             case Some(move) => controller.doMove(move)
         case "undo" => controller.undo()
         case "redo" => controller.redo()
-        case "save" => controller.save()
-        case "load" => controller.load()
+        case "save" => controller.save(new File("saves"+File.separator+"table"))
+        case "load" => controller.load(new File("saves"+File.separator+"table"))
 
   def drawInput(): Option[String] =
     while(true){

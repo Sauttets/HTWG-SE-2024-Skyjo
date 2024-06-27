@@ -6,9 +6,12 @@ import model.modelComponent.CardInterface
 import model.modelComponent.modelImplementation._
 import de.htwg.se.skyjo.util.Observable
 import de.htwg.se.skyjo.model.modelComponent.ModelInterface
+import java.io.File
+import de.htwg.se.skyjo.model.modelComponent.FileIOInterface
 
 trait ControllerInterface extends Observable{
   def table:ModelInterface
+  val fileIO:FileIOInterface
   def drawFromStack(): Unit
   def drawFromTrash(): Unit
   def doMove(move: Move): Unit
@@ -27,6 +30,6 @@ trait ControllerInterface extends Observable{
   def reset():Unit
   def getParitys():List[(Int,Int)]
   def openAll():Unit
-  def save(): Unit
-  def load(): Unit
+  def save(path:File): Unit
+  def load(path:File): Unit
 }

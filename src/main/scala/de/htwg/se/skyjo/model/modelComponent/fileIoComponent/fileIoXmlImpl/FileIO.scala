@@ -5,6 +5,7 @@ import de.htwg.se.skyjo.model.modelComponent.{FileIOInterface, ModelInterface}
 import de.htwg.se.skyjo.model.modelComponent._
 import de.htwg.se.skyjo.model.modelComponent.modelImplementation._
 import scala.xml._
+import java.io.File
 
 class FileIO extends FileIOInterface {
 
@@ -80,13 +81,13 @@ class FileIO extends FileIOInterface {
     PlayerTable(playerCount, width, height, currentPlayer, cardstack, tabletop)
   }
 
-  override def load: ModelInterface = {
-    val file = XML.loadFile("table.xml")
+  override def load(path:File): ModelInterface = {
+    val file = XML.loadFile(path.toString()+".xml")
     tableFromXml(file)
   }
 
-  override def save(table: ModelInterface): Unit = {
+  override def save(table: ModelInterface,path: File): Unit = {
     val xml = tableToXml(table.asInstanceOf[PlayerTable])
-    XML.save("table.xml", xml)
+    XML.save(path.toString()+".xml", xml)
   }
 }
