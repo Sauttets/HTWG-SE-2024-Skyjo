@@ -1,3 +1,4 @@
+// File: de/htwg/se/skyjo/controller/controllerComponent/controllerimplementation/TableController.scala
 package de.htwg.se.skyjo
 package controller.controllerComponent.controllerimplementation
 
@@ -12,7 +13,7 @@ import util.Memento
 import util.Move
 import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
 
-class TableController @Inject()(var table: ModelInterface) extends Observable, ControllerInterface {
+class TableController @Inject()(var table: ModelInterface, @Inject val fileIo: FileIOInterface) extends Observable, ControllerInterface {
 
   val careTaker = new CareTaker()
   val injector= Guice.createInjector(new SkyjoModule)
@@ -77,4 +78,13 @@ class TableController @Inject()(var table: ModelInterface) extends Observable, C
   def getParitys() = table.getParitys()
 
   def openAll() = { table = table.openAll(); notifyObservers }
+
+  def save() = {
+    fileIo.save(table)
+  }
+
+  def load() = {
+    table = fileIo.load
+    notifyObservers
+  }
 }

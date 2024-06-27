@@ -1,3 +1,4 @@
+// File: de/htwg/se/skyjo/aview/TUI.scala
 package de.htwg.se.skyjo
 package aview
 
@@ -36,7 +37,7 @@ class TUI(controller: ControllerInterface) extends Observer:
     println(controller.getPlayerString(winner(1))+" WON WITH ONLY "+winner(0)+" POINTS")
 
   def inputAndPrint():Unit=
-    println(controller.getCurrenPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash), (u)ndo, (r)edo ")
+    println(controller.getCurrenPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash), (u)ndo, (r)edo, (save), (load) ")
     drawInput() match
       case None  =>
       case Some(command) => command match
@@ -54,6 +55,8 @@ class TUI(controller: ControllerInterface) extends Observer:
             case Some(move) => controller.doMove(move)
         case "undo" => controller.undo()
         case "redo" => controller.redo()
+        case "save" => controller.save()
+        case "load" => controller.load()
 
   def drawInput(): Option[String] =
     while(true){
@@ -65,6 +68,8 @@ class TUI(controller: ControllerInterface) extends Observer:
         case "T" => return Some("drawTrash")
         case "U" => return Some("undo")
         case "R" => return Some("redo")
+        case "SAVE" => return Some("save")
+        case "LOAD" => return Some("load")
         case _=> print("wrong input \n")
     }
     None
