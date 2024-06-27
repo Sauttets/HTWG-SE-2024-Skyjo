@@ -1,4 +1,3 @@
-// File: de/htwg/se/skyjo/model/modelComponent/FileIOInterface.scala
 package de.htwg.se.skyjo.model.modelComponent
 
 trait FileIOInterface {

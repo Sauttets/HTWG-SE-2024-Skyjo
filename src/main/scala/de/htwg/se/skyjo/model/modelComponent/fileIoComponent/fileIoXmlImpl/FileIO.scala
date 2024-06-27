@@ -1,4 +1,3 @@
-// File: de/htwg/se/skyjo/model/modelComponent/fileIoXmlImpl/FileIO.scala
 package de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoXmlImpl
 
 import de.htwg.se.skyjo.model.modelComponent.{FileIOInterface, ModelInterface}
@@ -8,8 +7,6 @@ class FileIO extends FileIOInterface {
   override def load: ModelInterface = {
     val file = XML.loadFile("table.xml")
     // Deserialize XML to ModelInterface (implement your deserialization logic)
-    // val table = ...
-    // table
     ???
   }
 

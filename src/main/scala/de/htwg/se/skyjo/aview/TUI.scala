@@ -1,4 +1,3 @@
-// File: de/htwg/se/skyjo/aview/TUI.scala
 package de.htwg.se.skyjo
 package aview
 

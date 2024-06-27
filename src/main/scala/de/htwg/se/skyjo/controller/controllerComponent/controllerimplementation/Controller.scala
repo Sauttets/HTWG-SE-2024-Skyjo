@@ -1,4 +1,3 @@
-// File: de/htwg/se/skyjo/controller/controllerComponent/controllerimplementation/TableController.scala
 package de.htwg.se.skyjo
 package controller.controllerComponent.controllerimplementation
 

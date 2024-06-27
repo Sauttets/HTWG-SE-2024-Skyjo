@@ -1,4 +1,3 @@
-// File: de/htwg/se/skyjo/SkyjoModule.scala
 package de.htwg.se.skyjo
 
 import com.google.inject.AbstractModule
