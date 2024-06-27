@@ -12,11 +12,14 @@ import util.Memento
 import util.Move
 import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
 import java.io.File
+import scala.collection.mutable.Buffer
 
 class TableController @Inject()(var table: ModelInterface, @Inject val fileIO: FileIOInterface) extends Observable, ControllerInterface {
 
   val careTaker = new CareTaker()
   val injector= Guice.createInjector(new SkyjoModule)
+  var starttable=table
+  val moves=Buffer[Move]()
 
   def createPlayerTable: Unit = {
     table = injector.instance[ModelInterface](Names.named("tiny"))
@@ -34,6 +37,7 @@ class TableController @Inject()(var table: ModelInterface, @Inject val fileIO: F
   }
 
   def doMove(move: Move): Unit = {
+    moves+=move
     val command = new MoveCommand(this.table, move)
     careTaker.save(Memento(table))
     table=command.execute().state
@@ -80,11 +84,18 @@ class TableController @Inject()(var table: ModelInterface, @Inject val fileIO: F
   def openAll() = { table = table.openAll(); notifyObservers }
 
   def save(path:File) = {
-    fileIO.save(table,path)
+    fileIO.save(starttable,moves,path)
   }
 
   def load(path:File) = {
-    table =fileIO.load(path)
+    val state =fileIO.load(path)
+    starttable=state(0)
+    table=starttable
+    moves.clear()
+    state(1).foreach(m=>{
+      if(m.drawnFromStack) drawFromStack()
+      doMove(m)
+    })
     notifyObservers
   }
 }

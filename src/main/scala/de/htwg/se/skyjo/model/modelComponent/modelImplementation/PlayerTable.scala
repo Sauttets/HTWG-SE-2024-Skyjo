@@ -69,7 +69,7 @@ case class PlayerTable @Inject() (@Named("DefaultPlayerCount") playerCount: Int,
   }
 
   def drawFromTrash(): PlayerTable = {
-    copy(cardstack = cardstack)
+    copy()
   }
 
   def getScores(): List[(Int, Int)] = {

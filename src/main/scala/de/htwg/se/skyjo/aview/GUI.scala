@@ -66,6 +66,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       case MousePressed(_,p,_,_,_)=>
         if (active)
           publish(new DrawEvent(false))
+          stackCardButton.active_(false)
       }
   }
   stackCardButton.reactions+={

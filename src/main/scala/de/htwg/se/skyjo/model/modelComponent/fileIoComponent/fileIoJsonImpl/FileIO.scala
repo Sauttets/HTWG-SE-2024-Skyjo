@@ -10,6 +10,8 @@ import de.htwg.se.skyjo.util.CardStackStrategy
 import com.google.inject.Guice
 import com.google.inject.name.Names
 import de.htwg.se.skyjo.SkyjoModule
+import scala.collection.mutable.Buffer
+import de.htwg.se.skyjo.util.Move
 
 class FileIO extends FileIOInterface {
 
@@ -22,12 +24,14 @@ class FileIO extends FileIOInterface {
 
   implicit val cardReads: Reads[Card] = Json.reads[Card]
 
+  implicit val moveReads: Reads[Move] = Json.reads[Move]
+
   implicit val vectorCardWrites: Writes[Vector[CardInterface]] = new Writes[Vector[CardInterface]] {
     def writes(vector: Vector[CardInterface]): JsValue = Json.toJson(vector.map(_.asInstanceOf[Card]))
   }
 
   implicit val vectorCardReads: Reads[Vector[CardInterface]] = new Reads[Vector[CardInterface]] {
-    def reads(json: JsValue): JsResult[Vector[CardInterface]] = json.validate[Seq[Card]].map(_.toVector)
+    def reads(json: JsValue): JsResult[Vector[CardInterface]] = json.validate[Vector[Card]]
   }
 
   implicit val playerMatrixWrites: Writes[PlayerMatrix] = new Writes[PlayerMatrix] {
@@ -38,7 +42,7 @@ class FileIO extends FileIOInterface {
 
   implicit val playerMatrixReads: Reads[PlayerMatrix] = new Reads[PlayerMatrix] {
     def reads(json: JsValue): JsResult[PlayerMatrix] = for {
-      rows <- (json \ "rows").validate[Vector[Vector[Card]]]
+      rows <- (json \ "rows").validate[Vector[Vector[CardInterface]]]
     } yield PlayerMatrix(rows)
   }
 
@@ -63,33 +67,33 @@ class FileIO extends FileIOInterface {
     }
   }
 
-  implicit val cardStackStrategyReads: Reads[CardStackStrategy] = new Reads[CardStackStrategy] {
-    def reads(json: JsValue): JsResult[CardStackStrategy] = json.validate[LCardStack]
+  // implicit val cardStackStrategyReads: Reads[CardStackStrategy] = new Reads[CardStackStrategy] {
+  //   def reads(json: JsValue): JsResult[CardStackStrategy] = json.validate[LCardStack]
+  // }
+  implicit val moveWrites: Writes[Move] = new Writes[Move] {
+      def writes(move: Move): JsValue =Json.obj(
+        "drawnFromStack" -> move.drawnFromStack,
+        "swapped" -> move.swapped,
+        "row" ->move.row,
+        "col" ->move.col
+      )
+  }
+  implicit val movesReads: Reads[Buffer[Move]] = new Reads[Buffer[Move]] {
+    def reads(json: JsValue): JsResult[Buffer[Move]] = {
+      json.validate[Seq[Move]].map(Buffer(_*))
+    }
   }
 
-  implicit val playerTableWrites: Writes[PlayerTable] = new Writes[PlayerTable] {
-    def writes(table: PlayerTable): JsValue = Json.obj(
-      "playerCount" -> table.playerCount,
-      "width" -> table.width,
-      "height" -> table.height,
-      "currentPlayer" -> table.currentPlayer,
-      "cardstack" -> table.cardstack,
-      "tabletop" -> table.Tabletop
-    )
-  }
+  // implicit val moveReads: Reads[Move] = new Reads[Move] {
+  //   def reads(json: JsValue): JsResult[Move] = for {
+  //     drawnFromStack <- (json \ "fromStack").validate[Boolean]
+  //     swapped <- (json \ "swapped").validate[Boolean]
+  //     col <- (json \ "col").validate[Int]
+  //     row <- (json \ "row").validate[Int]
+  //   } yield Move(drawnFromStack, swapped, col, row)
+  // }
 
-  implicit val playerTableReads: Reads[PlayerTable] = new Reads[PlayerTable] {
-    def reads(json: JsValue): JsResult[PlayerTable] = for {
-      playerCount <- (json \ "playerCount").validate[Int]
-      width <- (json \ "width").validate[Int]
-      height <- (json \ "height").validate[Int]
-      currentPlayer <- (json \ "currentPlayer").validate[Int]
-      cardstack <- (json \ "cardstack").validate[CardStackStrategy]
-      tabletop <- (json \ "tabletop").validate[List[PlayerMatrix]]
-    } yield PlayerTable(playerCount, width, height, currentPlayer, cardstack, tabletop)
-  }
-
-  override def load(path:File): ModelInterface = {
+  override def load(path:File): (ModelInterface,Buffer[Move]) = {
     var table: PlayerTable = null
     val source: String = Source.fromFile(path.toString()+".json").getLines.mkString
     val json: JsValue = Json.parse(source)
@@ -99,12 +103,13 @@ class FileIO extends FileIOInterface {
     val currentPlayer = (json \ "currentPlayer").as[Int]
     val cardstack = (json \ "cardstack").as[LCardStack]
     val tabletop = (json \ "tabletop").as[List[PlayerMatrix]]
+    val moves =(json \ "moves").as[Buffer[Move]]
+    print(moves)
 
-    table = PlayerTable(playerCount, width, height, currentPlayer, cardstack, tabletop)
-    table
+    (PlayerTable(playerCount, width, height, currentPlayer, cardstack, tabletop),moves.toBuffer)
   }
 
-  override def save(model: ModelInterface,path:File): Unit = {
+  override def save(model: ModelInterface,moves:Buffer[Move],path:File): Unit = {
     val table = model.asInstanceOf[PlayerTable]
     val pw = new PrintWriter(new File(path.toString()+".json"))
     val json = Json.obj(
@@ -113,7 +118,8 @@ class FileIO extends FileIOInterface {
       "height" -> table.height,
       "currentPlayer" -> table.currentPlayer,
       "cardstack" -> Json.toJson(table.cardstack.asInstanceOf[LCardStack]),
-      "tabletop" -> Json.toJson(table.Tabletop)
+      "tabletop" -> Json.toJson(table.Tabletop),
+      "moves" ->Json.toJson(moves)
     )
     pw.write(Json.prettyPrint(json))
     pw.close()

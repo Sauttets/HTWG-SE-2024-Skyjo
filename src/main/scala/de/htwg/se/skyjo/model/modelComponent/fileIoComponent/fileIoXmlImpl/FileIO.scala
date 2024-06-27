@@ -6,6 +6,8 @@ import de.htwg.se.skyjo.model.modelComponent._
 import de.htwg.se.skyjo.model.modelComponent.modelImplementation._
 import scala.xml._
 import java.io.File
+import scala.collection.mutable.Buffer
+import de.htwg.se.skyjo.util.Move
 
 class FileIO extends FileIOInterface {
 
@@ -14,6 +16,7 @@ class FileIO extends FileIOInterface {
       <value>{card.value}</value>
       <opened>{card.opened}</opened>
     </card>
+
   }
 
   def cardFromXml(node: Node): Card = {
@@ -57,8 +60,23 @@ class FileIO extends FileIOInterface {
     val trashstack = (node \ "trashstack" \ "card").map(cardFromXml).toList
     LCardStack(stack, trashstack)
   }
+  def moveToXml(move:Move):Elem={
+    <move>
+      <fromStack>{move.drawnFromStack}</fromStack>
+      <swapped>{move.swapped}</swapped> 
+      <row>{move.row}</row>
+      <col>{move.col}</col>
+    </move>
 
-  def tableToXml(table: PlayerTable): Elem = {
+  }
+  def moveFromXml(node: Node): Move = {
+    val fromStack = (node \ "fromStack").text.toBoolean
+    val swapped = (node \ "swapped").text.toBoolean
+    val row = (node \ "row").text.toInt
+    val col = (node \ "col").text.toInt
+    Move(fromStack,swapped,row,col)
+  }
+  def tableToXml(table: PlayerTable,moves:Buffer[Move]): Elem = {
     <table>
       <playerCount>{table.playerCount}</playerCount>
       <width>{table.width}</width>
@@ -68,6 +86,9 @@ class FileIO extends FileIOInterface {
       <tabletop>
         {table.Tabletop.map(matrixToXml)}
       </tabletop>
+          <moves>
+            {moves.map(moveToXml)}
+          </moves>
     </table>
   }
 
@@ -81,13 +102,13 @@ class FileIO extends FileIOInterface {
     PlayerTable(playerCount, width, height, currentPlayer, cardstack, tabletop)
   }
 
-  override def load(path:File): ModelInterface = {
+  override def load(path:File): (ModelInterface,Buffer[Move]) = {
     val file = XML.loadFile(path.toString()+".xml")
-    tableFromXml(file)
+    (tableFromXml(file),(file \ "moves" \ "move").map(moveFromXml).toBuffer)
   }
 
-  override def save(table: ModelInterface,path: File): Unit = {
-    val xml = tableToXml(table.asInstanceOf[PlayerTable])
+  override def save(table: ModelInterface,moves:Buffer[Move],path:File): Unit = {
+    val xml = tableToXml(table.asInstanceOf[PlayerTable],moves)
     XML.save(path.toString()+".xml", xml)
   }
 }
