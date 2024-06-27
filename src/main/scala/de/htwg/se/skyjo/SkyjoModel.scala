@@ -7,6 +7,9 @@ import de.htwg.se.skyjo.controller.controllerComponent.ControllerInterface
 import de.htwg.se.skyjo.controller.controllerComponent.controllerimplementation.TableController
 import de.htwg.se.skyjo.model.modelComponent.ModelInterface
 import de.htwg.se.skyjo.model.modelComponent.modelImplementation.PlayerTable
+import de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoJsonImpl.FileIO as JsonFileIO
+import de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoXmlImpl.FileIO as XmlFileIO
+import de.htwg.se.skyjo.model.modelComponent.FileIOInterface
 import de.htwg.se.skyjo.util.{CardStackStrategy}
 import de.htwg.se.skyjo.model.modelComponent.modelImplementation.LCardStack
 import de.htwg.se.skyjo.model.modelComponent.modelImplementation.PlayerMatrix
@@ -30,5 +33,8 @@ class SkyjoModule extends AbstractModule with ScalaModule {
 
     bind[ModelInterface].to[PlayerTable]
     bind[ControllerInterface].to[TableController]
+
+    //bind[FileIOInterface].to[JsonFileIO]  // Use JSON implementation
+    bind[FileIOInterface].to[XmlFileIO]  // Use XML implementation
   }
 }
