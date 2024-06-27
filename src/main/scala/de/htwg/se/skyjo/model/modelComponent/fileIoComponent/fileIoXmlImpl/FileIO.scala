@@ -1,5 +1,5 @@
 // File: de/htwg/se/skyjo/model/modelComponent/fileIoXmlImpl/FileIO.scala
-package de.htwg.se.skyjo.model.modelComponent.fileIoXmlImpl
+package de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoXmlImpl
 
 import de.htwg.se.skyjo.model.modelComponent.{FileIOInterface, ModelInterface}
 import scala.xml._

@@ -1,5 +1,4 @@
-// File: de/htwg/se/skyjo/model/modelComponent/fileIoJsonImpl/FileIO.scala
-package de.htwg.se.skyjo.model.modelComponent.fileIoJsonImpl
+package de.htwg.se.skyjo.model.modelComponent.fileIoComponent.fileIoJsonImpl
 
 import de.htwg.se.skyjo.model.modelComponent.{FileIOInterface, ModelInterface}
 import play.api.libs.json._
