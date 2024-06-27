@@ -27,4 +27,6 @@ trait ControllerInterface extends Observable{
   def reset():Unit
   def getParitys():List[(Int,Int)]
   def openAll():Unit
+  def save(): Unit
+  def load(): Unit
 }
