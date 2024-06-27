@@ -92,10 +92,10 @@ class TableController @Inject()(var table: ModelInterface, @Inject val fileIO: F
     starttable=state(0)
     table=starttable
     moves.clear()
+    careTaker.clear()
     state(1).foreach(m=>{
       if(m.drawnFromStack) drawFromStack()
       doMove(m)
     })
-    notifyObservers
   }
 }

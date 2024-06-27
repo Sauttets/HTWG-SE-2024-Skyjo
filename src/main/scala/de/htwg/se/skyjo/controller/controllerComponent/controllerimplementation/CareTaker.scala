@@ -29,4 +29,5 @@ class CareTaker {
     undoStack.push(snapshot)
     redoStack.clear()
   }
+  def clear():Unit={undoStack.clear();redoStack.clear()}
 }
