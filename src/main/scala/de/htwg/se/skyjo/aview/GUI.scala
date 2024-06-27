@@ -132,7 +132,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
           phase2=false
         }}}
       grid.opaque_=(false)
-      val fixedSize = new Dimension((Util.width+3)  * grid.columns, (Util.height+3)* grid.rows)
+      val fixedSize = new Dimension((Util.width+3)  * grid.columns, (Util.height+3)* grid.rows+5)
       grid.preferredSize_=(fixedSize)
       grid.minimumSize_=(fixedSize)
       grid.maximumSize_=(fixedSize)
@@ -223,33 +223,49 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
         controller.save((new File(saveChooser.selectedFile.toString().replaceAll("\\..*",""))))
       }
   }
+  var gameScores=playerNameList.map(_=>Buffer[Int]()).toList
   def winScreen()={
-    val scores=controller.getScores().sortBy(s=>s._1)
-    val winner=scores(0)
+    val scores=controller.getScores()
+    val winner=scores.sortBy(s=>s._1).toList(0)
     val frame=peer
     val paritys=controller.getParitys()
     controller.openAll()
     if(paritys.size>0)
-      paritys.foreach((player,idx)=>{
+      paritys.foreach((player,row)=>{
         val grid=playerGridList(player)
         for(r<- 0 until grid.columns)
-          val cards=grid.contents(grid.rows*idx+r).asInstanceOf[ButtonPanel].contents(0).asInstanceOf[CardGUI]
+          val cards=grid.contents(grid.columns*row+r).asInstanceOf[ButtonPanel].contents(0).asInstanceOf[CardGUI]
           cards.opaque_=(false)
           cards.repaint()
       })
     new Dialog(this){
       frame.enable(false)
-      val Winlabel=new Label(playerNameList(winner(1)).text+" WON    "){
+      val Winlabel=new Label(playerNameList(winner(1)).text+" WON THIS ROUND  "){
         font_=(Util.mainFont.deriveFont(8.0f*pixel))
         foreground_=(playerColor(winner(1),playerGridList.size))
+        opaque_=(false)
       }
       val scoreText=new TextArea(){
         rows_=(scores.length)
-        this.
-        text_=(scores.zipWithIndex.map((s,idx)=>(idx+1)+".  "+playerNameList(s._2).text+":\t"+s._1).mkString(sys.props("line.separator")))
-        font_=(Util.mainFont.deriveFont(4.0f*pixel))
+        // text_=(scores.zipWithIndex.map((s,idx)=>(idx+1)+".  "+playerNameList(s._2).text+":\t"+s._1).mkString(sys.props("line.separator")))
+        gameScores=gameScores.zipWithIndex.map((sl,idx)=>sl+=(scores(idx)(0)))
+        val ln=sys.props("line.separator")
+        val scoreText=gameScores.zipWithIndex.sortBy((b,idx)=>b.sum).map((b,idx)=>playerNameList(idx).text+" : "+b.mkString(" | ")+" = "+b.sum)
+        text_=(ln+scoreText.mkString(ln+ln)+ln)
+        font_=(font.deriveFont(4.0f*pixel))
+        opaque_=(false)
       }
-      contents_=(new BoxPanel(Orientation.Vertical){contents+=(Winlabel,scoreText)})
+      contents_=(new BoxPanel(Orientation.Vertical){
+        override def paint(g: Graphics2D)={
+          super.paint(g)
+          g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
+          val MainbackgroundPaint=new TexturePaint(ImageIO.read(new File("assets"+File.separator+"GreyVectors.png")),new Rectangle(0,0,bounds.width,bounds.height+20))
+          g.setPaint(MainbackgroundPaint)
+          g.fillRect(0,0,bounds.width,bounds.height)
+          paintChildren(g)
+        }
+        contents+=(Winlabel,scoreText)}
+        )
       centerOnScreen()
       open()
       pack()
