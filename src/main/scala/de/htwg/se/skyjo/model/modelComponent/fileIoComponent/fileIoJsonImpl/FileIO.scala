@@ -7,6 +7,9 @@ import java.io._
 import scala.io.Source
 import de.htwg.se.skyjo.model.modelComponent.modelImplementation._
 import de.htwg.se.skyjo.util.CardStackStrategy
+import com.google.inject.Guice
+import com.google.inject.name.Names
+import de.htwg.se.skyjo.SkyjoModule
 
 class FileIO extends FileIOInterface {
 
@@ -87,14 +90,31 @@ class FileIO extends FileIOInterface {
   }
 
   override def load: ModelInterface = {
+    var table: PlayerTable = null
     val source: String = Source.fromFile("table.json").getLines.mkString
     val json: JsValue = Json.parse(source)
-    json.as[PlayerTable]
+    val playerCount = (json \ "playerCount").as[Int]
+    val width = (json \ "width").as[Int]
+    val height = (json \ "height").as[Int]
+    val currentPlayer = (json \ "currentPlayer").as[Int]
+    val cardstack = (json \ "cardstack").as[LCardStack]
+    val tabletop = (json \ "tabletop").as[List[PlayerMatrix]]
+
+    table = PlayerTable(playerCount, width, height, currentPlayer, cardstack, tabletop)
+    table
   }
 
-  override def save(table: ModelInterface): Unit = {
+  override def save(model: ModelInterface): Unit = {
+    val table = model.asInstanceOf[PlayerTable]
     val pw = new PrintWriter(new File("table.json"))
-    val json = Json.toJson(table.asInstanceOf[PlayerTable])
+    val json = Json.obj(
+      "playerCount" -> table.playerCount,
+      "width" -> table.width,
+      "height" -> table.height,
+      "currentPlayer" -> table.currentPlayer,
+      "cardstack" -> Json.toJson(table.cardstack.asInstanceOf[LCardStack]),
+      "tabletop" -> Json.toJson(table.Tabletop)
+    )
     pw.write(Json.prettyPrint(json))
     pw.close()
   }

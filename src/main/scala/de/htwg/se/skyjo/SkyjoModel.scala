@@ -34,7 +34,7 @@ class SkyjoModule extends AbstractModule with ScalaModule {
     bind[ModelInterface].to[PlayerTable]
     bind[ControllerInterface].to[TableController]
 
-    bind[FileIOInterface].to[JsonFileIO]  // Use JSON implementation
-    // bind[FileIOInterface].to[XmlFileIO]  // Use XML implementation
+    //bind[FileIOInterface].to[JsonFileIO]  // Use JSON implementation
+    bind[FileIOInterface].to[XmlFileIO]  // Use XML implementation
   }
 }
