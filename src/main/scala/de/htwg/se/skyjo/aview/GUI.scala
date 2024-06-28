@@ -172,7 +172,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
   }
   val Instructions=new ScrollPane(new TextArea(){
     font_=(Util.mainFont.deriveFont(3.0f*pixel))
-    text_=(scala.io.Source.fromFile("assets"+File.separator+"Instructions.txt").mkString)
+    text_=(scala.io.Source.fromFile("assets"+File.separator+"Instructions.txt").mkString.replaceAll("\\n","\n   "))
     background_=(Color.black)
   }){
     preferredSize_=(java.awt.Dimension(80*pixel,45*pixel))
@@ -248,7 +248,6 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
       }
       val scoreText=new TextArea(){
         rows_=(scores.length)
-        // text_=(scores.zipWithIndex.map((s,idx)=>(idx+1)+".  "+playerNameList(s._2).text+":\t"+s._1).mkString(sys.props("line.separator")))
         gameScores=gameScores.zipWithIndex.map((sl,idx)=>sl+=(scores(idx)(0)))
         val ln=sys.props("line.separator")
         val scoreText=gameScores.zipWithIndex.sortBy((b,idx)=>b.sum).map((b,idx)=>playerNameList(idx).text+" : "+b.mkString(" | ")+" = "+b.sum)

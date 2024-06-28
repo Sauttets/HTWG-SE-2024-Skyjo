@@ -21,7 +21,7 @@ trait ModelInterface{
     def getScores(): List[(Int, Int)]
     def swapCard(player: Int, row:Int,col:Int,card:CardInterface): (ModelInterface,CardInterface)
     def flipCard(player: Int, row:Int,col:Int): (ModelInterface)
-    def updateCardstack(card: CardInterface, drawnFromStack: Boolean): ModelInterface
+    def discardCard(card: CardInterface, drawnFromStack: Boolean): ModelInterface
     def nextPlayer():ModelInterface
     def getStackCard():CardInterface
     def getTrashCard():CardInterface

@@ -85,7 +85,7 @@ case class PlayerTable @Inject() (@Named("DefaultPlayerCount") playerCount: Int,
     copy(Tabletop = Tabletop.updated(player, Tabletop(player).flipCard(row, col)))
   }
 
-  def updateCardstack(card: CardInterface, drawFromStack: Boolean): PlayerTable = {
+  def discardCard(card: CardInterface, drawFromStack: Boolean): PlayerTable = {
     if (drawFromStack) copy(cardstack = cardstack.discard(card).removeStackTop())
     else copy(cardstack = cardstack.removeTrashTop().discard(card))
   }
