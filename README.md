@@ -1,6 +1,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/Sauttets/HTWG-SE-2024-Skyjo/badge.svg?branch=main)](https://coveralls.io/github/Sauttets/HTWG-SE-2024-Skyjo?branch=main)
 
-BITTE WARTEN MIT BEWERTEN WIR SCHREIBEN NOCH AN DEN TESTS :D
+# BITTE WARTEN MIT BEWERTEN WIR SCHREIBEN NOCH AN DEN TESTS :D
+
 
 ## sbt project compiled with Scala 3
 
