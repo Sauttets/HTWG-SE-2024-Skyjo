@@ -3,12 +3,18 @@
 # BITTE WARTEN MIT BEWERTEN WIR SCHREIBEN NOCH AN DEN TESTS :D
 
 
-## sbt project compiled with Scala 3
+## Skyjo
 
-### Usage
+ **How to play:**
 
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
+ 1.  Draw a card from the ''Stack'' or ''Trash''
+ 2a. Swap it with a card from your Field
+ 2b. Discard it by clicking on the trash
+     and flip open a card from your Field
 
-For more information on the sbt-dotty plugin, see the
-this is a merge conflict (not anymore)
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+ The goal of the game is to have the least 
+ amount of points on the board ( closed 
+ cards included, they get flipped open at the 
+ end of the game ) . If a row has only cards 
+ with the same value, the whole row is not
+ counted towards the points.    
