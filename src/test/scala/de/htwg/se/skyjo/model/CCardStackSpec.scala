@@ -23,7 +23,7 @@ class CCardStackSpec extends AnyWordSpec with Matchers{
       val sCard=stack.getStackCard()
       val tCard=stack.getTrashCard()
       "flip stackcard" in{
-        val drawnStack=stack.flipStackTop()
+        val drawnStack=stack.openStackTop()
         drawnStack.getTrashCard() shouldEqual tCard
         drawnStack.getStackCard().value shouldBe sCard.value
         drawnStack.getStackCard().opened shouldBe true
