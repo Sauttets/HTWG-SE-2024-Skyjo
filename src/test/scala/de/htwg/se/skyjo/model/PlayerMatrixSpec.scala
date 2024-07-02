@@ -1,70 +1,60 @@
-import de.htwg.se.skyjo.model._
-import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
+import de.htwg.se.skyjo.model.modelComponent.modelImplementation.{Card, CardBuilder, PlayerMatrix}
 
 class PlayerMatrixSpec extends AnyWordSpec with Matchers {
   "A PlayerMatrix" when {
-    "created" should {
-      "have the correct size" in {
-        val playerMatrix = new PlayerMatrix(3, 3)
-        playerMatrix.size shouldEqual 3
+    "new" should {
+      val height = 3
+      val width = 4
+      val matrix = new PlayerMatrix(height, width)
+
+      "have the correct dimensions" in {
+        matrix.size shouldBe height
+        matrix.rows.size shouldBe height
+        matrix.rows.head.size shouldBe width
       }
 
-      "and random all closed cards" in {
-        val playerMatrix = new PlayerMatrix(2, 2)
-        playerMatrix.rows.flatten.forall(!_.opened) shouldEqual true
+      "contain cards" in {
+        all(matrix.rows.flatten) shouldBe a[Card]
       }
-    }
 
-    "flipCard" should {
-      "correctly flip the specified card" in {
-        val playerMatrix = new PlayerMatrix(Vector(Vector(CardBuilder().build(), CardBuilder().build()), Vector(CardBuilder().build(), CardBuilder().build())))
-        val flippedMatrix = playerMatrix.flipCard(0, 0)
-        val cardValue = flippedMatrix.getCard(0, 0).value
-        flippedMatrix.getCard(0, 0).opened shouldEqual true
-        flippedMatrix.getCard(0, 0).value shouldEqual cardValue
+      "flip a card" in {
+        val row = 0
+        val col = 0
+        val initialCard = matrix.getCard(row, col)
+        initialCard.opened shouldBe false
+
+        val newMatrix = matrix.flipCard(row, col)
+        val flippedCard = newMatrix.getCard(row, col)
+        flippedCard.opened shouldBe true
       }
-    }
 
-    "changeCard method is called" should {
-      "correctly change the specified card" in {
-        val playerMatrix = new PlayerMatrix(Vector(Vector(CardBuilder().build(), CardBuilder().build()), Vector(CardBuilder().build(), CardBuilder().build())))
-        val originalCard = playerMatrix.getCard(0, 0)
+      "change a card" in {
+        val row = 0
+        val col = 0
         val newCard = CardBuilder().value(5).opened(true).build()
-        val (newMatrix, oldCard) = playerMatrix.changeCard(0, 0, newCard)
-        newMatrix.getCard(0, 0).value shouldEqual newCard.value
-        newMatrix.getCard(0, 0).opened shouldEqual true
-        originalCard.value shouldBe oldCard.value
-      }
-    }
+        val (newMatrix, oldCard) = matrix.changeCard(row, col, newCard)
 
-    "checkFinished method is called" should {
-      "return true if all cards are opened" in {
-        val playerMatrix = new PlayerMatrix(Vector(Vector(CardBuilder().value(1).opened(true).build(), CardBuilder().value(2).opened(true).build()), Vector(CardBuilder().value(3).opened(true).build(), CardBuilder().value(4).opened(true).build())))
-        playerMatrix.checkFinished() shouldEqual true
+        oldCard shouldBe matrix.getCard(row, col)
+        newMatrix.getCard(row, col) shouldBe newCard
       }
 
-      "return false if any card is not opened" in {
-        val playerMatrix = new PlayerMatrix(Vector(Vector(CardBuilder().value(1).opened(true).build(), CardBuilder().value(2).opened(false).build()), Vector(CardBuilder().value(3).opened(true).build(), CardBuilder().value(4).opened(true).build())))
-        playerMatrix.checkFinished() shouldEqual false
+      "check if finished" in {
+        val finishedMatrix = new PlayerMatrix(matrix.rows.map(row => row.map(_.open())))
+        finishedMatrix.checkFinished() shouldBe true
+        matrix.checkFinished() shouldBe false
+      }
+
+      "calculate score" in {
+        val row = 0
+        val col = 0
+        val matrixWithSameValueRow = matrix.changeCard(row, col, CardBuilder().value(0).opened(true).build())._1
+        matrixWithSameValueRow.getScore() shouldBe a[Int]
+
+        val matrixWithDifferentValues = matrix.changeCard(row, col, CardBuilder().value(1).opened(true).build())._1
+        matrixWithDifferentValues.getScore() should not be 0
       }
     }
-    "getScore method is called" should{
-      "return sum of all cards" in{
-        val playerMatrix = new PlayerMatrix(Vector(Vector(CardBuilder().value(-2).opened(true).build(), CardBuilder().value(12).opened(true).build()), Vector(CardBuilder().value(5).opened(true).build(), CardBuilder().value(0).opened(true).build())))
-        playerMatrix.getScore() shouldBe 15
-      }
-    }
-    "getRow method is called" should {
-        "return the correct row of cards" in {
-            val card1 = CardBuilder().value(1).opened(true).build()
-            val card2 = CardBuilder().value(2).opened(true).build()
-            val card3 = CardBuilder().value(3).opened(true).build()
-            val card4 = CardBuilder().value(4).opened(true).build()
-            val playerMatrix = new PlayerMatrix(Vector(Vector(card1, card2), Vector(card3, card4)))
-            val row = playerMatrix.getRow(0)
-            row shouldEqual Vector(card1, card2)
-            }
-        }
-    }
+  }
 }

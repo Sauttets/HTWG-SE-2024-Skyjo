@@ -1,42 +1,36 @@
-import de.htwg.se.skyjo._
-import org.scalatest._
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.skyjo.model.Card
-import org.scalatest.matchers.should._
-import de.htwg.se.skyjo.model.CardBuilder
+import org.scalatest.matchers.should.Matchers
+import de.htwg.se.skyjo.model.modelComponent.modelImplementation.{Card, CardBuilder}
 
-class CardBuilderSpec extends AnyWordSpec with Matchers{ 
-  "A Card" when{
-    "created should have initial state" should{
-      "without parameters" in{
-        val c=CardBuilder().build()
-        c.value should equal(5+-7)
-        c.opened shouldBe false
+class CardBuilderSpec extends AnyWordSpec with Matchers {
+  "A CardBuilder" when {
+    "new" should {
+      "create a card with default values" in {
+        val card = CardBuilder().build()
+        card.value should (be >= -2 and be <= 12)
+        card.opened shouldBe false
       }
-      "with Bool" in{
-        val a=CardBuilder().opened(false).build()
-        a.opened shouldBe false
-        a.value should equal(5+-7)
-        val b=CardBuilder().opened(true).build()
-        b.opened shouldBe true
-        b.value should equal(5+-7)
+      
+      "create a card with a specific value" in {
+        val card = CardBuilder().value(5).build()
+        card.value shouldBe 5
+        card.opened shouldBe false
       }
-      "with Int and Bool" in{
-        val d=CardBuilder().opened(true).value(4).build()
-        d.value shouldEqual 4
-        d.opened shouldEqual true
+      
+      "throw an exception for an out of range value" in {
+        an[IndexOutOfBoundsException] should be thrownBy CardBuilder().value(13).build()
+        an[IndexOutOfBoundsException] should be thrownBy CardBuilder().value(-3).build()
       }
-      "with value" in {
-        val cb = CardBuilder()
-        an [IndexOutOfBoundsException] should be thrownBy {
-          cb.value(13)
-        }
+      
+      "create a card with a specific open state" in {
+        val card = CardBuilder().opened(true).build()
+        card.opened shouldBe true
       }
-
-    }
-    "default" should{ 
-      "not be open"in{
-      Card.getClass.getMethod("$lessinit$greater$default$2").invoke(Card) shouldEqual false
+      
+      "create a card with a specific value and open state" in {
+        val card = CardBuilder().value(3).opened(true).build()
+        card.value shouldBe 3
+        card.opened shouldBe true
       }
     }
   }

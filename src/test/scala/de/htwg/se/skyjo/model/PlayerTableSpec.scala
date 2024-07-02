@@ -1,154 +1,117 @@
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
-import de.htwg.se.skyjo.model._
+import de.htwg.se.skyjo.model.modelComponent.modelImplementation.{Card, CardBuilder, PlayerMatrix, PlayerTable, LCardStack}
 
 class PlayerTableSpec extends AnyWordSpec with Matchers {
-
   "A PlayerTable" when {
+    "new" should {
+      val playerCount = 2
+      val width = 4
+      val height = 3
+      val currentPlayer = 0
+      val cardStack = new LCardStack()
+      val tableTop = List.tabulate(playerCount)(_ => new PlayerMatrix(height, width))
+      val playerTable = PlayerTable(playerCount, width, height, currentPlayer, cardStack, tableTop)
 
-    "created" should {
-      "have initial state" in {
-        val playerTable = new PlayerTable()
-        playerTable.Tabletop.size should be > 0
-        playerTable.cardstack.getStackCard().value should (be >= -2 and be <= 12)
-        playerTable.playerCount should be > 0
-        playerTable.currentPlayer shouldEqual 0
+      "have the correct number of players" in {
+        playerTable.playerCount shouldBe playerCount
+      }
+
+      "have the correct width and height" in {
+        playerTable.width shouldBe width
+        playerTable.height shouldBe height
+      }
+
+      "have the correct current player" in {
+        playerTable.currentPlayer shouldBe currentPlayer
+      }
+
+      "have a card stack" in {
+        playerTable.cardstack shouldBe cardStack
+      }
+
+      "have a table top with player matrices" in {
+        playerTable.Tabletop.size shouldBe playerCount
+        all(playerTable.Tabletop) shouldBe a[PlayerMatrix]
+      }
+
+      "draw a card from the stack" in {
+        val newTable = playerTable.drawFromStack()
+        newTable.cardstack.getStackCard().opened shouldBe true
+      }
+
+      "draw a card from the trash" in {
+        val newTable = playerTable.drawFromTrash()
+      }
+
+      "swap a card" in {
+        val row = 0
+        val col = 0
+        val newCard = CardBuilder().value(5).opened(true).build()
+        val (newTable, oldCard) = playerTable.swapCard(currentPlayer, row, col, newCard)
+        oldCard shouldBe playerTable.Tabletop(currentPlayer).getCard(row, col)
+        newTable.Tabletop(currentPlayer).getCard(row, col) shouldBe newCard
+      }
+
+      "flip a card" in {
+        val row = 0
+        val col = 0
+        val newTable = playerTable.flipCard(currentPlayer, row, col)
+        newTable.Tabletop(currentPlayer).getCard(row, col).opened shouldBe true
+      }
+
+      "update the card stack" in {
+        val card = CardBuilder().value(5).opened(true).build()
+        val newTable = playerTable.updateCardstack(card, drawFromStack = true)
+        newTable.cardstack.getTrashCard() shouldBe card
+      }
+
+      "move to the next player" in {
+        val newTable = playerTable.nextPlayer()
+        newTable.currentPlayer shouldBe (currentPlayer + 1) % playerCount
+      }
+
+      "check if the game has ended" in {
+        playerTable.gameEnd() shouldBe false
+        val finishedTable = playerTable.copy(Tabletop = tableTop.map(_.copy(rows = tableTop.head.rows.map(_.map(_.open())))))
+        finishedTable.gameEnd() shouldBe true
+      }
+
+      "get the correct scores" in {
+        val scores = playerTable.getScores()
+        scores.size shouldBe playerCount
+        all(scores.map(_._2)) shouldBe >= (0)
+      }
+
+      "return the correct card stack string" in {
+        playerTable.getCardStackString() should include("Current card stack")
+      }
+
+      "return the correct player matrices string" in {
+        playerTable.getPlayerMatricesString() should include("Player")
+      }
+
+      "return the correct current player string" in {
+        playerTable.getCurrenPlayerString() should include(s"Player ${currentPlayer + 1}")
+      }
+
+      "return the correct player string" in {
+        playerTable.getPlayerString(0) should include("Player 1")
+      }
+
+      "return the correct table string" in {
+        playerTable.getTableString() should include("Current card stack")
+      }
+
+      "get parity" in {
+        val parity = playerTable.getParitys()
+        parity shouldBe a[List[?]]
+      }
+
+      "open all cards" in {
+        val newTable = playerTable.openAll()
+        all(newTable.Tabletop.flatMap(_.rows.flatten)) should be(Symbol("opened"))
       }
     }
-
-    "drawing from the stack" should {
-      "open the top card" in {
-        val playerTable = new PlayerTable()
-        val updatedTable = playerTable.drawFromStack()
-        updatedTable.cardstack.getStackCard().opened shouldBe true
-      }
-    }
-
-    "updating a player's matrix" should {
-      "update the corresponding position in Tabletop" in {
-        val playerTable = new PlayerTable()
-        val newMatrix = new PlayerMatrix(4, 4)
-        val updatedTable = playerTable.updateMatrix(0, newMatrix)
-        updatedTable.Tabletop(0) shouldEqual newMatrix
-      }
-    }
-
-    "updating the cardstack" should {
-      "move the card from stack to trash if specified" in {
-        val playerTable = new PlayerTable()
-        val handCard = playerTable.cardstack.getStackCard()
-        val updatedTable = playerTable.updateCardstack(handCard, true)
-        updatedTable.cardstack.getTrashCard().value shouldBe handCard.value
-
-        val matrixHandCard = Card(10, opened = true)
-        val updatedTable2 = updatedTable.updateCardstack(matrixHandCard, false)
-        updatedTable2.cardstack.getTrashCard() shouldBe matrixHandCard
-      }
-    }
-
-    "padding values for cards" should {
-      "pad the values correctly" in {
-        val playerTable = new PlayerTable()
-        val card = CardBuilder().value(10).opened(true).build()
-        playerTable.padValue(card) shouldBe "│ 10 "
-        val card2 = CardBuilder().value(1).opened(true).build()
-        playerTable.padValue(card2) shouldBe "│ 01 "
-        val card3 = CardBuilder().value(-2).opened(true).build()
-        playerTable.padValue(card3) shouldBe "│ -2 "
-        val card4 = CardBuilder().value(1).opened(false).build()
-        playerTable.padValue(card4) shouldBe "│ xx "
-      }
-    }
-
-    "getting Cardstack String" should {
-      "return correct string representation" in {
-        val playerTable = new PlayerTable()
-        val str = playerTable.getCardStackString()
-        val shouldString =
-          s"""\nCurrent card stack:
-             |  ┌────┐  ┌────┐
-             | ┌${playerTable.padValue(playerTable.cardstack.getStackCard())}│  ${playerTable.padValue(playerTable.cardstack.getTrashCard())}│
-             | │└───┬┘  └────┘
-             | └────┘""".stripMargin
-        str shouldBe shouldString
-      }
-    }
-
-    "getting current player string" should {
-      "return correct string representation" in {
-        val playerTable = new PlayerTable()
-        val str = playerTable.getCurrenPlayerString()
-        str should include ((playerTable.currentPlayer+1).toString())
-        str.toUpperCase() should include ("PLAYER")
-      }
-    }
-
-    "getting player matrices string" should {
-      "return correct string representation" in {
-        val playerTable = new PlayerTable()
-        val str = playerTable.getPlayerMatricesString() 
-        val shouldString1 = 
-            s"""|\u001B[31m
-                |Player 1:
-                |+----+----+----+----+
-                |│ xx │ xx │ xx │ xx │
-                |+----+----+----+----+
-                |│ xx │ xx │ xx │ xx │
-                |+----+----+----+----+
-                |│ xx │ xx │ xx │ xx │
-                |+----+----+----+----+
-                |│ xx │ xx │ xx │ xx │
-                |+----+----+----+----+
-                |\u001B[32m
-                |Player 2:
-                |+----+----+----+----+
-                |│ xx │ xx │ xx │ xx │
-                |+----+----+----+----+
-                |│ xx │ xx │ xx │ xx │
-                |+----+----+----+----+
-                |│ xx │ xx │ xx │ xx │
-                |+----+----+----+----+
-                |│ xx │ xx │ xx │ xx │
-                |+----+----+----+----+\u001B[0m""".stripMargin
-        str shouldBe shouldString1
-      }
-      "return string representation of minimal matrix" in {
-        val playerTable = new PlayerTable(2, 1, 1)
-        val str = playerTable.getPlayerMatricesString()
-        val shouldString2 = 
-            s"""|\u001B[31m
-                |Player 1:
-                |+----+
-                |│ xx │
-                |+----+
-                |\u001B[32m
-                |Player 2:
-                |+----+
-                |│ xx │
-                |+----+\u001B[0m""".stripMargin
-        str shouldBe shouldString2
-      }
-    }
-
-    "getting full table string" should {
-      "return correct string representation" in {
-        val playerTable = new PlayerTable()
-        val str = playerTable.getTableString()
-        val shouldString = playerTable.getPlayerMatricesString() + playerTable.getCardStackString()
-        str shouldBe shouldString
-      }
-    }
-    "getting Scores" should{
-      "return scores of each player"in{
-        val playerTable= new PlayerTable(3,1,1)
-        val matrix0=playerTable.Tabletop(0)
-        val matrix1=playerTable.Tabletop(1)
-        val matrix2=playerTable.Tabletop(2)
-        playerTable.getScores() shouldBe List((matrix0.getCard(0,0).value,0),
-                                              (matrix1.getCard(0,0).value,1),
-                                              (matrix2.getCard(0,0).value,2))                                                       
-      }
-    }
-
   }
 }

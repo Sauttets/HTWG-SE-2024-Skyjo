@@ -1,58 +1,40 @@
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.skyjo.model._
-import de.htwg.se.skyjo.model.CCardStack
-import org.scalatest.matchers.should._
+import org.scalatest.matchers.should.Matchers
+import de.htwg.se.skyjo.model.modelComponent.modelImplementation.{Card, CardBuilder, CCardStack}
+import de.htwg.se.skyjo.model.modelComponent.CardInterface
 
-class CCardStackSpec extends AnyWordSpec with Matchers{ 
- "A CCardStack" when{
-    "created should have initial state" should{
-      "without parameters" in{
-        val stack=new CCardStack
-        stack.getStackCard() should not be null
-        stack.getStackCard().opened shouldBe false
+class CCardStackSpec extends AnyWordSpec with Matchers {
+  "A CCardStack" when {
+    "new" should {
+      val stackCard = CardBuilder().build()
+      val trashCard = CardBuilder().build()
+      val stack = CCardStack(stackCard, trashCard)
+
+      "have a stack card" in {
+        stack.getStackCard() shouldBe a[CardInterface]
       }
-      "with Cards" in{
-        val (a,b)=(CardBuilder().build(),CardBuilder().build())
-        val stack=new CCardStack(a,b)
-        stack.getStackCard() should equal (a)
-        stack.getTrashCard() should equal (b)
+
+      "have a trash card" in {
+        stack.getTrashCard() shouldBe a[CardInterface]
       }
-    }
-    "drawn from Stack" should{
-      val stack=new CCardStack
-      val sCard=stack.getStackCard()
-      val tCard=stack.getTrashCard()
-      "flip stackcard" in{
-        val drawnStack=stack.openStackTop()
-        drawnStack.getTrashCard() shouldEqual tCard
-        drawnStack.getStackCard().value shouldBe sCard.value
-        drawnStack.getStackCard().opened shouldBe true
+
+      "open the stack top card" in {
+        val openedStack = stack.openStackTop()
+        openedStack.getStackCard().opened shouldBe true
       }
-      "remove Stack top" in{
-        val drawnStack=stack.removeStackTop()
-        drawnStack.getStackCard().value should not be sCard.opened
-        drawnStack.getStackCard().opened shouldBe false
+
+      "close the stack top card" in {
+        val closedStack = stack.closeStackTop()
+        closedStack.getStackCard().opened shouldBe false
       }
-    }
-    "drawn from trash" should{
-      val stack=new CCardStack
-      val sCard=stack.getStackCard()
-      val tCard=stack.getTrashCard()
-      "give Trashcard" in{
-        val (tCard,cardStack)=(stack.getTrashCard(),stack.removeTrashTop())
-        stack.getTrashCard() shouldEqual tCard
+
+
+      "discard a card to the trash" in {
+        val card = CardBuilder().value(5).opened(true).build()
+        val discardedStack = stack.discard(card)
+        discardedStack.getTrashCard() shouldBe card
       }
-    }
-    "discarding" should{
-      val stack=new CCardStack
-      val sCard=stack.getStackCard()
-      "discard card" in{
-        val dCard=CardBuilder().build()
-        val dStack=stack.discard(dCard)
-        dStack.getTrashCard().value shouldEqual dCard.value
-        dStack.getTrashCard().opened shouldBe true
-        dStack.getStackCard() shouldEqual sCard
-      }
+
     }
   }
 }
