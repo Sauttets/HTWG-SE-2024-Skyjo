@@ -13,8 +13,6 @@
  (closed cards included, they get flipped open at the end of the game). 
  If a row has only cards with the same value, the whole row is not counted towards the points.
 
- # My Game Project
-
 ## Screenshots
 
 ### Game Screen
