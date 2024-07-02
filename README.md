@@ -17,9 +17,9 @@
 
 ## Screenshots
 
-### Finish Screen
-![Finish Screen](example_imgs/finish_screen.png)
-
 ### Game Screen
 ![Game Screen](example_imgs/game_screen.png)
 
+
+### Finish Screen
+![Finish Screen](example_imgs/finish_screen.png)
