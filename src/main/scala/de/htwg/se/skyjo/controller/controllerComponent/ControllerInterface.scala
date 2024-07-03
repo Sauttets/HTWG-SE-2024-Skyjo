@@ -19,8 +19,8 @@ trait ControllerInterface extends Observable{
   def toString :String
   def getPlayerString(player: Int): String
   def getScores(): List[(Int, Int)]
-  def getCurrenPlayerString(): String
-  def getCurrenPlayer(): Int
+  def getCurrentPlayerString(): String
+  def getCurrentPlayer(): Int
   def getPLayerCount(): Int
   def getStackCard(): CardInterface
   def getTrashCard(): CardInterface

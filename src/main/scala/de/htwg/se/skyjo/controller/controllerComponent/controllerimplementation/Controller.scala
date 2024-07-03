@@ -21,11 +21,6 @@ class TableController @Inject()(var table: ModelInterface, @Inject val fileIO: F
   var starttable=table
   val moves=Buffer[Move]()
 
-  def createPlayerTable: Unit = {
-    table = injector.instance[ModelInterface](Names.named("tiny"))
-    notifyObservers
-  }
-
   def drawFromStack(): Unit = {
     table = table.drawFromStack()
     notifyObservers
@@ -52,9 +47,9 @@ class TableController @Inject()(var table: ModelInterface, @Inject val fileIO: F
 
   def getScores(): List[(Int, Int)] = table.getScores()
 
-  def getCurrenPlayerString(): String = table.getCurrenPlayerString()
+  def getCurrentPlayerString(): String = table.getCurrenPlayerString()
 
-  def getCurrenPlayer(): Int = table.currentPlayer
+  def getCurrentPlayer(): Int = table.currentPlayer
 
   def getPLayerCount(): Int = table.playerCount
 
@@ -97,5 +92,6 @@ class TableController @Inject()(var table: ModelInterface, @Inject val fileIO: F
       if(m.drawnFromStack) drawFromStack()
       doMove(m)
     })
+    notifyObservers
   }
 }

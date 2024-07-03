@@ -28,7 +28,15 @@ class MoveCommandSpec extends AnyWordSpec with Matchers {
         val memento = command.execute()
         val updatedTable = memento.state.asInstanceOf[PlayerTable]
         val swappedCard = updatedTable.Tabletop(currentPlayer).getCard(0, 1)
-        }
+        initialCard should not be swappedCard
+      }
+      "flip a card card and update the table state" in {
+        val initialCardopen = playerTable.Tabletop(currentPlayer).getCard(0, 1).opened
+        val memento = MoveCommand(playerTable,Move(true,false,0,1)).execute()
+        val updatedTable = memento.state.asInstanceOf[PlayerTable]
+        val swappedCard = updatedTable.Tabletop(currentPlayer).getCard(0, 1)
+        initialCardopen should not equal swappedCard.opened
+      }
     }
   }
 }

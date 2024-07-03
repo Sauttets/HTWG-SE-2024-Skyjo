@@ -254,6 +254,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
         val scoreText=gameScores.zipWithIndex.sortBy((b,idx)=>b.sum).map((b,idx)=>playerNameList(idx).text+" : "+b.mkString(" | ")+" = "+b.sum)
         text_=(ln+scoreText.mkString(ln+ln)+ln)
         font_=(font.deriveFont(4.0f*pixel))
+        foreground_=(Color.WHITE)
         opaque_=(false)
       }
       contents_=(new BoxPanel(Orientation.Vertical){
@@ -284,7 +285,7 @@ class GUI(controller: ControllerInterface) extends MainFrame with Observer:
     Backgrounds=scala.List[AnimatedPanel]()
     stackCardButton.setContent(new CardGUI(controller.getStackCard()))
     trashCardButton.setContent(new CardGUI(controller.getTrashCard()))
-    val currentPlayer = controller.getCurrenPlayer()
+    val currentPlayer = controller.getCurrentPlayer()
     if(controller.gameEnd()&& lastplayer==(-1))
       lastplayer=(currentPlayer+controller.getPLayerCount()-1)%controller.getPLayerCount()
     updateMatrix(currentPlayer)

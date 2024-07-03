@@ -24,7 +24,7 @@ class TUI(controller: ControllerInterface) extends Observer:
   def getInputAndPrintLoop(): Unit =
     inputAndPrint()
     if(controller.gameEnd())
-      println(controller.getPlayerString(controller.getCurrenPlayer()-1)+ " ENDED THE GAME: one more round to go")
+      println(controller.getPlayerString(controller.getCurrentPlayer()-1)+ " ENDED THE GAME: one more round to go")
       return
     getInputAndPrintLoop()
 
@@ -37,13 +37,13 @@ class TUI(controller: ControllerInterface) extends Observer:
     println(controller.getPlayerString(winner(1))+" WON WITH ONLY "+winner(0)+" POINTS")
 
   def inputAndPrint():Unit=
-    println(controller.getCurrenPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash), (u)ndo, (r)edo, (save), (load) ")
+    println(controller.getCurrentPlayerString()+"'s turn\nEnter your command: (q)uit, (stack), (trash), (u)ndo, (r)edo, (save), (load) ")
     drawInput() match
       case None  =>
       case Some(command) => command match
         case "drawStack" =>
           controller.drawFromStack()
-          println(controller.getCurrenPlayerString())
+          println(controller.getCurrentPlayerString())
           println("Please enter your move: (swapped, row, col)")
           moveInput(readLine, true) match
             case None       =>

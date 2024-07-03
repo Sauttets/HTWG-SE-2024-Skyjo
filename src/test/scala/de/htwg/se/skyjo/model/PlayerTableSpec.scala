@@ -1,6 +1,6 @@
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
-import de.htwg.se.skyjo.model.modelComponent.modelImplementation.{Card, CardBuilder, PlayerMatrix, PlayerTable, LCardStack}
+import de.htwg.se.skyjo.model.modelComponent.modelImplementation.*
 
 class PlayerTableSpec extends AnyWordSpec with Matchers {
   "A PlayerTable" when {
@@ -12,7 +12,9 @@ class PlayerTableSpec extends AnyWordSpec with Matchers {
       val cardStack = new LCardStack()
       val tableTop = List.tabulate(playerCount)(_ => new PlayerMatrix(height, width))
       val playerTable = PlayerTable(playerCount, width, height, currentPlayer, cardStack, tableTop)
-
+      "change card stackstrategy " in{
+        playerTable.setCardStackStrategy(new CCardStack).cardstack shouldBe a[CCardStack]
+      }
       "have the correct number of players" in {
         playerTable.playerCount shouldBe playerCount
       }
@@ -62,8 +64,10 @@ class PlayerTableSpec extends AnyWordSpec with Matchers {
 
       "update the card stack" in {
         val card = CardBuilder().value(5).opened(true).build()
-        val newTable = playerTable.updateCardstack(card, drawFromStack = true)
-        newTable.cardstack.getTrashCard() shouldBe card
+        val newStack = playerTable.updateCardstack(card,true).cardstack
+        newStack.getTrashCard() shouldBe card
+        val newStackFromtrash = playerTable.updateCardstack(card,false).cardstack
+        newStack.getTrashCard() shouldBe card
       }
 
       "move to the next player" in {

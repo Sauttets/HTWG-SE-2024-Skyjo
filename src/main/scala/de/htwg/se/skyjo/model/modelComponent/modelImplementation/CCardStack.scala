@@ -8,7 +8,7 @@ case class CCardStack(stackCard: CardInterface, trashCard: CardInterface) extend
     override def openStackTop() = copy(stackCard.open(), trashCard)
     override def closeStackTop()=copy(stackCard.close(),trashCard)
     override def removeTrashTop(): CCardStack = copy(stackCard, Card(1, opened = true)) //1 needs to be fixed to a random number
-    override def discard(card: CardInterface): CCardStack = copy(stackCard, CardBuilder().value(card.value).opened(true).build())
+    override def discard(card: CardInterface): CCardStack = copy(stackCard, card)
     override def removeStackTop(): CCardStack = copy(CardBuilder().build(), trashCard)
     override def getStackCard()=stackCard
     override def getTrashCard()=trashCard

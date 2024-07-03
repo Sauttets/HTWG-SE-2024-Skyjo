@@ -49,15 +49,18 @@ class TableControllerSpec extends AnyWordSpec with Matchers {
       }
       
       "return current player string" in {
-        controller.getCurrenPlayerString() shouldBe a[String]
+        controller.getCurrentPlayerString() shouldBe a[String]
       }
       
       "return current player" in {
-        controller.getCurrenPlayer() shouldBe a[Integer]
+        controller.getCurrentPlayer() shouldBe a[Integer]
       }
       
       "return player count" in {
         controller.getPLayerCount() shouldBe a[Integer]
+      }
+      "return scores" in{
+        controller.getScores() shouldBe a[List[(Int,Int)]]
       }
       
       "return stack card" in {
