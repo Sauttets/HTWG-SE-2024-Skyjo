@@ -25,7 +25,9 @@ If a row has only cards with the same value, the whole row is not counted toward
 
 ### Docker
 
-to use the docker container run:
-`docker build -t skyjo:v1 . && xhost +local:docker && docker run -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --network host -ti skyjo:v1`
+to use the docker container run:  
+```
+docker build -t skyjo:v1 . && xhost +local:docker && docker run -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --network host -ti skyjo:v1
+```
 
 For macos XQuartz and socat is requred.
