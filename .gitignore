@@ -7,3 +7,5 @@ project/target/
 .metals/
 .idea/
 .vscode/
+.json
+.xml
